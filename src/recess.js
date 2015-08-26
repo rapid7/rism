@@ -187,21 +187,21 @@ _.assign(Recess.prototype,{
 
     element:function(Element) {
         var Component = React.createClass({
-            componentWillReceiveProps(newProps) {
+            componentWillReceiveProps:function(newProps) {
                 this.setState({
                     options:newProps.options || {},
                     style:newProps.style
                 });
             },
 
-            getInitialState() {
+            getInitialState:function() {
                 return {
                     options:this.props.options || {},
                     style:this.props.style
                 };
             },
 
-            onBlur() {
+            onBlur:function() {
                 this.setState({
                     style:this.props.style
                 });
@@ -211,7 +211,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onDrag() {
+            onDrag:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.drag)
                 });
@@ -221,7 +221,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onDragEnter() {
+            onDragEnter:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.dragEnter)
                 });
@@ -231,7 +231,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onDragLeave() {
+            onDragLeave:function() {
                 this.setState({
                     style:this.props.style
                 });
@@ -241,7 +241,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onFocus() {
+            onFocus:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.focus)
                 });
@@ -251,7 +251,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onMouseDown() {
+            onMouseDown:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.active)
                 });
@@ -261,7 +261,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onMouseEnter() {
+            onMouseEnter:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.hover)
                 });
@@ -271,7 +271,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onMouseLeave() {
+            onMouseLeave:function() {
                 this.setState({
                     style:this.props.style
                 });
@@ -281,7 +281,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onMouseUp() {
+            onMouseUp:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.hover)
                 });
@@ -291,7 +291,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            render() {
+            render:function() {
                 var {
                         children,
                         onDragEnter,
@@ -308,7 +308,7 @@ _.assign(Recess.prototype,{
                         options,
                         style,
                         ...otherProps
-                        } = this.props,
+                    } = this.props,
                     style = this.state.style;
 
                 if(this.props.disabled) {
@@ -340,7 +340,7 @@ _.assign(Recess.prototype,{
                 );
             },
 
-            onTouchEnd() {
+            onTouchEnd:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.active)
                 });
@@ -350,7 +350,7 @@ _.assign(Recess.prototype,{
                 }
             },
 
-            onTouchStart() {
+            onTouchStart:function() {
                 this.setState({
                     style:_.assign({},this.props.style,this.state.options.active)
                 });
