@@ -1,13 +1,7 @@
-import variables from "./variables";
-
-import {
-    ceil,
-    cloneDeep,
-    extend,
-    parseInt
-} from "lodash";
-
-import normalize from "react-style-normalizer";
+var variables = require("./variables"),
+    _ = require("lodash"),
+    normalize = require("react-style-normalizer"),
+    defaultCard;
 
 function getMaxHeight() {
     return window.innerHeight - variables.gutter;
@@ -24,11 +18,11 @@ function getCardStyle(type,isActive,styles) {
         axis;
 
     if(styles && styles.width && _.isString(styles.width) && /%/.test(styles.width)) {
-        styles.width = (window.innerWidth * (parseInt(styles.width) / 100)) - (variables.gutter / 2);
+        styles.width = (window.innerWidth * (_.parseInt(styles.width) / 100)) - (variables.gutter / 2);
     }
 
     if(styles && styles.height && _.isString(styles.height) && /%/.test(styles.height)) {
-        styles.height = (window.innerHeight * (parseInt(styles.height) / 100)) - (variables.gutter / 2);
+        styles.height = (window.innerHeight * (_.parseInt(styles.height) / 100)) - (variables.gutter / 2);
     }
 
     switch(type) {
@@ -66,11 +60,11 @@ function getCardStyle(type,isActive,styles) {
             break;
     }
 
-    cardStyle = extend(cloneDeep(defaultCard),xy,styles);
+    cardStyle = _.extend(_.cloneDeep(defaultCard),xy,styles);
 
-    translate = isActive ? 0 : (xy.width || xy.height) + ceil(variables.gutter / 2);
+    translate = isActive ? 0 : (xy.width || xy.height) + _.ceil(variables.gutter / 2);
 
-    extend(cardStyle,{
+    _.extend(cardStyle,{
         maxHeight:getMaxHeight(),
         maxWidth:getMaxWidth()
     });
@@ -82,30 +76,28 @@ function getCardStyle(type,isActive,styles) {
             break;
     }
 
-    extend(cardStyle,normalize({
+    _.extend(cardStyle,normalize({
         transform:"translate" + axis + "(" + translate + "px)"
     }));
 
     return cardStyle;
 }
 
-let defaultCard = normalize({
-        backgroundColor:variables.backgroundColor.toString(),
-        border:"1px solid " + variables.borderColor.toString(),
-        borderRadius:variables.borderRadius,
-        boxShadow:"2px 2px 2px #ccc",
-        color:variables.fontColor.toString(),
-        maxHeight:getMaxHeight(),
-        maxWidth:getMaxWidth(),
-        position:"fixed",
-        transition:"transform 150ms ease-in-out, height 150ms ease-in-out",
-        zIndex:1000
-    });
+defaultCard = normalize({
+    backgroundColor:variables.backgroundColor.toString(),
+    border:"1px solid " + variables.borderColor.toString(),
+    borderRadius:variables.borderRadius,
+    boxShadow:"2px 2px 2px #ccc",
+    color:variables.fontColor.toString(),
+    maxHeight:getMaxHeight(),
+    maxWidth:getMaxWidth(),
+    position:"fixed",
+    transition:"transform 150ms ease-in-out, height 150ms ease-in-out",
+    zIndex:1000
+});
 
-const card = {
+module.exports = {
     card:function(type,isActive,styles){
         return getCardStyle(type,isActive,styles);
     }
 };
-
-export default card;

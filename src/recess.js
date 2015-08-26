@@ -1,31 +1,22 @@
-import "normalize.css";
-import React from "react";
-import normalize from "react-style-normalizer";
-import CleanCSS from "clean-css";
-
-import {
-    assign,
-    forEach,
-    forOwn,
-    kebabCase,
-    merge
-} from "lodash";
-
-import base from "./base";
-import buttons from "./buttons";
-import card from "./card";
-import forms from "./forms";
-import grid from "./grid";
-import headings from "./headings";
-import helpers from "./helpers";
-import images from "./images";
-import labels from "./labels";
-import listGroup from "./listGroup";
-import nav from "./nav";
-import sizes from "./sizes";
-import responsive from "./responsive";
-
-let styleObjects = [
+var normalizeCss = require("normalize.css"),
+    React = require("react"),
+    normalize = require("react-style-normalizer"),
+    CleanCSS = require("clean-css"),
+    _ = require("lodash"),
+    base = require("./base"),
+    buttons = require("./buttons"),
+    card = require("./card"),
+    forms = require("./forms"),
+    grid = require("./grid"),
+    headings = require("./headings"),
+    helpers = require("./helpers"),
+    images = require("./images"),
+    labels = require("./labels"),
+    listGroup = require("./listGroup"),
+    nav = require("./nav"),
+    sizes = require("./sizes"),
+    responsive = require("./responsive"),
+    styleObjects = [
         base,
         buttons,
         card,
@@ -69,8 +60,8 @@ function setPropertyReadonly(obj,prop,value) {
 }
 
 function setResponsive(size) {
-    forOwn(responsive(size),function(style,key){
-        assign(this.styles[key],style);
+    _.forOwn(responsive(size),function(style,key){
+        _.assign(this.styles[key],style);
     }.bind(this));
 }
 
@@ -83,8 +74,8 @@ function Recess() {
     setPropertyPermanent(this,"size",sizes.sizeName());
     setPropertyPermanent(this,"styles",{});
 
-    forEach(styleObjects,function(style){
-        assign(this.styles,style);
+    _.forEach(styleObjects,function(style){
+        _.assign(this.styles,style);
     }.bind(this));
 
     setResponsive.call(this,this.size);
@@ -103,8 +94,8 @@ _.assign(Recess.prototype,{
     combine() {
         var obj = {};
 
-        forEach(arguments,function(argument,i) {
-            merge(obj,argument);
+        _.forEach(arguments,function(argument,i) {
+            _.merge(obj,argument);
         });
 
         return obj;
@@ -146,7 +137,7 @@ _.assign(Recess.prototype,{
             }
 
             this._component[name] = component;
-            assign(this._componentOptions[name],options);
+            _.assign(this._componentOptions[name],options);
         }
 
         return this;
@@ -188,14 +179,14 @@ _.assign(Recess.prototype,{
             }
 
             this._component[name] = component;
-            assign(this._componentStyles[name],styles);
+            _.assign(this._componentStyles[name],styles);
         }
 
         return this;
     },
 
     element(Element) {
-        let Component = React.createClass({
+        var Component = React.createClass({
             componentWillReceiveProps(newProps) {
                 this.setState({
                     options:newProps.options || {},
@@ -374,7 +365,7 @@ _.assign(Recess.prototype,{
     },
 
     extend(styles) {
-        forOwn(styles,function(value,key) {
+        _.forOwn(styles,function(value,key) {
             if(!this.styles[key]) {
                 this.styles[key] = {}
             }
@@ -404,7 +395,7 @@ _.assign(Recess.prototype,{
         if(this._app) {
             this._app.forceUpdate();
         } else {
-            forOwn(this._components,function(component){
+            _.forOwn(this._components,function(component){
                 component.forceUpdate();
             });
         }
@@ -432,17 +423,17 @@ _.assign(Recess.prototype,{
         } else if(_.isObject(styles)) {
             let str = "";
 
-            forOwn(styles,function(style,key) {
+            _.forOwn(styles,function(style,key) {
                 str += key + "{";
 
                 style = normalize(style);
 
-                forOwn(style,function(value,property) {
+                _.forOwn(style,function(value,property) {
                     if(property.charAt(0).toUpperCase() === property.charAt(0)) {
                         str += "-";
                     }
 
-                    str += kebabCase(property) + ":" + value + ";";
+                    str += _.kebabCase(property) + ":" + value + ";";
                 });
 
                 str += "}"
@@ -460,21 +451,4 @@ _.assign(Recess.prototype,{
     }
 });
 
-recess = new Recess();
-
-recess.stylesheet("Recess",normalize({
-    "*,*:before,*:after":{
-        boxSizing:"border-box"
-    },
-    ".clearFix:before,.clearFix:after":{
-        content:"\"\"",
-        display:"table"
-    },
-    ".clearFix:after":{
-        clear:"both"
-    }
-}));
-
-window.addEventListener("resize",recess.onResize.bind(recess),false);
-
-export default recess;
+module.exports = Recess;

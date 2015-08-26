@@ -1,27 +1,17 @@
-import {
-    ceil,
-    cloneDeep,
-    extend
-} from "lodash";
+var _ = require("lodash"),
+    variables = require("./variables"),
+    headings = {
+        h1:{
+            display:"block",
+            fontWeight:variables.headingFontWeight,
+            margin:variables.headingMargin
+        }
+    };
 
-import {
-    fontSize,
-    headingFontWeight,
-    headingMargin
-} from "./variables";
+headings.h2 = _.cloneDeep(headings.h1);
+headings.h3 = _.cloneDeep(headings.h1);
+headings.h4 = _.cloneDeep(headings.h1);
+headings.h5 = _.cloneDeep(headings.h1);
+headings.h6 = _.cloneDeep(headings.h1);
 
-let headings = {
-    h1:{
-        display:"block",
-        fontWeight:headingFontWeight,
-        margin:headingMargin
-    }
-};
-
-headings.h2 = cloneDeep(headings.h1);
-headings.h3 = cloneDeep(headings.h1);
-headings.h4 = cloneDeep(headings.h1);
-headings.h5 = cloneDeep(headings.h1);
-headings.h6 = cloneDeep(headings.h1);
-
-export default headings;
+module.exports = headings;

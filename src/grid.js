@@ -1,66 +1,58 @@
-import {
-    ceil,
-    extend,
-    cloneDeep,
-    parseInt
-} from "lodash";
+var _ = require("lodash"),
+    variables = require("./variables"),
+    normalize = require("react-style-normalizer"),
+    grid = {
+        column:function(width) {
+            var numDenom;
 
-import variables from "./variables";
+            if(/((\d*)\/(\d*))/.test(width)) {
+                numDenom = width.split("/");
+                width = 100 * (_.parseInt(numDenom[0]) / _.parseInt(numDenom[1])) + "%";
+            }
 
-import normalize from "react-style-normalizer";
-
-let grid = {
-    column:function(width) {
-        var numDenom;
-
-        if(/((\d*)\/(\d*))/.test(width)) {
-            numDenom = width.split("/");
-            width = 100 * (parseInt(numDenom[0]) / parseInt(numDenom[1])) + "%";
-        }
-
-        return {
-            display:"inline-block",
-            minHeight:1,
-            paddingLeft:ceil(variables.gutter / 2),
-            paddingRight:ceil(variables.gutter / 2),
-            width:width || "100%",
-            verticalAlign:"top"
-        };
-    },
-    columnFlex:normalize({
-        flexGrow:1,
-        flexShrink:1,
-        paddingLeft:ceil(variables.gutter / 2),
-        paddingRight:ceil(variables.gutter / 2)
-    }),
-    containerFixed:{
-        marginLeft:"auto",
-        marginRight:"auto",
-        paddingLeft:ceil(variables.gutter / 2),
-        paddingRight:ceil(variables.gutter / 2)
-    },
-    containerFlex:normalize({
-        alignContent:"stretch",
-        alignItems:"stretch",
-        display:"flex",
-        flexDirection:"row"
-    }),
-    row:{
-        marginLeft:-1 * ceil(variables.gutter / 2),
-        marginRight:-1 * ceil(variables.gutter / 2)
-    },
-    rowFlex:normalize({
-        flexWrap:"nowrap"
-    })
-};
+            return {
+                display:"inline-block",
+                minHeight:1,
+                paddingLeft:_.ceil(variables.gutter / 2),
+                paddingRight:_.ceil(variables.gutter / 2),
+                width:width || "100%",
+                verticalAlign:"top"
+            };
+        },
+        columnFlex:normalize({
+            flexGrow:1,
+            flexShrink:1,
+            paddingLeft:_.ceil(variables.gutter / 2),
+            paddingRight:_.ceil(variables.gutter / 2)
+        }),
+        containerFixed:{
+            marginLeft:"auto",
+            marginRight:"auto",
+            paddingLeft:_.ceil(variables.gutter / 2),
+            paddingRight:_.ceil(variables.gutter / 2)
+        },
+        containerFlex:normalize({
+            alignContent:"stretch",
+            alignItems:"stretch",
+            display:"flex",
+            flexDirection:"row"
+        }),
+        row:{
+            marginLeft:-1 * _.ceil(variables.gutter / 2),
+            marginRight:-1 * _.ceil(variables.gutter / 2)
+        },
+        rowFlex:normalize({
+            flexWrap:"nowrap"
+        })
+    };
 
 grid.container = function(width) {
-    return extend(cloneDeep(grid.containerFixed),{
+    return _.extend(_.cloneDeep(grid.containerFixed),{
         width:width || "100%"
     });
 };
 
-grid.containerFull = extend(cloneDeep(grid.containerFixed),{
+grid.containerFull = _.extend(_.cloneDeep(grid.containerFixed),{
     width:"100%"
 });
 
@@ -89,4 +81,4 @@ grid.column_9_10 = grid.column("9/10");
 grid.column_11_12 = grid.column("11/12");
 grid.columnFull = grid.column("100%");
 
-export default grid;
+module.exports = grid;

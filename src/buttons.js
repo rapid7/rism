@@ -1,14 +1,7 @@
-import c from "d3-color";
-import normalize from "react-style-normalizer"
-import {
-    cloneDeep,
-    extend,
-    forEach
-} from "lodash";
-
-import variables from "./variables";
-
-let buttons = {
+var normalize = require("react-style-normalizer"),
+    _ = require("lodash"),
+    variables = require("./variables"),
+    buttons = {
         button:normalize({
             border:"1px solid " + variables.borderColor.toString(),
             backgroundColor:variables.backgroundColor.toString(),
@@ -42,23 +35,23 @@ let buttons = {
         "Warning"
     ];
 
-buttons.buttonHover = extend(cloneDeep(buttons.button),{
+buttons.buttonHover = _.extend(_.cloneDeep(buttons.button),{
     backgroundColor:variables.backgroundColor.darker(0.5).toString()
 });
 
-forEach(projectColors,function(color){
+_.forEach(projectColors,function(color){
     let fontColor = ((color === "Warning") ? variables.fontColor : variables.white).toString();
 
-    buttons["button" + color] = extend(cloneDeep(buttons.button),{
+    buttons["button" + color] = _.extend(_.cloneDeep(buttons.button),{
         borderColor:variables["color" + color].darker(0.5).toString(),
         backgroundColor:variables["color" + color],
         color:fontColor
     });
 
-    buttons["button" + color + "Hover"] = extend(cloneDeep(buttons["button" + color]),{
+    buttons["button" + color + "Hover"] = _.extend(_.cloneDeep(buttons["button" + color]),{
         backgroundColor:variables["color" + color].darker(0.5).toString(),
         color:fontColor
     });
 });
 
-export default buttons;
+module.exports = buttons;

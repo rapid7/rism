@@ -1,23 +1,17 @@
-import normalize from "react-style-normalizer";
+var normalize = require("react-style-normalizer"),
+    variables = require("./variables");
 
-import {
-    borderRadius,
-    white
-} from "./variables";
-
-let images = {
-        imgCircle:normalize({
-            borderRadius:"50%"
-        }),
-        imgResponsive:{
-            display:"block",
-            height:"auto",
-            maxWidth:"100%"
-        },
-        imgThumbnail:normalize({
-            border:"5px solid " + white.toString(),
-            borderRadius:borderRadius
-        })
-    };
-
-export default images;
+module.exports = {
+    imgCircle:normalize({
+        borderRadius:"50%"
+    }),
+    imgResponsive:{
+        display:"block",
+        height:"auto",
+        maxWidth:"100%"
+    },
+    imgThumbnail:normalize({
+        border:"5px solid " + variables.white.toString(),
+        borderRadius:variables.borderRadius
+    })
+};

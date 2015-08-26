@@ -1,3 +1,1 @@
-import Recess from "./index";
-
-export default Recess.styles;
+module.exports = require("./index").styles;

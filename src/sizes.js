@@ -1,4 +1,5 @@
-let sizes = {
+var _ = require("lodash"),
+    sizes = {
         lg:992,
         md:768,
         sm:568,
@@ -43,7 +44,7 @@ let sizes = {
 
 
 
-export default {
+module.exports = {
     isLg() {
         return mqls.lg.matches;
     },

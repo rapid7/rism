@@ -56,86 +56,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-	__webpack_require__(1);
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var _cleanCss = __webpack_require__(18);
-
-	var _cleanCss2 = _interopRequireDefault(_cleanCss);
-
-	var _lodash = __webpack_require__(123);
-
-	var _base = __webpack_require__(124);
-
-	var _base2 = _interopRequireDefault(_base);
-
-	var _buttons = __webpack_require__(128);
-
-	var _buttons2 = _interopRequireDefault(_buttons);
-
-	var _card = __webpack_require__(129);
-
-	var _card2 = _interopRequireDefault(_card);
-
-	var _forms = __webpack_require__(130);
-
-	var _forms2 = _interopRequireDefault(_forms);
-
-	var _grid = __webpack_require__(131);
-
-	var _grid2 = _interopRequireDefault(_grid);
-
-	var _headings = __webpack_require__(132);
-
-	var _headings2 = _interopRequireDefault(_headings);
-
-	var _helpers = __webpack_require__(133);
-
-	var _helpers2 = _interopRequireDefault(_helpers);
-
-	var _images = __webpack_require__(134);
-
-	var _images2 = _interopRequireDefault(_images);
-
-	var _labels = __webpack_require__(135);
-
-	var _labels2 = _interopRequireDefault(_labels);
-
-	var _listGroup = __webpack_require__(136);
-
-	var _listGroup2 = _interopRequireDefault(_listGroup);
-
-	var _nav = __webpack_require__(137);
-
-	var _nav2 = _interopRequireDefault(_nav);
-
-	var _sizes = __webpack_require__(127);
-
-	var _sizes2 = _interopRequireDefault(_sizes);
-
-	var _responsive = __webpack_require__(138);
-
-	var _responsive2 = _interopRequireDefault(_responsive);
-
-	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _sizes2["default"]],
-	    recess = undefined;
+	var normalizeCss = __webpack_require__(1),
+	    React = __webpack_require__(5),
+	    normalize = __webpack_require__(6),
+	    CleanCSS = __webpack_require__(18),
+	    _ = __webpack_require__(123),
+	    base = __webpack_require__(124),
+	    buttons = __webpack_require__(127),
+	    card = __webpack_require__(128),
+	    forms = __webpack_require__(129),
+	    grid = __webpack_require__(130),
+	    headings = __webpack_require__(131),
+	    helpers = __webpack_require__(132),
+	    images = __webpack_require__(133),
+	    labels = __webpack_require__(134),
+	    listGroup = __webpack_require__(135),
+	    nav = __webpack_require__(136),
+	    sizes = __webpack_require__(137),
+	    responsive = __webpack_require__(138),
+	    styleObjects = [base, buttons, card, forms, grid, headings, helpers, images, labels, listGroup, nav, sizes],
+	    recess;
 
 	function setPropertyHidden(obj, prop, value) {
 	    Object.defineProperty(obj, prop, {
@@ -165,8 +109,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function setResponsive(size) {
-	    (0, _lodash.forOwn)((0, _responsive2["default"])(size), (function (style, key) {
-	        (0, _lodash.assign)(this.styles[key], style);
+	    _.forOwn(responsive(size), (function (style, key) {
+	        _.assign(this.styles[key], style);
 	    }).bind(this));
 	}
 
@@ -176,11 +120,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    setPropertyReadonly(this, "_component", {});
 	    setPropertyReadonly(this, "_componentOptions", {});
 	    setPropertyReadonly(this, "_componentStyles", {});
-	    setPropertyPermanent(this, "size", _sizes2["default"].sizeName());
+	    setPropertyPermanent(this, "size", sizes.sizeName());
 	    setPropertyPermanent(this, "styles", {});
 
-	    (0, _lodash.forEach)(styleObjects, (function (style) {
-	        (0, _lodash.assign)(this.styles, style);
+	    _.forEach(styleObjects, (function (style) {
+	        _.assign(this.styles, style);
 	    }).bind(this));
 
 	    setResponsive.call(this, this.size);
@@ -199,8 +143,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    combine: function combine() {
 	        var obj = {};
 
-	        (0, _lodash.forEach)(arguments, function (argument, i) {
-	            (0, _lodash.merge)(obj, argument);
+	        _.forEach(arguments, function (argument, i) {
+	            _.merge(obj, argument);
 	        });
 
 	        return obj;
@@ -240,7 +184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            this._component[name] = component;
-	            (0, _lodash.assign)(this._componentOptions[name], options);
+	            _.assign(this._componentOptions[name], options);
 	        }
 
 	        return this;
@@ -280,14 +224,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            this._component[name] = component;
-	            (0, _lodash.assign)(this._componentStyles[name], styles);
+	            _.assign(this._componentStyles[name], styles);
 	        }
 
 	        return this;
 	    },
 
 	    element: function element(Element) {
-	        var Component = _react2["default"].createClass({
+	        var Component = React.createClass({
 	            displayName: "Component",
 
 	            componentWillReceiveProps: function componentWillReceiveProps(newProps) {
@@ -421,7 +365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    style = this.props.options.readonly;
 	                }
 
-	                return _react2["default"].createElement(
+	                return React.createElement(
 	                    Element.type,
 	                    _extends({
 	                        onBlur: this.onBlur,
@@ -467,7 +411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    extend: function extend(styles) {
-	        (0, _lodash.forOwn)(styles, (function (value, key) {
+	        _.forOwn(styles, (function (value, key) {
 	            if (!this.styles[key]) {
 	                this.styles[key] = {};
 	            }
@@ -475,7 +419,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (_.isFunction(value)) {
 	                this.styles[key] = value;
 	            } else {
-	                (0, _lodash.assign)(this.styles[key], value);
+	                assign(this.styles[key], value);
 	            }
 	        }).bind(this));
 
@@ -483,13 +427,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    onResize: function onResize() {
-	        if (_sizes2["default"].sizeName() !== this.size) {
-	            this.size = _sizes2["default"].sizeName();
+	        if (sizes.sizeName() !== this.size) {
+	            this.size = sizes.sizeName();
 	            this.render();
 	        }
 	    },
 
-	    prefix: _reactStyleNormalizer2["default"],
+	    prefix: normalize,
 
 	    render: function render() {
 	        setResponsive.call(this, this.size);
@@ -497,7 +441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (this._app) {
 	            this._app.forceUpdate();
 	        } else {
-	            (0, _lodash.forOwn)(this._components, function (component) {
+	            _.forOwn(this._components, function (component) {
 	                component.forceUpdate();
 	            });
 	        }
@@ -521,27 +465,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        style.id = id;
 
 	        if (_.isString(styles)) {
-	            style.textContent = new _cleanCss2["default"]().minify(styles).styles;
+	            style.textContent = new CleanCSS().minify(styles).styles;
 	        } else if (_.isObject(styles)) {
 	            var str = "";
 
-	            (0, _lodash.forOwn)(styles, function (style, key) {
+	            _.forOwn(styles, function (style, key) {
 	                str += key + "{";
 
-	                style = (0, _reactStyleNormalizer2["default"])(style);
+	                style = normalize(style);
 
-	                (0, _lodash.forOwn)(style, function (value, property) {
+	                _.forOwn(style, function (value, property) {
 	                    if (property.charAt(0).toUpperCase() === property.charAt(0)) {
 	                        str += "-";
 	                    }
 
-	                    str += (0, _lodash.kebabCase)(property) + ":" + value + ";";
+	                    str += _.kebabCase(property) + ":" + value + ";";
 	                });
 
 	                str += "}";
 	            });
 
-	            style.textContent = new _cleanCss2["default"]().minify(str).styles;
+	            style.textContent = new CleanCSS().minify(str).styles;
 	        } else {
 	            console.error("Error: You either need to provide an object or a string when creating a new stylesheet");
 	            return this;
@@ -553,25 +497,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 
-	recess = new Recess();
-
-	recess.stylesheet("Recess", (0, _reactStyleNormalizer2["default"])({
-	    "*,*:before,*:after": {
-	        boxSizing: "border-box"
-	    },
-	    ".clearFix:before,.clearFix:after": {
-	        content: "\"\"",
-	        display: "table"
-	    },
-	    ".clearFix:after": {
-	        clear: "both"
-	    }
-	}));
-
-	window.addEventListener("resize", recess.onResize.bind(recess), false);
-
-	exports["default"] = recess;
-	module.exports = exports["default"];
+	module.exports = Recess;
 
 /***/ },
 /* 1 */
@@ -31212,25 +31138,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	var variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _lodash = __webpack_require__(123);
-
-	// Recess defaults
-
-	var _variables = __webpack_require__(125);
-
-	var _sizes = __webpack_require__(127);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var base = {
+	module.exports = {
 	    a: {
 	        color: "blue",
 	        cursor: "pointer",
@@ -31247,18 +31158,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        margin: "1em 0"
 	    },
 	    wrapAll: {
-	        backgroundColor: _variables.backgroundColor.toString(),
-	        color: _variables.fontColor.toString(),
+	        backgroundColor: variables.backgroundColor.toString(),
+	        color: variables.fontColor.toString(),
 	        fontFamily: "TypoPRO Roboto, Helvetica Neue, Helvetica, Arial, sans-serif",
-	        fontSize: _variables.fontSize,
-	        fontWeight: _variables.fontWeight,
+	        fontSize: variables.fontSize,
+	        fontWeight: variables.fontWeight,
 	        height: "auto",
 	        minHeight: "100vh"
 	    }
 	};
-
-	exports["default"] = base;
-	module.exports = exports["default"];
 
 /***/ },
 /* 125 */
@@ -31266,28 +31174,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _d3Color = __webpack_require__(126);
-
-	var _d3Color2 = _interopRequireDefault(_d3Color);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var colors = {
-	    black: _d3Color2["default"].color("#111"),
-	    danger: _d3Color2["default"].color("#d9534f"),
-	    info: _d3Color2["default"].color("#5bc0de"),
-	    primary: _d3Color2["default"].color("#337ab7"),
-	    success: _d3Color2["default"].color("#5cb85c"),
-	    warning: _d3Color2["default"].color("#f0ad4e"),
-	    white: _d3Color2["default"].color("#fff")
+	var c = __webpack_require__(126),
+	    normalize = __webpack_require__(6),
+	    colors = {
+	    black: c.color("#111"),
+	    danger: c.color("#d9534f"),
+	    info: c.color("#5bc0de"),
+	    primary: c.color("#337ab7"),
+	    success: c.color("#5cb85c"),
+	    warning: c.color("#f0ad4e"),
+	    white: c.color("#fff")
 	},
 	    sizes = {
 	    borderRadius: 3,
@@ -31298,7 +31194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    gutter: 30
 	};
 
-	var variables = (0, _reactStyleNormalizer2["default"])({
+	module.exports = normalize({
 	    black: colors.black,
 	    backgroundColor: colors.white,
 	    borderColor: colors.white.darker(0.625), // #ccc
@@ -31316,9 +31212,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    headingMargin: sizes.headingMargin,
 	    white: colors.white
 	});
-
-	exports["default"] = variables;
-	module.exports = exports["default"];
 
 /***/ },
 /* 126 */
@@ -32017,110 +31910,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 127 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var sizes = {
-	    lg: 992,
-	    md: 768,
-	    sm: 568,
-	    xl: 1200,
-	    xs: 0
-	},
-	    mqls = (function () {
-	    var ret = {};
-
-	    _.forOwn(sizes, function (size, key) {
-	        ret[key] = window.matchMedia("(min-width:" + size + "px)");
-	    });
-
-	    return ret;
-	})(),
-	    size = function size() {
-	    if (mqls.xl.matches) {
-	        return sizes.xl;
-	    } else if (mqls.lg.matches) {
-	        return sizes.lg;
-	    } else if (mqls.md.matches) {
-	        return sizes.md;
-	    } else if (mqls.sm.matches) {
-	        return sizes.sm;
-	    }
-
-	    return window.innerWidth;
-	},
-	    sizeName = function sizeName() {
-	    if (mqls.xl.matches) {
-	        return "xl";
-	    } else if (mqls.lg.matches) {
-	        return "lg";
-	    } else if (mqls.md.matches) {
-	        return "md";
-	    } else if (mqls.sm.matches) {
-	        return "sm";
-	    }
-
-	    return "xs";
-	};
-
-	exports["default"] = {
-	    isLg: function isLg() {
-	        return mqls.lg.matches;
-	    },
-	    isMd: function isMd() {
-	        return mqls.md.matches;
-	    },
-	    isSm: function isSm() {
-	        return mqls.sm.matches;
-	    },
-	    isXl: function isXl() {
-	        return mqls.xl.matches;
-	    },
-	    isXs: function isXs() {
-	        return mqls.xs.matches;
-	    },
-	    size: size,
-	    sizeName: sizeName,
-	    sizes: sizes
-	};
-	module.exports = exports["default"];
-
-/***/ },
-/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _d3Color = __webpack_require__(126);
-
-	var _d3Color2 = _interopRequireDefault(_d3Color);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var _lodash = __webpack_require__(123);
-
-	var _variables = __webpack_require__(125);
-
-	var _variables2 = _interopRequireDefault(_variables);
-
-	var buttons = {
-	    button: (0, _reactStyleNormalizer2["default"])({
-	        border: "1px solid " + _variables2["default"].borderColor.toString(),
-	        backgroundColor: _variables2["default"].backgroundColor.toString(),
-	        borderRadius: _variables2["default"].borderRadius.toString(),
-	        color: _variables2["default"].fontColor.toString(),
+	var normalize = __webpack_require__(6),
+	    _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    buttons = {
+	    button: normalize({
+	        border: "1px solid " + variables.borderColor.toString(),
+	        backgroundColor: variables.backgroundColor.toString(),
+	        borderRadius: variables.borderRadius.toString(),
+	        color: variables.fontColor.toString(),
 	        cursor: "pointer",
 	        display: "inline-block",
 	        fontFamily: "inherit",
@@ -32135,7 +31937,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        verticalAlign: "middle",
 	        whiteSpace: "nowrap"
 	    }),
-	    buttonDisabled: (0, _reactStyleNormalizer2["default"])({
+	    buttonDisabled: normalize({
 	        border: 0,
 	        cursor: "not-allowed",
 	        opacity: 0.4
@@ -32143,90 +31945,78 @@ return /******/ (function(modules) { // webpackBootstrap
 	},
 	    projectColors = ["Danger", "Info", "Primary", "Success", "Warning"];
 
-	buttons.buttonHover = (0, _lodash.extend)((0, _lodash.cloneDeep)(buttons.button), {
-	    backgroundColor: _variables2["default"].backgroundColor.darker(0.5).toString()
+	buttons.buttonHover = _.extend(_.cloneDeep(buttons.button), {
+	    backgroundColor: variables.backgroundColor.darker(0.5).toString()
 	});
 
-	(0, _lodash.forEach)(projectColors, function (color) {
-	    var fontColor = (color === "Warning" ? _variables2["default"].fontColor : _variables2["default"].white).toString();
+	_.forEach(projectColors, function (color) {
+	    var fontColor = (color === "Warning" ? variables.fontColor : variables.white).toString();
 
-	    buttons["button" + color] = (0, _lodash.extend)((0, _lodash.cloneDeep)(buttons.button), {
-	        borderColor: _variables2["default"]["color" + color].darker(0.5).toString(),
-	        backgroundColor: _variables2["default"]["color" + color],
+	    buttons["button" + color] = _.extend(_.cloneDeep(buttons.button), {
+	        borderColor: variables["color" + color].darker(0.5).toString(),
+	        backgroundColor: variables["color" + color],
 	        color: fontColor
 	    });
 
-	    buttons["button" + color + "Hover"] = (0, _lodash.extend)((0, _lodash.cloneDeep)(buttons["button" + color]), {
-	        backgroundColor: _variables2["default"]["color" + color].darker(0.5).toString(),
+	    buttons["button" + color + "Hover"] = _.extend(_.cloneDeep(buttons["button" + color]), {
+	        backgroundColor: variables["color" + color].darker(0.5).toString(),
 	        color: fontColor
 	    });
 	});
 
-	exports["default"] = buttons;
-	module.exports = exports["default"];
+	module.exports = buttons;
 
 /***/ },
-/* 129 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _variables = __webpack_require__(125);
-
-	var _variables2 = _interopRequireDefault(_variables);
-
-	var _lodash = __webpack_require__(123);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
+	var variables = __webpack_require__(125),
+	    _ = __webpack_require__(123),
+	    normalize = __webpack_require__(6),
+	    defaultCard;
 
 	function getMaxHeight() {
-	    return window.innerHeight - _variables2["default"].gutter;
+	    return window.innerHeight - variables.gutter;
 	}
 
 	function getMaxWidth() {
-	    return window.innerWidth - _variables2["default"].gutter;
+	    return window.innerWidth - variables.gutter;
 	}
 
 	function getCardStyle(type, isActive, styles) {
 	    var cardStyle, xy, translate, axis;
 
 	    if (styles && styles.width && _.isString(styles.width) && /%/.test(styles.width)) {
-	        styles.width = window.innerWidth * ((0, _lodash.parseInt)(styles.width) / 100) - _variables2["default"].gutter / 2;
+	        styles.width = window.innerWidth * (_.parseInt(styles.width) / 100) - variables.gutter / 2;
 	    }
 
 	    if (styles && styles.height && _.isString(styles.height) && /%/.test(styles.height)) {
-	        styles.height = window.innerHeight * ((0, _lodash.parseInt)(styles.height) / 100) - _variables2["default"].gutter / 2;
+	        styles.height = window.innerHeight * (_.parseInt(styles.height) / 100) - variables.gutter / 2;
 	    }
 
 	    switch (type) {
 	        case "bottom":
 	            xy = {
-	                bottom: _.ceil(_variables2["default"].gutter / 2),
+	                bottom: _.ceil(variables.gutter / 2),
 	                height: styles.height || 200,
-	                left: _.ceil(_variables2["default"].gutter / 2)
+	                left: _.ceil(variables.gutter / 2)
 	            };
 	            axis = "Y";
 	            break;
 	        case "left":
 	            xy = {
-	                left: _.ceil(_variables2["default"].gutter / 2),
-	                top: _.ceil(_variables2["default"].gutter / 2),
+	                left: _.ceil(variables.gutter / 2),
+	                top: _.ceil(variables.gutter / 2),
 	                width: styles.width || 200
 	            };
 	            axis = "X";
 	            break;
 	        case "right":
 	            xy = {
-	                right: _.ceil(_variables2["default"].gutter / 2),
-	                top: _.ceil(_variables2["default"].gutter / 2),
+	                right: _.ceil(variables.gutter / 2),
+	                top: _.ceil(variables.gutter / 2),
 	                width: styles.width || 200
 	            };
 	            axis = "X";
@@ -32234,18 +32024,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case "top":
 	            xy = {
 	                height: styles.height || 200,
-	                left: _.ceil(_variables2["default"].gutter / 2),
-	                top: _.ceil(_variables2["default"].gutter / 2)
+	                left: _.ceil(variables.gutter / 2),
+	                top: _.ceil(variables.gutter / 2)
 	            };
 	            axis = "Y";
 	            break;
 	    }
 
-	    cardStyle = (0, _lodash.extend)((0, _lodash.cloneDeep)(defaultCard), xy, styles);
+	    cardStyle = _.extend(_.cloneDeep(defaultCard), xy, styles);
 
-	    translate = isActive ? 0 : (xy.width || xy.height) + (0, _lodash.ceil)(_variables2["default"].gutter / 2);
+	    translate = isActive ? 0 : (xy.width || xy.height) + _.ceil(variables.gutter / 2);
 
-	    (0, _lodash.extend)(cardStyle, {
+	    _.extend(cardStyle, {
 	        maxHeight: getMaxHeight(),
 	        maxWidth: getMaxWidth()
 	    });
@@ -32257,19 +32047,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 	    }
 
-	    (0, _lodash.extend)(cardStyle, (0, _reactStyleNormalizer2["default"])({
+	    _.extend(cardStyle, normalize({
 	        transform: "translate" + axis + "(" + translate + "px)"
 	    }));
 
 	    return cardStyle;
 	}
 
-	var defaultCard = (0, _reactStyleNormalizer2["default"])({
-	    backgroundColor: _variables2["default"].backgroundColor.toString(),
-	    border: "1px solid " + _variables2["default"].borderColor.toString(),
-	    borderRadius: _variables2["default"].borderRadius,
+	defaultCard = normalize({
+	    backgroundColor: variables.backgroundColor.toString(),
+	    border: "1px solid " + variables.borderColor.toString(),
+	    borderRadius: variables.borderRadius,
 	    boxShadow: "2px 2px 2px #ccc",
-	    color: _variables2["default"].fontColor.toString(),
+	    color: variables.fontColor.toString(),
 	    maxHeight: getMaxHeight(),
 	    maxWidth: getMaxWidth(),
 	    position: "fixed",
@@ -32277,36 +32067,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    zIndex: 1000
 	});
 
-	var card = {
+	module.exports = {
 	    card: function card(type, isActive, styles) {
 	        return getCardStyle(type, isActive, styles);
 	    }
 	};
 
-	exports["default"] = card;
-	module.exports = exports["default"];
-
 /***/ },
-/* 130 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _lodash = __webpack_require__(123);
-
-	var _variables = __webpack_require__(125);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var forms = {
+	var _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6),
+	    forms = {
 	    fieldset: {
 	        border: 0,
 	        margin: 0,
@@ -32320,12 +32096,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        display: "block",
 	        margin: "0.5em 0 0.2em"
 	    },
-	    input: (0, _reactStyleNormalizer2["default"])({
-	        backgroundColor: _variables.backgroundColor.toString(),
-	        border: "1px solid " + _variables.borderColor.toString(),
-	        borderRadius: _variables.borderRadius,
+	    input: normalize({
+	        backgroundColor: variables.backgroundColor.toString(),
+	        border: "1px solid " + variables.borderColor.toString(),
+	        borderRadius: variables.borderRadius,
 	        boxShadow: "inset 0 1px 3px #ddd",
-	        color: _variables.fontColor.toString(),
+	        color: variables.fontColor.toString(),
 	        display: "block",
 	        outline: 0,
 	        padding: "0.5em 0.6em",
@@ -32336,108 +32112,94 @@ return /******/ (function(modules) { // webpackBootstrap
 	        borderColor: "#e5e5e5",
 	        borderStyle: "solid",
 	        borderBottomWidth: 1,
-	        color: _variables.fontColor.toString(),
+	        color: variables.fontColor.toString(),
 	        display: "block",
 	        marginBottom: "0.3em",
 	        padding: "0.3em 0"
 	    },
 	    readOnly: {
-	        backgroundColor: _variables.borderColor.toString(),
-	        color: _variables.borderColor.darker().toString()
+	        backgroundColor: variables.borderColor.toString(),
+	        color: variables.borderColor.darker().toString()
 	    }
 	};
 
-	forms.inputColor = (0, _lodash.extend)((0, _lodash.cloneDeep)(forms.input), {
+	forms.inputColor = _.extend(_.cloneDeep(forms.input), {
 	    padding: "0.2em 0.5em"
 	});
 
-	forms.select = (0, _lodash.extend)((0, _lodash.cloneDeep)(forms.input), {
+	forms.select = _.extend(_.cloneDeep(forms.input), {
 	    height: "2.25em"
 	});
 
-	forms.selectMultiple = (0, _lodash.extend)((0, _lodash.cloneDeep)(forms.input), {
+	forms.selectMultiple = _.extend(_.cloneDeep(forms.input), {
 	    height: "auto"
 	});
 
-	forms.textarea = (0, _lodash.cloneDeep)(forms.input);
+	forms.textarea = _.cloneDeep(forms.input);
 
-	exports["default"] = forms;
-	module.exports = exports["default"];
+	module.exports = forms;
 
 /***/ },
-/* 131 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _lodash = __webpack_require__(123);
-
-	var _variables = __webpack_require__(125);
-
-	var _variables2 = _interopRequireDefault(_variables);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var grid = {
+	var _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6),
+	    grid = {
 	    column: function column(width) {
 	        var numDenom;
 
 	        if (/((\d*)\/(\d*))/.test(width)) {
 	            numDenom = width.split("/");
-	            width = 100 * ((0, _lodash.parseInt)(numDenom[0]) / (0, _lodash.parseInt)(numDenom[1])) + "%";
+	            width = 100 * (_.parseInt(numDenom[0]) / _.parseInt(numDenom[1])) + "%";
 	        }
 
 	        return {
 	            display: "inline-block",
 	            minHeight: 1,
-	            paddingLeft: (0, _lodash.ceil)(_variables2["default"].gutter / 2),
-	            paddingRight: (0, _lodash.ceil)(_variables2["default"].gutter / 2),
+	            paddingLeft: _.ceil(variables.gutter / 2),
+	            paddingRight: _.ceil(variables.gutter / 2),
 	            width: width || "100%",
 	            verticalAlign: "top"
 	        };
 	    },
-	    columnFlex: (0, _reactStyleNormalizer2["default"])({
+	    columnFlex: normalize({
 	        flexGrow: 1,
 	        flexShrink: 1,
-	        paddingLeft: (0, _lodash.ceil)(_variables2["default"].gutter / 2),
-	        paddingRight: (0, _lodash.ceil)(_variables2["default"].gutter / 2)
+	        paddingLeft: _.ceil(variables.gutter / 2),
+	        paddingRight: _.ceil(variables.gutter / 2)
 	    }),
 	    containerFixed: {
 	        marginLeft: "auto",
 	        marginRight: "auto",
-	        paddingLeft: (0, _lodash.ceil)(_variables2["default"].gutter / 2),
-	        paddingRight: (0, _lodash.ceil)(_variables2["default"].gutter / 2)
+	        paddingLeft: _.ceil(variables.gutter / 2),
+	        paddingRight: _.ceil(variables.gutter / 2)
 	    },
-	    containerFlex: (0, _reactStyleNormalizer2["default"])({
+	    containerFlex: normalize({
 	        alignContent: "stretch",
 	        alignItems: "stretch",
 	        display: "flex",
 	        flexDirection: "row"
 	    }),
 	    row: {
-	        marginLeft: -1 * (0, _lodash.ceil)(_variables2["default"].gutter / 2),
-	        marginRight: -1 * (0, _lodash.ceil)(_variables2["default"].gutter / 2)
+	        marginLeft: -1 * _.ceil(variables.gutter / 2),
+	        marginRight: -1 * _.ceil(variables.gutter / 2)
 	    },
-	    rowFlex: (0, _reactStyleNormalizer2["default"])({
+	    rowFlex: normalize({
 	        flexWrap: "nowrap"
 	    })
 	};
 
 	grid.container = function (width) {
-	    return (0, _lodash.extend)((0, _lodash.cloneDeep)(grid.containerFixed), {
+	    return _.extend(_.cloneDeep(grid.containerFixed), {
 	        width: width || "100%"
 	    });
 	};
 
-	grid.containerFull = (0, _lodash.extend)((0, _lodash.cloneDeep)(grid.containerFixed), {
+	grid.containerFull = _.extend(_.cloneDeep(grid.containerFixed), {
 	    width: "100%"
 	});
 
@@ -32466,50 +32228,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	grid.column_11_12 = grid.column("11/12");
 	grid.columnFull = grid.column("100%");
 
-	exports["default"] = grid;
-	module.exports = exports["default"];
+	module.exports = grid;
 
 /***/ },
-/* 132 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _lodash = __webpack_require__(123);
-
-	var _variables = __webpack_require__(125);
-
-	var headings = {
+	var _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    headings = {
 	    h1: {
 	        display: "block",
-	        fontWeight: _variables.headingFontWeight,
-	        margin: _variables.headingMargin
+	        fontWeight: variables.headingFontWeight,
+	        margin: variables.headingMargin
 	    }
 	};
 
-	headings.h2 = (0, _lodash.cloneDeep)(headings.h1);
-	headings.h3 = (0, _lodash.cloneDeep)(headings.h1);
-	headings.h4 = (0, _lodash.cloneDeep)(headings.h1);
-	headings.h5 = (0, _lodash.cloneDeep)(headings.h1);
-	headings.h6 = (0, _lodash.cloneDeep)(headings.h1);
+	headings.h2 = _.cloneDeep(headings.h1);
+	headings.h3 = _.cloneDeep(headings.h1);
+	headings.h4 = _.cloneDeep(headings.h1);
+	headings.h5 = _.cloneDeep(headings.h1);
+	headings.h6 = _.cloneDeep(headings.h1);
 
-	exports["default"] = headings;
-	module.exports = exports["default"];
+	module.exports = headings;
 
 /***/ },
-/* 133 */
+/* 132 */
 /***/ function(module, exports) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var helpers = {
+	module.exports = {
 	    hidden: {
 	        display: "none"
 	    },
@@ -32560,29 +32311,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	exports["default"] = helpers;
-	module.exports = exports["default"];
-
 /***/ },
-/* 134 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	var normalize = __webpack_require__(6),
+	    variables = __webpack_require__(125);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var _variables = __webpack_require__(125);
-
-	var images = {
-	    imgCircle: (0, _reactStyleNormalizer2["default"])({
+	module.exports = {
+	    imgCircle: normalize({
 	        borderRadius: "50%"
 	    }),
 	    imgResponsive: {
@@ -32590,41 +32329,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        height: "auto",
 	        maxWidth: "100%"
 	    },
-	    imgThumbnail: (0, _reactStyleNormalizer2["default"])({
-	        border: "5px solid " + _variables.white.toString(),
-	        borderRadius: _variables.borderRadius
+	    imgThumbnail: normalize({
+	        border: "5px solid " + variables.white.toString(),
+	        borderRadius: variables.borderRadius
 	    })
 	};
 
-	exports["default"] = images;
-	module.exports = exports["default"];
-
 /***/ },
-/* 135 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	var variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _variables = __webpack_require__(125);
-
-	var _variables2 = _interopRequireDefault(_variables);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var labels = {
-	    label: (0, _reactStyleNormalizer2["default"])({
-	        backgroundColor: _variables2["default"].white.darker(0.4).toString(), // #ddd
-	        borderRadius: _variables2["default"].borderRadius * 2,
+	module.exports = {
+	    label: normalize({
+	        backgroundColor: variables.white.darker(0.4).toString(), // #ddd
+	        borderRadius: variables.borderRadius * 2,
 	        display: "inline",
-	        fontSize: _variables2["default"].fontSize,
+	        fontSize: variables.fontSize,
 	        marginLeft: 5,
 	        marginRight: 5,
 	        padding: 6,
@@ -32632,8 +32357,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	    })
 	};
 
-	exports["default"] = labels;
-	module.exports = exports["default"];
+/***/ },
+/* 135 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6);
+
+	module.exports = {
+	    listGroup: normalize({
+	        border: "1px solid " + variables.white.darker(1.14).toString(), // #aaa
+	        borderRadius: variables.borderRadius,
+	        boxShadow: "2px 2px 2px " + variables.borderColor.toString(),
+	        listStyleType: "none",
+	        margin: 0,
+	        padding: 0,
+	        width: "100%"
+	    }),
+	    listGroupHeader: {
+	        backgroundColor: variables.white.darker(0.17).toString(), // #f0f0f0
+	        borderBottomWidth: 1,
+	        borderColor: variables.borderColor.toString(),
+	        borderStyle: "solid",
+	        fontWeight: variables.headingFontWeight,
+	        padding: 15,
+	        textTransform: "uppercase"
+	    },
+	    listGroupItem: {
+	        backgroundColor: variables.backgroundColor.toString(),
+	        borderBottomWidth: 1,
+	        borderColor: variables.borderColor.toString(),
+	        borderStyle: "solid",
+	        padding: 15
+	    }
+	};
 
 /***/ },
 /* 136 */
@@ -32641,80 +32400,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _variables = __webpack_require__(125);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var listGroup = {
-	    listGroup: (0, _reactStyleNormalizer2["default"])({
-	        border: "1px solid " + _variables.white.darker(1.14).toString(), // #aaa
-	        borderRadius: _variables.borderRadius,
-	        boxShadow: "2px 2px 2px " + _variables.borderColor.toString(),
-	        listStyleType: "none",
-	        margin: 0,
-	        padding: 0,
-	        width: "100%"
-	    }),
-	    listGroupHeader: {
-	        backgroundColor: _variables.white.darker(0.17).toString(), // #f0f0f0
-	        borderBottomWidth: 1,
-	        borderColor: _variables.borderColor.toString(),
-	        borderStyle: "solid",
-	        fontWeight: _variables.headingFontWeight,
-	        padding: 15,
-	        textTransform: "uppercase"
-	    },
-	    listGroupItem: {
-	        backgroundColor: _variables.backgroundColor.toString(),
-	        borderBottomWidth: 1,
-	        borderColor: _variables.borderColor.toString(),
-	        borderStyle: "solid",
-	        padding: 15
-	    }
-	};
-
-	exports["default"] = listGroup;
-	module.exports = exports["default"];
-
-/***/ },
-/* 137 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _lodash = __webpack_require__(123);
-
-	var _variables = __webpack_require__(125);
-
-	var _reactStyleNormalizer = __webpack_require__(6);
-
-	var _reactStyleNormalizer2 = _interopRequireDefault(_reactStyleNormalizer);
-
-	var nav = {
-	    nav: (0, _reactStyleNormalizer2["default"])({
-	        backgroundColor: _variables.white.darker(0.17).toString(), // #f0f0f0
-	        boxShadow: "2px 2px 2px " + _variables.borderColor.toString(),
-	        marginBottom: (0, _lodash.ceil)(_variables.gutter / 2),
+	var _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    normalize = __webpack_require__(6),
+	    nav = {
+	    nav: normalize({
+	        backgroundColor: variables.white.darker(0.17).toString(), // #f0f0f0
+	        boxShadow: "2px 2px 2px " + variables.borderColor.toString(),
+	        marginBottom: _.ceil(variables.gutter / 2),
 	        minHeight: 1
 	    }),
 	    navBrand: {
 	        color: "inherit",
 	        display: "inline-block",
-	        fontSize: _variables.fontSize * 2,
+	        fontSize: variables.fontSize * 2,
 	        padding: 10,
 	        textDecoration: "none",
 	        verticalAlign: "middle"
@@ -32740,12 +32439,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	nav.navFixed = (0, _lodash.extend)((0, _lodash.cloneDeep)(nav.nav), {
+	nav.navFixed = _.extend(_.cloneDeep(nav.nav), {
 	    position: "fixed"
 	});
 
-	exports["default"] = nav;
-	module.exports = exports["default"];
+	module.exports = nav;
+
+/***/ },
+/* 137 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _ = __webpack_require__(123),
+	    sizes = {
+	    lg: 992,
+	    md: 768,
+	    sm: 568,
+	    xl: 1200,
+	    xs: 0
+	},
+	    mqls = (function () {
+	    var ret = {};
+
+	    _.forOwn(sizes, function (size, key) {
+	        ret[key] = window.matchMedia("(min-width:" + size + "px)");
+	    });
+
+	    return ret;
+	})(),
+	    size = function size() {
+	    if (mqls.xl.matches) {
+	        return sizes.xl;
+	    } else if (mqls.lg.matches) {
+	        return sizes.lg;
+	    } else if (mqls.md.matches) {
+	        return sizes.md;
+	    } else if (mqls.sm.matches) {
+	        return sizes.sm;
+	    }
+
+	    return window.innerWidth;
+	},
+	    sizeName = function sizeName() {
+	    if (mqls.xl.matches) {
+	        return "xl";
+	    } else if (mqls.lg.matches) {
+	        return "lg";
+	    } else if (mqls.md.matches) {
+	        return "md";
+	    } else if (mqls.sm.matches) {
+	        return "sm";
+	    }
+
+	    return "xs";
+	};
+
+	module.exports = {
+	    isLg: function isLg() {
+	        return mqls.lg.matches;
+	    },
+	    isMd: function isMd() {
+	        return mqls.md.matches;
+	    },
+	    isSm: function isSm() {
+	        return mqls.sm.matches;
+	    },
+	    isXl: function isXl() {
+	        return mqls.xl.matches;
+	    },
+	    isXs: function isXs() {
+	        return mqls.xs.matches;
+	    },
+	    size: size,
+	    sizeName: sizeName,
+	    sizes: sizes
+	};
 
 /***/ },
 /* 138 */
@@ -32753,68 +32522,44 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _lodash = __webpack_require__(123);
-
-	// Recess defaults
-
-	var _variables = __webpack_require__(125);
-
-	var _base = __webpack_require__(124);
-
-	var _base2 = _interopRequireDefault(_base);
-
-	var _headings = __webpack_require__(132);
-
-	var _headings2 = _interopRequireDefault(_headings);
-
-	var _sizes = __webpack_require__(127);
-
-	var _sizes2 = _interopRequireDefault(_sizes);
-
-	var responsiveStyles = {
+	var _ = __webpack_require__(123),
+	    variables = __webpack_require__(125),
+	    sizes = __webpack_require__(137),
+	    responsiveStyles = {
 	    headingFontSize: {
-	        lg: (0, _lodash.ceil)(_variables.fontSize * 1.25),
-	        md: (0, _lodash.ceil)(_variables.fontSize * 1.125),
-	        sm: _variables.fontSize,
-	        xl: (0, _lodash.ceil)(_variables.fontSize * 1.4),
-	        xs: _variables.fontSize
+	        lg: _.ceil(variables.fontSize * 1.25),
+	        md: _.ceil(variables.fontSize * 1.125),
+	        sm: variables.fontSize,
+	        xl: _.ceil(variables.fontSize * 1.4),
+	        xs: variables.fontSize
 	    }
 	};
 
-	function setResponsive(size) {
+	module.exports = function setResponsive(size) {
 	    return {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes[size] - _variables.gutter
+	            width: sizes.sizes[size] - variables.gutter
 	        },
 	        h1: {
-	            fontSize: (0, _lodash.ceil)(responsiveStyles.headingFontSize[size] * 2.5)
+	            fontSize: _.ceil(responsiveStyles.headingFontSize[size] * 2.5)
 	        },
 	        h2: {
-	            fontSize: (0, _lodash.ceil)(responsiveStyles.headingFontSize[size] * 2)
+	            fontSize: _.ceil(responsiveStyles.headingFontSize[size] * 2)
 	        },
 	        h3: {
-	            fontSize: (0, _lodash.ceil)(responsiveStyles.headingFontSize[size] * 1.5)
+	            fontSize: _.ceil(responsiveStyles.headingFontSize[size] * 1.5)
 	        },
 	        h4: {
-	            fontSize: (0, _lodash.ceil)(responsiveStyles.headingFontSize[size] * 1.25)
+	            fontSize: _.ceil(responsiveStyles.headingFontSize[size] * 1.25)
 	        },
 	        h5: {
-	            fontSize: (0, _lodash.ceil)(responsiveStyles.headingFontSize[size] * 1.125)
+	            fontSize: _.ceil(responsiveStyles.headingFontSize[size] * 1.125)
 	        },
 	        h6: {
 	            fontSize: responsiveStyles.headingFontSize[size]
 	        }
 	    };
-	}
-
-	exports["default"] = setResponsive;
-	module.exports = exports["default"];
+	};
 
 /***/ }
 /******/ ])

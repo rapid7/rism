@@ -1,4 +1,4 @@
-let helpers ={
+module.exports = {
     hidden:{
         display:"none"
     },
@@ -48,5 +48,3 @@ let helpers ={
         textTransform:"uppercase"
     }
 };
-
-export default helpers;

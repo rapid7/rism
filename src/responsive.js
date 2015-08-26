@@ -1,53 +1,38 @@
-import {
-    assign,
-    ceil
-} from "lodash";
-
-// Recess defaults
-import {
-    fontSize,
-    gutter
-} from "./variables";
-
-import base from "./base";
-import headings from "./headings";
-
-import sizes from "./sizes";
-
-let responsiveStyles = {
+var _ = require("lodash"),
+    variables = require("./variables"),
+    sizes = require("./sizes"),
+    responsiveStyles = {
         headingFontSize:{
-            lg:ceil(fontSize * 1.25),
-            md:ceil(fontSize * 1.125),
-            sm:fontSize,
-            xl:ceil(fontSize * 1.4),
-            xs:fontSize
+            lg:_.ceil(variables.fontSize * 1.25),
+            md:_.ceil(variables.fontSize * 1.125),
+            sm:variables.fontSize,
+            xl:_.ceil(variables.fontSize * 1.4),
+            xs:variables.fontSize
         }
     };
 
-function setResponsive(size) {
+module.exports = function setResponsive(size) {
     return {
         containerFixed:{
-            width:sizes.sizes[size] - gutter
+            width:sizes.sizes[size] - variables.gutter
         },
         h1:{
-            fontSize:ceil(responsiveStyles.headingFontSize[size] * 2.5)
+            fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 2.5)
         },
         h2:{
-            fontSize:ceil(responsiveStyles.headingFontSize[size] * 2)
+            fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 2)
         },
         h3:{
-            fontSize:ceil(responsiveStyles.headingFontSize[size] * 1.5)
+            fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 1.5)
         },
         h4:{
-            fontSize:ceil(responsiveStyles.headingFontSize[size] * 1.25)
+            fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 1.25)
         },
         h5:{
-            fontSize:ceil(responsiveStyles.headingFontSize[size] * 1.125)
+            fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 1.125)
         },
         h6:{
             fontSize:responsiveStyles.headingFontSize[size]
         }
     };
-}
-
-export default setResponsive;
+};

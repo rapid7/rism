@@ -1,7 +1,6 @@
-import c from "d3-color";
-import normalize from "react-style-normalizer";
-
-let colors = {
+var c = require("d3-color"),
+    normalize = require("react-style-normalizer"),
+    colors = {
         black:c.color("#111"),
         danger:c.color("#d9534f"),
         info:c.color("#5bc0de"),
@@ -19,7 +18,7 @@ let colors = {
         gutter:30
     };
 
-const variables = normalize({
+module.exports = normalize({
     black:colors.black,
     backgroundColor:colors.white,
     borderColor:colors.white.darker(0.625), // #ccc
@@ -37,5 +36,3 @@ const variables = normalize({
     headingMargin:sizes.headingMargin,
     white:colors.white
 });
-
-export default variables;
