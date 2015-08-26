@@ -1,6 +1,11 @@
 var normalize = require("react-style-normalizer"),
-    Recess = require("./recess"),
-    recess = new Recess();
+    Recess,
+    recess;
+
+require("babel/register");
+
+Recess = require("./recess");
+recess = new Recess();
 
 recess.stylesheet("Recess",normalize({
     "*,*:before,*:after":{
