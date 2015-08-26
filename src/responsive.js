@@ -1,7 +1,8 @@
-var _ = require("lodash"),
-    variables = require("./variables"),
-    sizes = require("./sizes"),
-    responsiveStyles = {
+import _ from "lodash";
+import variables from "./variables";
+import sizes from "./sizes";
+
+var responsiveStyles = {
         headingFontSize:{
             lg:_.ceil(variables.fontSize * 1.25),
             md:_.ceil(variables.fontSize * 1.125),
@@ -11,7 +12,7 @@ var _ = require("lodash"),
         }
     };
 
-module.exports = function setResponsive(size) {
+export default function setResponsive(size) {
     return {
         containerFixed:{
             width:sizes.sizes[size] - variables.gutter

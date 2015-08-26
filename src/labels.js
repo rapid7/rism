@@ -1,7 +1,7 @@
-var variables = require("./variables"),
-    normalize = require("react-style-normalizer");
+import normalize from "react-style-normalizer";
+import variables from "./variables";
 
-module.exports = {
+export default {
     label:normalize({
         backgroundColor:variables.white.darker(0.4).toString(), // #ddd
         borderRadius:variables.borderRadius * 2,

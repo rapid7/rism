@@ -1,7 +1,8 @@
-var _ = require("lodash"),
-    variables = require("./variables"),
-    normalize = require("react-style-normalizer"),
-    nav = {
+import _ from "lodash";
+import normalize from "react-style-normalizer";
+import variables from "./variables";
+
+var nav = {
         nav:normalize({
             backgroundColor:variables.white.darker(0.17).toString(), // #f0f0f0
             boxShadow:"2px 2px 2px " + variables.borderColor.toString(),
@@ -41,4 +42,4 @@ nav.navFixed = _.extend(_.cloneDeep(nav.nav),{
     position:"fixed"
 });
 
-module.exports = nav;
+export default nav;

@@ -1,7 +1,7 @@
-var variables = require("./variables"),
-    normalize = require("react-style-normalizer");
+import variables from "./variables";
+import normalize from "react-style-normalizer";
 
-module.exports = {
+export default {
     a:{
         color:"blue",
         cursor:"pointer",

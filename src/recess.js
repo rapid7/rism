@@ -1,22 +1,25 @@
-var normalizeCss = require("normalize.css"),
-    React = require("react"),
-    normalize = require("react-style-normalizer"),
-    CleanCSS = require("clean-css"),
-    _ = require("lodash"),
-    base = require("./base"),
-    buttons = require("./buttons"),
-    card = require("./card"),
-    forms = require("./forms"),
-    grid = require("./grid"),
-    headings = require("./headings"),
-    helpers = require("./helpers"),
-    images = require("./images"),
-    labels = require("./labels"),
-    listGroup = require("./listGroup"),
-    nav = require("./nav"),
-    sizes = require("./sizes"),
-    responsive = require("./responsive"),
-    styleObjects = [
+import React from "react";
+import normalize from "react-style-normalizer";
+import CleanCSS from "clean-css";
+import _ from "lodash";
+
+import base from "./base";
+import buttons from "./buttons";
+import card from "./card";
+import forms from "./forms";
+import grid from "./grid";
+import headings from "./headings";
+import helpers from "./helpers";
+import images from "./images";
+import labels from "./labels";
+import listGroup from "./listGroup";
+import nav from "./nav";
+import sizes from "./sizes";
+import responsive from "./responsive";
+
+import "normalize.css";
+
+var styleObjects = [
         base,
         buttons,
         card,
@@ -86,12 +89,12 @@ function Recess() {
 }
 
 _.assign(Recess.prototype,{
-    application:function(app){
+    application(app){
         setPropertyReadonly(this,"_app",app);
         return this;
     },
 
-    combine:function() {
+    combine() {
         var obj = {};
 
         _.forEach(arguments,function(argument,i) {
@@ -101,7 +104,7 @@ _.assign(Recess.prototype,{
         return obj;
     },
 
-    componentOptions:function(component,options) {
+    componentOptions(component,options) {
         var name;
 
         if(!this._app && this._appWarn) {
@@ -143,7 +146,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    componentStyles:function(component,styles) {
+    componentStyles(component,styles) {
         var name;
 
         if(!this._app && this._appWarn) {
@@ -185,186 +188,186 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    element:function(Element) {
+    element(Element) {
         var Component = React.createClass({
-            componentWillReceiveProps:function(newProps) {
-                this.setState({
-                    options:newProps.options || {},
-                    style:newProps.style
-                });
-            },
+                componentWillReceiveProps(newProps) {
+                    this.setState({
+                        options:newProps.options || {},
+                        style:newProps.style
+                    });
+                },
 
-            getInitialState:function() {
-                return {
-                    options:this.props.options || {},
-                    style:this.props.style
-                };
-            },
+                getInitialState() {
+                    return {
+                        options:this.props.options || {},
+                        style:this.props.style
+                    };
+                },
 
-            onBlur:function() {
-                this.setState({
-                    style:this.props.style
-                });
+                onBlur() {
+                    this.setState({
+                        style:this.props.style
+                    });
 
-                if(this.props.onBlur) {
-                    this.props.onBlur.call();
+                    if(this.props.onBlur) {
+                        this.props.onBlur.call();
+                    }
+                },
+
+                onDrag() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.drag)
+                    });
+
+                    if(this.props.onDrag) {
+                        this.props.onDrag.call();
+                    }
+                },
+
+                onDragEnter() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.dragEnter)
+                    });
+
+                    if(this.props.onDragEnter) {
+                        this.props.onDragEnter.call();
+                    }
+                },
+
+                onDragLeave() {
+                    this.setState({
+                        style:this.props.style
+                    });
+
+                    if(this.props.onDragLeave) {
+                        this.props.onDragLeave.call();
+                    }
+                },
+
+                onFocus() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.focus)
+                    });
+
+                    if(this.props.onFocus) {
+                        this.props.onFocus.call();
+                    }
+                },
+
+                onMouseDown() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.active)
+                    });
+
+                    if(this.props.onMouseDown) {
+                        this.props.onMouseDown.call();
+                    }
+                },
+
+                onMouseEnter() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.hover)
+                    });
+
+                    if(this.props.onMouseEnter) {
+                        this.props.onMouseEnter.call();
+                    }
+                },
+
+                onMouseLeave() {
+                    this.setState({
+                        style:this.props.style
+                    });
+
+                    if(this.props.onMouseLeave) {
+                        this.props.onMouseLeave.call();
+                    }
+                },
+
+                onMouseUp() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.hover)
+                    });
+
+                    if(this.props.onMouseUp) {
+                        this.props.onMouseUp.call();
+                    }
+                },
+
+                render() {
+                    var {
+                            children,
+                            onDragEnter,
+                            onDragExit,
+                            onDragLeave,
+                            onDragOver,
+                            onLoad,
+                            onMouseDown,
+                            onMouseEnter,
+                            onMouseLeave,
+                            onMouseUp,
+                            onTouchEnd,
+                            onTouchStart,
+                            options,
+                            style,
+                            ...otherProps
+                        } = this.props,
+                        style = this.state.style;
+
+                    if(this.props.disabled) {
+                        style = this.props.options.disabled;
+                    }
+
+                    if(this.props.readonly) {
+                        style = this.props.options.readonly;
+                    }
+
+                    return (
+                        <Element.type
+                            onBlur={this.onBlur}
+                            onDrag={this.onDrag}
+                            onDragEnter={this.onDragEnter}
+                            onDragLeave={this.onDragLeave}
+                            onFocus={this.onFocus}
+                            onLoad={this.onLoad}
+                            onMouseDown={this.onMouseDown}
+                            onMouseEnter={this.onMouseEnter}
+                            onMouseLeave={this.onMouseLeave}
+                            onMouseUp={this.onMouseUp}
+                            onTouchEnd={this.onTouchEnd}
+                            onTouchStart={this.onTouchStart}
+                            style={style}
+                            {...otherProps}>
+                            {children}
+                        </Element.type>
+                    );
+                },
+
+                onTouchEnd() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.active)
+                    });
+
+                    if(this.props.onTouchEnd) {
+                        this.props.onTouchEnd.call();
+                    }
+                },
+
+                onTouchStart() {
+                    this.setState({
+                        style:_.assign({},this.props.style,this.state.options.active)
+                    });
+
+                    if(this.props.onTouchStart) {
+                        this.props.onTouchStart.call();
+                    }
                 }
-            },
-
-            onDrag:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.drag)
-                });
-
-                if(this.props.onDrag) {
-                    this.props.onDrag.call();
-                }
-            },
-
-            onDragEnter:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.dragEnter)
-                });
-
-                if(this.props.onDragEnter) {
-                    this.props.onDragEnter.call();
-                }
-            },
-
-            onDragLeave:function() {
-                this.setState({
-                    style:this.props.style
-                });
-
-                if(this.props.onDragLeave) {
-                    this.props.onDragLeave.call();
-                }
-            },
-
-            onFocus:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.focus)
-                });
-
-                if(this.props.onFocus) {
-                    this.props.onFocus.call();
-                }
-            },
-
-            onMouseDown:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
-                });
-
-                if(this.props.onMouseDown) {
-                    this.props.onMouseDown.call();
-                }
-            },
-
-            onMouseEnter:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.hover)
-                });
-
-                if(this.props.onMouseEnter) {
-                    this.props.onMouseEnter.call();
-                }
-            },
-
-            onMouseLeave:function() {
-                this.setState({
-                    style:this.props.style
-                });
-
-                if(this.props.onMouseLeave) {
-                    this.props.onMouseLeave.call();
-                }
-            },
-
-            onMouseUp:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.hover)
-                });
-
-                if(this.props.onMouseUp) {
-                    this.props.onMouseUp.call();
-                }
-            },
-
-            render:function() {
-                var {
-                        children,
-                        onDragEnter,
-                        onDragExit,
-                        onDragLeave,
-                        onDragOver,
-                        onLoad,
-                        onMouseDown,
-                        onMouseEnter,
-                        onMouseLeave,
-                        onMouseUp,
-                        onTouchEnd,
-                        onTouchStart,
-                        options,
-                        style,
-                        ...otherProps
-                    } = this.props,
-                    style = this.state.style;
-
-                if(this.props.disabled) {
-                    style = this.props.options.disabled;
-                }
-
-                if(this.props.readonly) {
-                    style = this.props.options.readonly;
-                }
-
-                return (
-                    <Element.type
-                        onBlur={this.onBlur}
-                        onDrag={this.onDrag}
-                        onDragEnter={this.onDragEnter}
-                        onDragLeave={this.onDragLeave}
-                        onFocus={this.onFocus}
-                        onLoad={this.onLoad}
-                        onMouseDown={this.onMouseDown}
-                        onMouseEnter={this.onMouseEnter}
-                        onMouseLeave={this.onMouseLeave}
-                        onMouseUp={this.onMouseUp}
-                        onTouchEnd={this.onTouchEnd}
-                        onTouchStart={this.onTouchStart}
-                        style={style}
-                        {...otherProps}>
-                        {children}
-                    </Element.type>
-                );
-            },
-
-            onTouchEnd:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
-                });
-
-                if(this.props.onTouchEnd) {
-                    this.props.onTouchEnd.call();
-                }
-            },
-
-            onTouchStart:function() {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
-                });
-
-                if(this.props.onTouchStart) {
-                    this.props.onTouchStart.call();
-                }
-            }
-        });
+            });
 
         return Component;
     },
 
-    extend:function(styles) {
+    extend(styles) {
         _.forOwn(styles,function(value,key) {
             if(!this.styles[key]) {
                 this.styles[key] = {}
@@ -380,7 +383,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    onResize:function() {
+    onResize() {
         if(sizes.sizeName() !== this.size) {
             this.size = sizes.sizeName();
             this.render();
@@ -389,7 +392,7 @@ _.assign(Recess.prototype,{
 
     prefix:normalize,
 
-    render:function() {
+    render() {
         setResponsive.call(this,this.size);
 
         if(this._app) {
@@ -403,7 +406,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    stylesheet:function(id, styles) {
+    stylesheet(id, styles) {
         if(_.isUndefined(id)) {
             console.error("Error: generated stylesheets need to be given an id.");
             return this;
@@ -451,4 +454,4 @@ _.assign(Recess.prototype,{
     }
 });
 
-module.exports = Recess;
+export default Recess;

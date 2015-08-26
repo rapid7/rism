@@ -1,7 +1,8 @@
-var _ = require("lodash"),
-    variables = require("./variables"),
-    normalize = require("react-style-normalizer"),
-    grid = {
+import _ from "lodash";
+import normalize from "react-style-normalizer";
+import variables from "./variables";
+
+var grid = {
         column:function(width) {
             var numDenom;
 
@@ -81,4 +82,4 @@ grid.column_9_10 = grid.column("9/10");
 grid.column_11_12 = grid.column("11/12");
 grid.columnFull = grid.column("100%");
 
-module.exports = grid;
+export default grid;

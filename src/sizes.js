@@ -1,5 +1,6 @@
-var _ = require("lodash"),
-    sizes = {
+import _ from "lodash";
+
+var sizes = {
         lg:992,
         md:768,
         sm:568,
@@ -12,7 +13,7 @@ _.forOwn(sizes,function(size,key){
     mqls[key] = window.matchMedia("(min-width:" + size + "px)");
 });
 
-module.exports = {
+export default {
     isLg() {
         return mqls.lg.matches;
     },

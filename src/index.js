@@ -1,6 +1,7 @@
-var normalize = require("react-style-normalizer"),
-    Recess = require("./recess"),
-    recess = new Recess();
+import normalize from "react-style-normalizer";
+import Recess from "./recess";
+
+var recess = new Recess();
 
 recess.stylesheet("Recess",normalize({
     "*,*:before,*:after":{
@@ -17,4 +18,4 @@ recess.stylesheet("Recess",normalize({
 
 window.addEventListener("resize",recess.onResize.bind(recess),false);
 
-module.exports = recess;
+export default recess;

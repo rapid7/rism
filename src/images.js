@@ -1,7 +1,7 @@
-var normalize = require("react-style-normalizer"),
-    variables = require("./variables");
+import normalize from "react-style-normalizer";
+import variables from "./variables";
 
-module.exports = {
+export default {
     imgCircle:normalize({
         borderRadius:"50%"
     }),

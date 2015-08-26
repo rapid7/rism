@@ -1,6 +1,7 @@
-var _ = require("lodash"),
-    variables = require("./variables"),
-    headings = {
+import _ from "lodash";
+import variables from "./variables";
+
+var headings = {
         h1:{
             display:"block",
             fontWeight:variables.headingFontWeight,
@@ -14,4 +15,4 @@ headings.h4 = _.cloneDeep(headings.h1);
 headings.h5 = _.cloneDeep(headings.h1);
 headings.h6 = _.cloneDeep(headings.h1);
 
-module.exports = headings;
+export default headings;

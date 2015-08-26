@@ -1,6 +1,7 @@
-var c = require("d3-color"),
-    normalize = require("react-style-normalizer"),
-    colors = {
+import c from "d3-color";
+import normalize from "react-style-normalizer";
+
+var colors = {
         black:c.color("#111"),
         danger:c.color("#d9534f"),
         info:c.color("#5bc0de"),
@@ -18,7 +19,7 @@ var c = require("d3-color"),
         gutter:30
     };
 
-module.exports = normalize({
+export default normalize({
     black:colors.black,
     backgroundColor:colors.white,
     borderColor:colors.white.darker(0.625), // #ccc

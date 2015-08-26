@@ -1,1 +1,3 @@
-module.exports = require("./index").styles;
+import {styles} from "./index";
+
+export default styles;

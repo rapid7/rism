@@ -1,7 +1,8 @@
-var _ = require("lodash"),
-    variables = require("./variables"),
-    normalize = require("react-style-normalizer"),
-    forms = {
+import _ from "lodash";
+import normalize from "react-style-normalizer";
+import variables from "./variables";
+
+var forms = {
         fieldset:{
             border:0,
             margin:0,
@@ -56,4 +57,4 @@ forms.selectMultiple = _.extend(_.cloneDeep(forms.input),{
 
 forms.textarea = _.cloneDeep(forms.input);
 
-module.exports = forms;
+export default forms;

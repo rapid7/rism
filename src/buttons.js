@@ -1,7 +1,8 @@
-var normalize = require("react-style-normalizer"),
-    _ = require("lodash"),
-    variables = require("./variables"),
-    buttons = {
+import _ from "lodash";
+import normalize from "react-style-normalizer";
+import variables from "./variables";
+
+var buttons = {
         button:normalize({
             border:"1px solid " + variables.borderColor.toString(),
             backgroundColor:variables.backgroundColor.toString(),
@@ -54,4 +55,4 @@ _.forEach(projectColors,function(color){
     });
 });
 
-module.exports = buttons;
+export default buttons;

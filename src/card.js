@@ -1,7 +1,8 @@
-var variables = require("./variables"),
-    _ = require("lodash"),
-    normalize = require("react-style-normalizer"),
-    defaultCard;
+import _ from "lodash";
+import normalize from "react-style-normalizer";
+import variables from "./variables";
+
+var defaultCard;
 
 function getMaxHeight() {
     return window.innerHeight - variables.gutter;
@@ -96,7 +97,7 @@ defaultCard = normalize({
     zIndex:1000
 });
 
-module.exports = {
+export default {
     card:function(type,isActive,styles){
         return getCardStyle(type,isActive,styles);
     }

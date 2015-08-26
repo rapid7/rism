@@ -1,7 +1,7 @@
-var variables = require("./variables"),
-    normalize = require("react-style-normalizer");
+import normalize from "react-style-normalizer";
+import variables from "./variables";
 
-module.exports = {
+export default {
     listGroup:normalize({
         border:"1px solid " + variables.white.darker(1.14).toString(), // #aaa
         borderRadius:variables.borderRadius,
