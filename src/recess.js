@@ -86,12 +86,12 @@ function Recess() {
 }
 
 _.assign(Recess.prototype,{
-    application(app){
+    application:function(app){
         setPropertyReadonly(this,"_app",app);
         return this;
     },
 
-    combine() {
+    combine:function() {
         var obj = {};
 
         _.forEach(arguments,function(argument,i) {
@@ -101,7 +101,7 @@ _.assign(Recess.prototype,{
         return obj;
     },
 
-    componentOptions(component,options) {
+    componentOptions:function(component,options) {
         var name;
 
         if(!this._app && this._appWarn) {
@@ -143,7 +143,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    componentStyles(component,styles) {
+    componentStyles:function(component,styles) {
         var name;
 
         if(!this._app && this._appWarn) {
@@ -185,7 +185,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    element(Element) {
+    element:function(Element) {
         var Component = React.createClass({
             componentWillReceiveProps(newProps) {
                 this.setState({
@@ -364,7 +364,7 @@ _.assign(Recess.prototype,{
         return Component;
     },
 
-    extend(styles) {
+    extend:function(styles) {
         _.forOwn(styles,function(value,key) {
             if(!this.styles[key]) {
                 this.styles[key] = {}
@@ -380,7 +380,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    onResize() {
+    onResize:function() {
         if(sizes.sizeName() !== this.size) {
             this.size = sizes.sizeName();
             this.render();
@@ -389,7 +389,7 @@ _.assign(Recess.prototype,{
 
     prefix:normalize,
 
-    render() {
+    render:function() {
         setResponsive.call(this,this.size);
 
         if(this._app) {
@@ -403,7 +403,7 @@ _.assign(Recess.prototype,{
         return this;
     },
 
-    stylesheet(id, styles) {
+    stylesheet:function(id, styles) {
         if(_.isUndefined(id)) {
             console.error("Error: generated stylesheets need to be given an id.");
             return this;

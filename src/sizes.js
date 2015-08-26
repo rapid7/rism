@@ -6,43 +6,11 @@ var _ = require("lodash"),
         xl:1200,
         xs:0
     },
-    mqls = (function(){
-        var ret = {};
+    mqls = {};
 
-        _.forOwn(sizes,function(size,key){
-            ret[key] = window.matchMedia("(min-width:" + size + "px)");
-        });
-
-        return ret;
-    })(),
-    size = function(){
-        if(mqls.xl.matches) {
-            return sizes.xl;
-        } else if(mqls.lg.matches) {
-            return sizes.lg;
-        } else if(mqls.md.matches) {
-            return sizes.md;
-        } else if(mqls.sm.matches) {
-            return sizes.sm;
-        }
-
-        return window.innerWidth;
-    },
-    sizeName = function(){
-        if(mqls.xl.matches) {
-            return "xl";
-        } else if(mqls.lg.matches) {
-            return "lg";
-        } else if(mqls.md.matches) {
-            return "md";
-        } else if(mqls.sm.matches) {
-            return "sm";
-        }
-
-        return "xs";
-    };
-
-
+_.forOwn(sizes,function(size,key){
+    mqls[key] = window.matchMedia("(min-width:" + size + "px)");
+});
 
 module.exports = {
     isLg() {
@@ -60,7 +28,31 @@ module.exports = {
     isXs() {
         return mqls.xs.matches;
     },
-    size:size,
-    sizeName:sizeName,
+    size:function(){
+        if(mqls.xl.matches) {
+            return sizes.xl;
+        } else if(mqls.lg.matches) {
+            return sizes.lg;
+        } else if(mqls.md.matches) {
+            return sizes.md;
+        } else if(mqls.sm.matches) {
+            return sizes.sm;
+        }
+
+        return window.innerWidth;
+    },
+    sizeName:function(){
+        if(mqls.xl.matches) {
+            return "xl";
+        } else if(mqls.lg.matches) {
+            return "lg";
+        } else if(mqls.md.matches) {
+            return "md";
+        } else if(mqls.sm.matches) {
+            return "sm";
+        }
+
+        return "xs";
+    },
     sizes:sizes
 };
