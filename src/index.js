@@ -6,6 +6,7 @@ import {
     assign,
     forEach,
     forOwn,
+    kebabCase,
     merge
 } from "lodash";
 
@@ -37,14 +38,7 @@ let styleObjects = [
         nav,
         sizes
     ],
-    link = document.createElement("link"),
     recess;
-
-link.rel = "stylesheet";
-link.type = "text/css";
-link.href = "https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,400italic,500,500italic,700,700italic,900,900italic,100,100italic";
-
-document.head.appendChild(link);
 
 function setPropertyHidden(obj,prop,value) {
     Object.defineProperty(obj,prop,{
@@ -307,22 +301,22 @@ _.assign(Recess.prototype,{
 
             render() {
                 var {
-                    children,
-                    onDragEnter,
-                    onDragExit,
-                    onDragLeave,
-                    onDragOver,
-                    onLoad,
-                    onMouseDown,
-                    onMouseEnter,
-                    onMouseLeave,
-                    onMouseUp,
-                    onTouchEnd,
-                    onTouchStart,
-                    options,
-                    style,
-                    ...otherProps
-                    } = this.props,
+                        children,
+                        onDragEnter,
+                        onDragExit,
+                        onDragLeave,
+                        onDragOver,
+                        onLoad,
+                        onMouseDown,
+                        onMouseEnter,
+                        onMouseLeave,
+                        onMouseUp,
+                        onTouchEnd,
+                        onTouchStart,
+                        options,
+                        style,
+                        ...otherProps
+                        } = this.props,
                     style = this.state.style;
 
                 if(this.props.disabled) {
@@ -413,7 +407,7 @@ _.assign(Recess.prototype,{
                 component.forceUpdate();
             });
         }
-        
+
         return this;
     },
 
@@ -440,8 +434,14 @@ _.assign(Recess.prototype,{
             forOwn(styles,function(style,key) {
                 str += key + "{";
 
+                style = normalize(style);
+
                 forOwn(style,function(value,property) {
-                    str += property + ":" + value + ";";
+                    if(property.charAt(0).toUpperCase() === property.charAt(0)) {
+                        str += "-";
+                    }
+
+                    str += kebabCase(property) + ":" + value + ";";
                 });
 
                 str += "}"
@@ -461,25 +461,18 @@ _.assign(Recess.prototype,{
 
 recess = new Recess();
 
-recess.stylesheet("Recess",`
-    *,
-    *:before,
-    *:after {
-        -webkit-box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        box-sizing:border-box
+recess.stylesheet("Recess",normalize({
+    "*,*:before,*:after":{
+        boxSizing:"border-box"
+    },
+    ".clearFix:before,.clearFix:after":{
+        content:"\"\"",
+        display:"table"
+    },
+    ".clearFix:after":{
+        clear:"both"
     }
-
-    .clearFix:before,
-    .clearFix:after {
-        content:"";
-        display:table;
-    }
-
-    .clearFix:after {
-        clear:both;
-    }
-`);
+}));
 
 window.addEventListener("resize",recess.onResize.bind(recess),false);
 
