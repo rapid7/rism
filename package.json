@@ -12,7 +12,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "./node_modules/webpack/bin/webpack.js && ./node_modules/webpack/bin/webpack.js --config=webpack.config.minified.js"
+    "compile": "babel -d lib/ src/",
+    "dist": "./node_modules/webpack/bin/webpack.js && ./node_modules/webpack/bin/webpack.js --config=webpack.config.minified.js",
+    "prepublish": "npm run compile"
   },
   "dependencies": {
     "babel": "~5.8.21",
