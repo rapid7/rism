@@ -36,7 +36,7 @@ let base = {
         wrapAll:{
             backgroundColor:backgroundColor.toString(),
             color:fontColor.toString(),
-            fontFamily:"'Helvetica Neue', Helvetica, Arial, sans-serif",
+            fontFamily:"TypoPRO Roboto, Helvetica Neue, Helvetica, Arial, sans-serif",
             fontSize:fontSize,
             fontWeight:fontWeight,
             height:"auto",

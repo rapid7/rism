@@ -2,7 +2,7 @@
   "name": "recess",
   "version": "0.0.1",
   "description": "Tools to streamline inline style management for React elements",
-  "main": "src/index.js",
+  "main": "src",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rapid7/recess.git"

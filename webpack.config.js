@@ -4,7 +4,7 @@ var path = require("path"),
 module.exports = {
     cache:true,
 
-    entry: path.join(__dirname,"src/index.js"),
+    entry: path.join(__dirname,"src/recess.js"),
 
     externals:[
         {
