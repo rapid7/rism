@@ -13,17 +13,15 @@
   "license": "MIT",
   "scripts": {
     "compile": "babel -d lib/ src/",
-    "dist": "./node_modules/webpack/bin/webpack.js && ./node_modules/webpack/bin/webpack.js --config=webpack.config.minified.js",
+    "dist": "npm run compile && ./node_modules/webpack/bin/webpack.js && ./node_modules/webpack/bin/webpack.js --config=webpack.config.minified.js",
     "prepublish": "npm run compile"
   },
   "dependencies": {
     "babel": "~5.8.21",
     "babel-core": "~5.8.22",
     "babel-loader": "~5.3.2",
-    "clean-css": "~3.3.9",
     "css-loader": "~0.16.0",
     "d3-color": "~0.2.4",
-    "fs": "~0.0.2",
     "lodash": "~3.10.1",
     "normalize.css": "~3.0.3",
     "react": "~0.13.3",

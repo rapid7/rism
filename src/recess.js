@@ -1,7 +1,8 @@
 import React from "react";
 import normalize from "react-style-normalizer";
-import CleanCSS from "clean-css";
 import _ from "lodash";
+
+import sqwish from "./sqwish";
 
 import base from "./base";
 import buttons from "./buttons";
@@ -422,7 +423,7 @@ _.assign(Recess.prototype,{
         style.id = id;
 
         if(_.isString(styles)) {
-            style.textContent = new CleanCSS().minify(styles).styles;
+            style.textContent = sqwish(styles);
         } else if(_.isObject(styles)) {
             let str = "";
 
@@ -442,7 +443,7 @@ _.assign(Recess.prototype,{
                 str += "}"
             });
 
-            style.textContent = new CleanCSS().minify(str).styles;
+            style.textContent = sqwish(str);
         } else {
             console.error("Error: You either need to provide an object or a string when creating a new stylesheet");
             return this;
