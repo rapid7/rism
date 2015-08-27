@@ -13367,6 +13367,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 	var _lodash = __webpack_require__(14);
@@ -13474,6 +13478,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    return css;
 	}
+
+	exports["default"] = function (css, strict) {
+	    return sqwish(css, strict);
+	};
+
+	module.exports = exports["default"];
 
 /***/ },
 /* 17 */

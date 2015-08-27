@@ -108,3 +108,7 @@ function strict_css(css) {
 
     return css;
 }
+
+export default function(css,strict) {
+    return sqwish(css,strict);
+}
