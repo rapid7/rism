@@ -205,73 +205,73 @@ _.assign(Recess.prototype,{
                     };
                 },
 
-                onBlur() {
+                onBlur(e) {
                     this.setState({
                         style:this.props.style
                     });
 
                     if(this.props.onBlur) {
-                        this.props.onBlur.call();
+                        this.props.onBlur(e);
                     }
                 },
 
-                onDrag() {
+                onDrag(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.drag)
                     });
 
                     if(this.props.onDrag) {
-                        this.props.onDrag.call();
+                        this.props.onDrag(e);
                     }
                 },
 
-                onDragEnter() {
+                onDragEnter(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.dragEnter)
                     });
 
                     if(this.props.onDragEnter) {
-                        this.props.onDragEnter.call();
+                        this.props.onDragEnter(e);
                     }
                 },
 
-                onDragLeave() {
+                onDragLeave(e) {
                     this.setState({
                         style:this.props.style
                     });
 
                     if(this.props.onDragLeave) {
-                        this.props.onDragLeave.call();
+                        this.props.onDragLeave(e);
                     }
                 },
 
-                onFocus() {
+                onFocus(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.focus)
                     });
 
                     if(this.props.onFocus) {
-                        this.props.onFocus.call();
+                        this.props.onFocus(e);
                     }
                 },
 
-                onMouseDown() {
+                onMouseDown(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.active)
                     });
 
                     if(this.props.onMouseDown) {
-                        this.props.onMouseDown.call();
+                        this.props.onMouseDown(e);
                     }
                 },
 
-                onMouseEnter() {
+                onMouseEnter(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.hover)
                     });
 
                     if(this.props.onMouseEnter) {
-                        this.props.onMouseEnter.call();
+                        this.props.onMouseEnter(e);
                     }
                 },
 
@@ -285,13 +285,13 @@ _.assign(Recess.prototype,{
                     }
                 },
 
-                onMouseUp() {
+                onMouseUp(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.hover)
                     });
 
                     if(this.props.onMouseUp) {
-                        this.props.onMouseUp.call();
+                        this.props.onMouseUp(e);
                     }
                 },
 
@@ -344,23 +344,23 @@ _.assign(Recess.prototype,{
                     );
                 },
 
-                onTouchEnd() {
+                onTouchEnd(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.active)
                     });
 
                     if(this.props.onTouchEnd) {
-                        this.props.onTouchEnd.call();
+                        this.props.onTouchEnd(e);
                     }
                 },
 
-                onTouchStart() {
+                onTouchStart(e) {
                     this.setState({
                         style:_.assign({},this.props.style,this.state.options.active)
                     });
 
                     if(this.props.onTouchStart) {
-                        this.props.onTouchStart.call();
+                        this.props.onTouchStart(e);
                     }
                 }
             });
