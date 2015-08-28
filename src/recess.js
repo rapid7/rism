@@ -377,7 +377,7 @@ _.assign(Recess.prototype,{
             if(_.isFunction(value)) {
                 this.styles[key] = value;
             } else {
-                assign(this.styles[key],value);
+                _.assign(this.styles[key],value);
             }
         }.bind(this));
 

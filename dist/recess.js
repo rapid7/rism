@@ -477,7 +477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (_lodash2["default"].isFunction(value)) {
 	                this.styles[key] = value;
 	            } else {
-	                assign(this.styles[key], value);
+	                _lodash2["default"].assign(this.styles[key], value);
 	            }
 	        }).bind(this));
 
