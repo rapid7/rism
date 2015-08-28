@@ -306,73 +306,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	                };
 	            },
 
-	            onBlur: function onBlur() {
+	            onBlur: function onBlur(e) {
 	                this.setState({
 	                    style: this.props.style
 	                });
 
 	                if (this.props.onBlur) {
-	                    this.props.onBlur.call();
+	                    this.props.onBlur(e);
 	                }
 	            },
 
-	            onDrag: function onDrag() {
+	            onDrag: function onDrag(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.drag)
 	                });
 
 	                if (this.props.onDrag) {
-	                    this.props.onDrag.call();
+	                    this.props.onDrag(e);
 	                }
 	            },
 
-	            onDragEnter: function onDragEnter() {
+	            onDragEnter: function onDragEnter(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.dragEnter)
 	                });
 
 	                if (this.props.onDragEnter) {
-	                    this.props.onDragEnter.call();
+	                    this.props.onDragEnter(e);
 	                }
 	            },
 
-	            onDragLeave: function onDragLeave() {
+	            onDragLeave: function onDragLeave(e) {
 	                this.setState({
 	                    style: this.props.style
 	                });
 
 	                if (this.props.onDragLeave) {
-	                    this.props.onDragLeave.call();
+	                    this.props.onDragLeave(e);
 	                }
 	            },
 
-	            onFocus: function onFocus() {
+	            onFocus: function onFocus(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.focus)
 	                });
 
 	                if (this.props.onFocus) {
-	                    this.props.onFocus.call();
+	                    this.props.onFocus(e);
 	                }
 	            },
 
-	            onMouseDown: function onMouseDown() {
+	            onMouseDown: function onMouseDown(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
 	                });
 
 	                if (this.props.onMouseDown) {
-	                    this.props.onMouseDown.call();
+	                    this.props.onMouseDown(e);
 	                }
 	            },
 
-	            onMouseEnter: function onMouseEnter() {
+	            onMouseEnter: function onMouseEnter(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.hover)
 	                });
 
 	                if (this.props.onMouseEnter) {
-	                    this.props.onMouseEnter.call();
+	                    this.props.onMouseEnter(e);
 	                }
 	            },
 
@@ -386,13 +386,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            },
 
-	            onMouseUp: function onMouseUp() {
+	            onMouseUp: function onMouseUp(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.hover)
 	                });
 
 	                if (this.props.onMouseUp) {
-	                    this.props.onMouseUp.call();
+	                    this.props.onMouseUp(e);
 	                }
 	            },
 
@@ -444,23 +444,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                );
 	            },
 
-	            onTouchEnd: function onTouchEnd() {
+	            onTouchEnd: function onTouchEnd(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
 	                });
 
 	                if (this.props.onTouchEnd) {
-	                    this.props.onTouchEnd.call();
+	                    this.props.onTouchEnd(e);
 	                }
 	            },
 
-	            onTouchStart: function onTouchStart() {
+	            onTouchStart: function onTouchStart(e) {
 	                this.setState({
 	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
 	                });
 
 	                if (this.props.onTouchStart) {
-	                    this.props.onTouchStart.call();
+	                    this.props.onTouchStart(e);
 	                }
 	            }
 	        });
