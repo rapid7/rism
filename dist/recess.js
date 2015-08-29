@@ -136,9 +136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	__webpack_require__(32);
 
-	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _sizes2["default"]],
-	    recess;
-
+	// functions to set properties in different ways
 	function setPropertyHidden(obj, prop, value) {
 	    Object.defineProperty(obj, prop, {
 	        configurable: false,
@@ -166,33 +164,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}
 
+	// set responsive values
 	function setResponsive(size) {
 	    _lodash2["default"].forOwn((0, _responsive2["default"])(size), (function (style, key) {
-	        _lodash2["default"].assign(this.styles[key], style);
+	        _lodash2["default"].assign(this[key], style);
 	    }).bind(this));
 	}
 
-	function Recess() {
-	    setPropertyHidden(this, "_app", undefined);
-	    setPropertyHidden(this, "_appWarn", true);
-	    setPropertyReadonly(this, "_component", {});
-	    setPropertyReadonly(this, "_componentOptions", {});
-	    setPropertyReadonly(this, "_componentStyles", {});
-	    setPropertyPermanent(this, "size", _sizes2["default"].sizeName());
-	    setPropertyPermanent(this, "styles", {});
+	// polyfill for setPrototypeOf
+	Object.setPrototypeOf = Object.setPrototypeOf || function (obj, proto) {
+	    obj.__proto__ = proto;
+	    return obj;
+	};
 
-	    _lodash2["default"].forEach(styleObjects, (function (style) {
-	        _lodash2["default"].assign(this.styles, style);
-	    }).bind(this));
+	// set up stuff for creation of normal object
+	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _sizes2["default"]],
+	    recess = {};
 
-	    setResponsive.call(this, this.size);
+	// set up internal properties
+	setPropertyHidden(recess, "_app", undefined);
+	setPropertyHidden(recess, "_appWarn", true);
+	setPropertyReadonly(recess, "_component", {});
+	setPropertyReadonly(recess, "_componentOptions", {});
+	setPropertyReadonly(recess, "_componentStyles", {});
+	setPropertyReadonly(recess, "_stylesheets", {});
+	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
 
-	    Object.preventExtensions(this);
+	// add external styles to main object
+	_lodash2["default"].forEach(styleObjects, function (style) {
+	    _lodash2["default"].assign(recess, style);
+	});
 
-	    return this;
-	}
+	// set responsive properties
+	setResponsive.call(recess, recess.size);
 
-	_lodash2["default"].assign(Recess.prototype, {
+	// create the methods for this object
+	Object.setPrototypeOf(recess, {
 	    application: function application(app) {
 	        setPropertyReadonly(this, "_app", app);
 	        return this;
@@ -206,86 +213,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 
 	        return obj;
-	    },
-
-	    componentOptions: function componentOptions(component, options) {
-	        var name;
-
-	        if (!this._app && this._appWarn) {
-	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
-
-	            this._appWarn = false;
-	        }
-
-	        if (_lodash2["default"].isUndefined(component)) {
-	            console.error("Error: No component has been specified.");
-	            return this;
-	        }
-
-	        if (_lodash2["default"].isString(component)) {
-	            return this._componentOptions[component];
-	        }
-
-	        if (_lodash2["default"].isObject(component)) {
-	            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-	            if (!this._component[name]) {
-	                this._component[name] = {};
-	            }
-
-	            if (!this._componentOptions[name]) {
-	                this._componentOptions[name] = {};
-	            }
-
-	            if (_lodash2["default"].isUndefined(options)) {
-	                return this._componentOptions[name];
-	            }
-
-	            this._component[name] = component;
-	            _lodash2["default"].assign(this._componentOptions[name], options);
-	        }
-
-	        return this;
-	    },
-
-	    componentStyles: function componentStyles(component, styles) {
-	        var name;
-
-	        if (!this._app && this._appWarn) {
-	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
-
-	            this._appWarn = false;
-	        }
-
-	        if (_lodash2["default"].isUndefined(component)) {
-	            console.error("Error: No component has been specified.");
-	            return this;
-	        }
-
-	        if (_lodash2["default"].isString(component)) {
-	            return this._componentStyles[component];
-	        }
-
-	        if (_lodash2["default"].isObject(component)) {
-	            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-	            if (!this._component[name]) {
-	                this._component[name] = {};
-	            }
-
-	            if (!this._componentStyles[name]) {
-	                this._componentStyles[name] = {};
-	            }
-
-	            if (_lodash2["default"].isUndefined(styles)) {
-	                return this._componentStyles[name];
-	            }
-
-	            this._component[name] = component;
-	            _lodash2["default"].assign(this._componentStyles[name], styles);
-	        }
-
-	        return this;
 	    },
 
 	    element: function element(Element) {
@@ -470,14 +397,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    extend: function extend(styles) {
 	        _lodash2["default"].forOwn(styles, (function (value, key) {
-	            if (!this.styles[key]) {
-	                this.styles[key] = {};
+	            if (!this[key]) {
+	                this[key] = {};
 	            }
 
 	            if (_lodash2["default"].isFunction(value)) {
-	                this.styles[key] = value;
+	                this[key] = value;
 	            } else {
-	                _lodash2["default"].assign(this.styles[key], value);
+	                _lodash2["default"].assign(this[key], value);
 	            }
 	        }).bind(this));
 
@@ -485,10 +412,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    onResize: function onResize() {
-	        if (_sizes2["default"].sizeName() !== this.size) {
+	        var size = _sizes2["default"].sizeName();
+
+	        if (size === "xs" || size !== this.size) {
 	            this.size = _sizes2["default"].sizeName();
 	            this.render();
 	        }
+	    },
+
+	    options: function options(component, _options) {
+	        var name;
+
+	        if (!this._app && this._appWarn) {
+	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
+
+	            this._appWarn = false;
+	        }
+
+	        if (_lodash2["default"].isUndefined(component)) {
+	            console.error("Error: No component has been specified.");
+	            return this;
+	        }
+
+	        if (_lodash2["default"].isString(component)) {
+	            return this._componentOptions[component];
+	        }
+
+	        if (_lodash2["default"].isObject(component)) {
+	            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
+
+	            if (!this._component[name]) {
+	                this._component[name] = {};
+	            }
+
+	            if (!this._componentOptions[name]) {
+	                this._componentOptions[name] = {};
+	            }
+
+	            if (_lodash2["default"].isUndefined(_options)) {
+	                return this._componentOptions[name];
+	            }
+
+	            this._component[name] = component;
+	            _lodash2["default"].assign(this._componentOptions[name], _options);
+	        }
+
+	        return this;
 	    },
 
 	    prefix: _reactStyleNormalizer2["default"],
@@ -502,6 +471,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _lodash2["default"].forOwn(this._components, function (component) {
 	                component.forceUpdate();
 	            });
+	        }
+
+	        return this;
+	    },
+
+	    styles: function styles(component, _styles) {
+	        var name;
+
+	        if (!this._app && this._appWarn) {
+	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
+
+	            this._appWarn = false;
+	        }
+
+	        if (_lodash2["default"].isUndefined(component)) {
+	            console.error("Error: No component has been specified.");
+	            return this;
+	        }
+
+	        if (_lodash2["default"].isString(component)) {
+	            return this._componentStyles[component];
+	        }
+
+	        if (_lodash2["default"].isObject(component)) {
+	            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
+
+	            if (!this._component[name]) {
+	                this._component[name] = {};
+	            }
+
+	            if (!this._componentStyles[name]) {
+	                this._componentStyles[name] = {};
+	            }
+
+	            if (_lodash2["default"].isUndefined(_styles)) {
+	                return this._componentStyles[name];
+	            }
+
+	            this._component[name] = component;
+	            _lodash2["default"].assign(this._componentStyles[name], _styles);
 	        }
 
 	        return this;
@@ -549,13 +558,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this;
 	        }
 
+	        this._stylesheets[id] = style;
+
 	        document.head.appendChild(style);
 
 	        return this;
 	    }
 	});
 
-	exports["default"] = Recess;
+	// add the basic stylesheet
+	recess.stylesheet("Recess", (0, _reactStyleNormalizer2["default"])({
+	    "*,*:before,*:after": {
+	        boxSizing: "border-box"
+	    },
+	    ".clearFix:before,.clearFix:after": {
+	        content: "\"\"",
+	        display: "table"
+	    },
+	    ".clearFix:after": {
+	        clear: "both"
+	    }
+	}));
+
+	// add the listener for responsive items
+	window.addEventListener("resize", recess.onResize.bind(recess), false);
+
+	// let's go!
+	exports["default"] = recess;
 	module.exports = exports["default"];
 
 /***/ },
@@ -15001,19 +15030,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isXs: function isXs() {
 	        return mqls.xs.matches;
 	    },
-	    size: function size() {
-	        if (mqls.xl.matches) {
-	            return sizes.xl;
-	        } else if (mqls.lg.matches) {
-	            return sizes.lg;
-	        } else if (mqls.md.matches) {
-	            return sizes.md;
-	        } else if (mqls.sm.matches) {
-	            return sizes.sm;
-	        }
-
-	        return window.innerWidth;
-	    },
 	    sizeName: function sizeName() {
 	        if (mqls.xl.matches) {
 	            return "xl";
@@ -15040,7 +15056,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports["default"] = setResponsive;
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -15066,10 +15081,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-	function setResponsive(size) {
+	exports["default"] = function (size) {
 	    return {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes[size] - _variables2["default"].gutter
+	            width: (size === "xs" ? window.innerWidth : _sizes2["default"].sizes[size]) - _variables2["default"].gutter
 	        },
 	        h1: {
 	            fontSize: _lodash2["default"].ceil(responsiveStyles.headingFontSize[size] * 2.5)
@@ -15090,7 +15105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: responsiveStyles.headingFontSize[size]
 	        }
 	    };
-	}
+	};
 
 	;
 	module.exports = exports["default"];
