@@ -3,19 +3,19 @@ import variables from "./variables";
 import sizes from "./sizes";
 
 var responsiveStyles = {
-        headingFontSize:{
-            lg:_.ceil(variables.fontSize * 1.25),
-            md:_.ceil(variables.fontSize * 1.125),
-            sm:variables.fontSize,
-            xl:_.ceil(variables.fontSize * 1.4),
-            xs:variables.fontSize
-        }
-    };
+    headingFontSize:{
+        lg:_.ceil(variables.fontSize * 1.25),
+        md:_.ceil(variables.fontSize * 1.125),
+        sm:variables.fontSize,
+        xl:_.ceil(variables.fontSize * 1.4),
+        xs:variables.fontSize
+    }
+};
 
-export default function setResponsive(size) {
+export default function(size) {
     return {
         containerFixed:{
-            width:sizes.sizes[size] - variables.gutter
+            width:((size === "xs") ? window.innerWidth : sizes.sizes[size]) - variables.gutter
         },
         h1:{
             fontSize:_.ceil(responsiveStyles.headingFontSize[size] * 2.5)
