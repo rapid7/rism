@@ -84,8 +84,8 @@ setPropertyHidden(recess,"_appWarn",true);
 setPropertyReadonly(recess,"_component",{});
 setPropertyReadonly(recess,"_componentOptions",{});
 setPropertyReadonly(recess,"_componentStyles",{});
-setPropertyPermanent(recess,"_size",sizes.sizeName());
 setPropertyReadonly(recess,"_stylesheets",{});
+setPropertyPermanent(recess,"size",sizes.sizeName());
 
 // add external styles to main object
 _.forEach(styleObjects,function(style){
@@ -93,7 +93,7 @@ _.forEach(styleObjects,function(style){
 });
 
 // set responsive properties
-setResponsive.call(recess,recess._size);
+setResponsive.call(recess,recess.size);
 
 // create the methods for this object
 Object.setPrototypeOf(recess,{
@@ -310,8 +310,8 @@ Object.setPrototypeOf(recess,{
     onResize() {
         var size = sizes.sizeName();
 
-        if(size === "xs" || size !== this._size) {
-            this._size = sizes.sizeName();
+        if(size === "xs" || size !== this.size) {
+            this.size = sizes.sizeName();
             this.render();
         }
     },
@@ -361,7 +361,7 @@ Object.setPrototypeOf(recess,{
     prefix:normalize,
 
     render() {
-        setResponsive.call(this,this._size);
+        setResponsive.call(this,this.size);
 
         if(this._app) {
             this._app.forceUpdate();

@@ -29,19 +29,6 @@ export default {
     isXs() {
         return mqls.xs.matches;
     },
-    size:function(){
-        if(mqls.xl.matches) {
-            return sizes.xl;
-        } else if(mqls.lg.matches) {
-            return sizes.lg;
-        } else if(mqls.md.matches) {
-            return sizes.md;
-        } else if(mqls.sm.matches) {
-            return sizes.sm;
-        }
-
-        return window.innerWidth;
-    },
     sizeName:function(){
         if(mqls.xl.matches) {
             return "xl";

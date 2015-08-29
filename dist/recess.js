@@ -187,8 +187,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	setPropertyReadonly(recess, "_component", {});
 	setPropertyReadonly(recess, "_componentOptions", {});
 	setPropertyReadonly(recess, "_componentStyles", {});
-	setPropertyPermanent(recess, "_size", _sizes2["default"].sizeName());
 	setPropertyReadonly(recess, "_stylesheets", {});
+	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
 
 	// add external styles to main object
 	_lodash2["default"].forEach(styleObjects, function (style) {
@@ -196,7 +196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	// set responsive properties
-	setResponsive.call(recess, recess._size);
+	setResponsive.call(recess, recess.size);
 
 	// create the methods for this object
 	Object.setPrototypeOf(recess, {
@@ -414,8 +414,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onResize: function onResize() {
 	        var size = _sizes2["default"].sizeName();
 
-	        if (size === "xs" || size !== this._size) {
-	            this._size = _sizes2["default"].sizeName();
+	        if (size === "xs" || size !== this.size) {
+	            this.size = _sizes2["default"].sizeName();
 	            this.render();
 	        }
 	    },
@@ -463,7 +463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prefix: _reactStyleNormalizer2["default"],
 
 	    render: function render() {
-	        setResponsive.call(this, this._size);
+	        setResponsive.call(this, this.size);
 
 	        if (this._app) {
 	            this._app.forceUpdate();
@@ -15029,19 +15029,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    isXs: function isXs() {
 	        return mqls.xs.matches;
-	    },
-	    size: function size() {
-	        if (mqls.xl.matches) {
-	            return sizes.xl;
-	        } else if (mqls.lg.matches) {
-	            return sizes.lg;
-	        } else if (mqls.md.matches) {
-	            return sizes.md;
-	        } else if (mqls.sm.matches) {
-	            return sizes.sm;
-	        }
-
-	        return window.innerWidth;
 	    },
 	    sizeName: function sizeName() {
 	        if (mqls.xl.matches) {
