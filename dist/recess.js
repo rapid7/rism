@@ -188,35 +188,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }).bind(this));
 	}
 
-	// polyfill for setPrototypeOf
-	Object.setPrototypeOf = Object.setPrototypeOf || function (obj, proto) {
-	    obj.__proto__ = proto;
-	    return obj;
-	};
-
 	// set up stuff for creation of normal object
 	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _sizes2["default"]],
-	    recess = {};
-
-	// set up internal properties
-	setPropertyHidden(recess, "_app", undefined);
-	setPropertyHidden(recess, "_appWarn", true);
-	setPropertyReadonly(recess, "_component", {});
-	setPropertyReadonly(recess, "_componentStateStyles", {});
-	setPropertyReadonly(recess, "_componentStyles", {});
-	setPropertyReadonly(recess, "_stylesheets", {});
-	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
-
-	// add external styles to main object
-	_utils2["default"].forEach(styleObjects, function (style) {
-	    _utils2["default"].assign(recess, style);
-	});
-
-	// set responsive properties
-	setResponsive.call(recess, recess.size);
-
-	// create the methods for this object
-	Object.setPrototypeOf(recess, {
+	    recess = Object.create({
 	    application: function application(app) {
 	        setPropertyReadonly(this, "_app", app);
 	        return this;
@@ -566,6 +540,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this;
 	    }
 	});
+
+	// set up internal properties
+	setPropertyHidden(recess, "_app", undefined);
+	setPropertyHidden(recess, "_appWarn", true);
+	setPropertyReadonly(recess, "_component", {});
+	setPropertyReadonly(recess, "_componentStateStyles", {});
+	setPropertyReadonly(recess, "_componentStyles", {});
+	setPropertyReadonly(recess, "_stylesheets", {});
+	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
+
+	// add external styles to main object
+	_utils2["default"].forEach(styleObjects, function (style) {
+	    _utils2["default"].assign(recess, style);
+	});
+
+	// set responsive properties
+	setResponsive.call(recess, recess.size);
 
 	// add the basic stylesheet
 	recess.stylesheet("Recess", (0, _reactStyleNormalizer2["default"])({
