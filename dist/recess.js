@@ -54,6 +54,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -344,11 +350,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var style = this.state.style;
 
 	                if (this.props.disabled) {
-	                    style = this.props.states.disabled;
+	                    style = combineStyles(this.props.style, this.props.states.disabled);
 	                }
 
 	                if (this.props.readonly) {
-	                    style = this.props.states.readonly;
+	                    style = combineStyles(this.props.style, this.props.states.readonly);
 	                }
 
 	                return _react2["default"].createElement(
@@ -1139,6 +1145,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 15 */
 /***/ function(module, exports) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1365,6 +1377,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1412,6 +1430,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2166,6 +2190,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2239,6 +2269,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 20 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2364,6 +2400,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2445,6 +2487,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2553,6 +2601,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2589,6 +2643,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 24 */
 /***/ function(module, exports) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2651,6 +2711,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2687,6 +2753,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2720,6 +2792,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 27 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2769,6 +2847,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 
@@ -2836,6 +2920,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	/*!
 	 * Sqwish - a CSS Compressor
@@ -2967,6 +3057,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ },
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
 
 	"use strict";
 

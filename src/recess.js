@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+ * material contains unpublished, copyrighted work including confidential and
+ * proprietary information of Rapid7.
+ ******************************************************************************/
+
 import React from "react";
 import normalize from "react-style-normalizer";
 
@@ -242,11 +248,11 @@ Object.setPrototypeOf(recess,{
                     style = this.state.style;
 
                 if(this.props.disabled) {
-                    style = this.props.states.disabled;
+                    style = combineStyles(this.props.style,this.props.states.disabled);
                 }
 
                 if(this.props.readonly) {
-                    style = this.props.states.readonly;
+                    style = combineStyles(this.props.style,this.props.states.readonly);
                 }
 
                 return (

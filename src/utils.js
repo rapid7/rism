@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+ * material contains unpublished, copyrighted work including confidential and
+ * proprietary information of Rapid7.
+ ******************************************************************************/
+
 export default {
     assign(target,source) {
         if(this.isObject(target) && !this.isFunction(target)) {
