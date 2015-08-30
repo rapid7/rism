@@ -82,7 +82,7 @@ var styleObjects = [
 setPropertyHidden(recess,"_app",undefined);
 setPropertyHidden(recess,"_appWarn",true);
 setPropertyReadonly(recess,"_component",{});
-setPropertyReadonly(recess,"_componentOptions",{});
+setPropertyReadonly(recess,"_componentStateStyles",{});
 setPropertyReadonly(recess,"_componentStyles",{});
 setPropertyReadonly(recess,"_stylesheets",{});
 setPropertyPermanent(recess,"size",sizes.sizeName());
@@ -113,17 +113,17 @@ Object.setPrototypeOf(recess,{
     },
 
     element(Element) {
-        var Component = React.createClass({
+        return React.createClass({
             componentWillReceiveProps(newProps) {
                 this.setState({
-                    options:newProps.options || {},
+                    states:newProps.states || {},
                     style:newProps.style
                 });
             },
 
             getInitialState() {
                 return {
-                    options:this.props.options || {},
+                    states:this.props.states || {},
                     style:this.props.style
                 };
             },
@@ -140,7 +140,7 @@ Object.setPrototypeOf(recess,{
 
             onDrag(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.drag)
+                    style:_.assign({},this.props.style,this.state.states.drag)
                 });
 
                 if(this.props.onDrag) {
@@ -150,7 +150,7 @@ Object.setPrototypeOf(recess,{
 
             onDragEnter(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.dragEnter)
+                    style:_.assign({},this.props.style,this.state.states.dragEnter)
                 });
 
                 if(this.props.onDragEnter) {
@@ -170,7 +170,7 @@ Object.setPrototypeOf(recess,{
 
             onFocus(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.focus)
+                    style:_.assign({},this.props.style,this.state.states.focus)
                 });
 
                 if(this.props.onFocus) {
@@ -180,7 +180,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseDown(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
+                    style:_.assign({},this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onMouseDown) {
@@ -190,7 +190,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseEnter(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.hover)
+                    style:_.assign({},this.props.style,this.state.states.hover)
                 });
 
                 if(this.props.onMouseEnter) {
@@ -210,7 +210,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseUp(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.hover)
+                    style:_.assign({},this.props.style,this.state.states.hover)
                 });
 
                 if(this.props.onMouseUp) {
@@ -232,18 +232,18 @@ Object.setPrototypeOf(recess,{
                         onMouseUp,
                         onTouchEnd,
                         onTouchStart,
-                        options,
+                        states,
                         style,
                         ...otherProps
                         } = this.props,
                     style = this.state.style;
 
                 if(this.props.disabled) {
-                    style = this.props.options.disabled;
+                    style = this.props.states.disabled;
                 }
 
                 if(this.props.readonly) {
-                    style = this.props.options.readonly;
+                    style = this.props.states.readonly;
                 }
 
                 return (
@@ -269,7 +269,7 @@ Object.setPrototypeOf(recess,{
 
             onTouchEnd(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
+                    style:_.assign({},this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onTouchEnd) {
@@ -279,7 +279,7 @@ Object.setPrototypeOf(recess,{
 
             onTouchStart(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.options.active)
+                    style:_.assign({},this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onTouchStart) {
@@ -287,8 +287,6 @@ Object.setPrototypeOf(recess,{
                 }
             }
         });
-
-        return Component;
     },
 
     extend(styles) {
@@ -316,7 +314,23 @@ Object.setPrototypeOf(recess,{
         }
     },
 
-    options(component,options) {
+    prefix:normalize,
+
+    render() {
+        setResponsive.call(this,this.size);
+
+        if(this._app) {
+            this._app.forceUpdate();
+        } else {
+            _.forOwn(this._components,function(component){
+                component.forceUpdate();
+            });
+        }
+
+        return this;
+    },
+
+    states(component,states) {
         var name;
 
         if(!this._app && this._appWarn) {
@@ -333,7 +347,7 @@ Object.setPrototypeOf(recess,{
         }
 
         if(_.isString(component)) {
-            return this._componentOptions[component];
+            return this._componentStateStyles[component];
         }
 
         if(_.isObject(component)) {
@@ -343,32 +357,16 @@ Object.setPrototypeOf(recess,{
                 this._component[name] = {};
             }
 
-            if(!this._componentOptions[name]) {
-                this._componentOptions[name] = {};
+            if(!this._componentStateStyles[name]) {
+                this._componentStateStyles[name] = {};
             }
 
-            if(_.isUndefined(options)) {
-                return this._componentOptions[name];
+            if(_.isUndefined(states)) {
+                return this._componentStateStyles[name];
             }
 
             this._component[name] = component;
-            _.assign(this._componentOptions[name],options);
-        }
-
-        return this;
-    },
-
-    prefix:normalize,
-
-    render() {
-        setResponsive.call(this,this.size);
-
-        if(this._app) {
-            this._app.forceUpdate();
-        } else {
-            _.forOwn(this._components,function(component){
-                component.forceUpdate();
-            });
+            _.assign(this._componentStateStyles[name],states);
         }
 
         return this;

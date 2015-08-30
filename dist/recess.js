@@ -185,7 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	setPropertyHidden(recess, "_app", undefined);
 	setPropertyHidden(recess, "_appWarn", true);
 	setPropertyReadonly(recess, "_component", {});
-	setPropertyReadonly(recess, "_componentOptions", {});
+	setPropertyReadonly(recess, "_componentStateStyles", {});
 	setPropertyReadonly(recess, "_componentStyles", {});
 	setPropertyReadonly(recess, "_stylesheets", {});
 	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
@@ -216,19 +216,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    element: function element(Element) {
-	        var Component = _react2["default"].createClass({
-	            displayName: "Component",
-
+	        return _react2["default"].createClass({
 	            componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	                this.setState({
-	                    options: newProps.options || {},
+	                    states: newProps.states || {},
 	                    style: newProps.style
 	                });
 	            },
 
 	            getInitialState: function getInitialState() {
 	                return {
-	                    options: this.props.options || {},
+	                    states: this.props.states || {},
 	                    style: this.props.style
 	                };
 	            },
@@ -245,7 +243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onDrag: function onDrag(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.drag)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.drag)
 	                });
 
 	                if (this.props.onDrag) {
@@ -255,7 +253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onDragEnter: function onDragEnter(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.dragEnter)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.dragEnter)
 	                });
 
 	                if (this.props.onDragEnter) {
@@ -275,7 +273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onFocus: function onFocus(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.focus)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.focus)
 	                });
 
 	                if (this.props.onFocus) {
@@ -285,7 +283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onMouseDown: function onMouseDown(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.active)
 	                });
 
 	                if (this.props.onMouseDown) {
@@ -295,7 +293,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onMouseEnter: function onMouseEnter(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.hover)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.hover)
 	                });
 
 	                if (this.props.onMouseEnter) {
@@ -315,7 +313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onMouseUp: function onMouseUp(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.hover)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.hover)
 	                });
 
 	                if (this.props.onMouseUp) {
@@ -337,17 +335,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var onMouseUp = _props.onMouseUp;
 	                var onTouchEnd = _props.onTouchEnd;
 	                var onTouchStart = _props.onTouchStart;
-	                var options = _props.options;
+	                var states = _props.states;
 	                var style = _props.style;
-	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "options", "style"]);
+	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "states", "style"]);
 	                var style = this.state.style;
 
 	                if (this.props.disabled) {
-	                    style = this.props.options.disabled;
+	                    style = this.props.states.disabled;
 	                }
 
 	                if (this.props.readonly) {
-	                    style = this.props.options.readonly;
+	                    style = this.props.states.readonly;
 	                }
 
 	                return _react2["default"].createElement(
@@ -373,7 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onTouchEnd: function onTouchEnd(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.active)
 	                });
 
 	                if (this.props.onTouchEnd) {
@@ -383,7 +381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            onTouchStart: function onTouchStart(e) {
 	                this.setState({
-	                    style: _lodash2["default"].assign({}, this.props.style, this.state.options.active)
+	                    style: _lodash2["default"].assign({}, this.props.style, this.state.states.active)
 	                });
 
 	                if (this.props.onTouchStart) {
@@ -391,8 +389,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	        });
-
-	        return Component;
 	    },
 
 	    extend: function extend(styles) {
@@ -420,7 +416,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 
-	    options: function options(component, _options) {
+	    prefix: _reactStyleNormalizer2["default"],
+
+	    render: function render() {
+	        setResponsive.call(this, this.size);
+
+	        if (this._app) {
+	            this._app.forceUpdate();
+	        } else {
+	            _lodash2["default"].forOwn(this._components, function (component) {
+	                component.forceUpdate();
+	            });
+	        }
+
+	        return this;
+	    },
+
+	    states: function states(component, _states) {
 	        var name;
 
 	        if (!this._app && this._appWarn) {
@@ -435,7 +447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (_lodash2["default"].isString(component)) {
-	            return this._componentOptions[component];
+	            return this._componentStateStyles[component];
 	        }
 
 	        if (_lodash2["default"].isObject(component)) {
@@ -445,32 +457,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._component[name] = {};
 	            }
 
-	            if (!this._componentOptions[name]) {
-	                this._componentOptions[name] = {};
+	            if (!this._componentStateStyles[name]) {
+	                this._componentStateStyles[name] = {};
 	            }
 
-	            if (_lodash2["default"].isUndefined(_options)) {
-	                return this._componentOptions[name];
+	            if (_lodash2["default"].isUndefined(_states)) {
+	                return this._componentStateStyles[name];
 	            }
 
 	            this._component[name] = component;
-	            _lodash2["default"].assign(this._componentOptions[name], _options);
-	        }
-
-	        return this;
-	    },
-
-	    prefix: _reactStyleNormalizer2["default"],
-
-	    render: function render() {
-	        setResponsive.call(this, this.size);
-
-	        if (this._app) {
-	            this._app.forceUpdate();
-	        } else {
-	            _lodash2["default"].forOwn(this._components, function (component) {
-	                component.forceUpdate();
-	            });
+	            _lodash2["default"].assign(this._componentStateStyles[name], _states);
 	        }
 
 	        return this;
