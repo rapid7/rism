@@ -1,8 +1,8 @@
 import React from "react";
 import normalize from "react-style-normalizer";
-import _ from "lodash";
 
 import sqwish from "./sqwish";
+import utils from "./utils";
 
 import base from "./base";
 import buttons from "./buttons";
@@ -48,10 +48,21 @@ function setPropertyReadonly(obj,prop,value) {
     });
 }
 
+// since I use it in the element
+function combineStyles() {
+    var obj = {};
+
+    utils.forEach(arguments,function(argument,i) {
+        obj = utils.merge(obj,argument);
+    });
+
+    return obj;
+}
+
 // set responsive values
 function setResponsive(size) {
-    _.forOwn(responsive(size),function(style,key){
-        _.assign(this[key],style);
+    utils.forIn(responsive(size),function(style,key){
+        utils.assign(this[key],style);
     }.bind(this));
 }
 
@@ -88,8 +99,8 @@ setPropertyReadonly(recess,"_stylesheets",{});
 setPropertyPermanent(recess,"size",sizes.sizeName());
 
 // add external styles to main object
-_.forEach(styleObjects,function(style){
-    _.assign(recess,style);
+utils.forEach(styleObjects,function(style){
+    utils.assign(recess,style);
 });
 
 // set responsive properties
@@ -102,15 +113,7 @@ Object.setPrototypeOf(recess,{
         return this;
     },
 
-    combine() {
-        var obj = {};
-
-        _.forEach(arguments,function(argument,i) {
-            _.merge(obj,argument);
-        });
-
-        return obj;
-    },
+    combine:combineStyles,
 
     element(Element) {
         return React.createClass({
@@ -140,7 +143,7 @@ Object.setPrototypeOf(recess,{
 
             onDrag(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.drag)
+                    style:combineStyles(this.props.style,this.state.states.drag)
                 });
 
                 if(this.props.onDrag) {
@@ -150,7 +153,7 @@ Object.setPrototypeOf(recess,{
 
             onDragEnter(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.dragEnter)
+                    style:combineStyles(this.props.style,this.state.states.dragEnter)
                 });
 
                 if(this.props.onDragEnter) {
@@ -170,7 +173,7 @@ Object.setPrototypeOf(recess,{
 
             onFocus(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.focus)
+                    style:combineStyles(this.props.style,this.state.states.focus)
                 });
 
                 if(this.props.onFocus) {
@@ -180,7 +183,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseDown(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
+                    style:combineStyles(this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onMouseDown) {
@@ -190,7 +193,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseEnter(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.hover)
+                    style:combineStyles(this.props.style,this.state.states.hover)
                 });
 
                 if(this.props.onMouseEnter) {
@@ -210,7 +213,7 @@ Object.setPrototypeOf(recess,{
 
             onMouseUp(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.hover)
+                    style:combineStyles(this.props.style,this.state.states.hover)
                 });
 
                 if(this.props.onMouseUp) {
@@ -269,7 +272,7 @@ Object.setPrototypeOf(recess,{
 
             onTouchEnd(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
+                    style:combineStyles(this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onTouchEnd) {
@@ -279,7 +282,7 @@ Object.setPrototypeOf(recess,{
 
             onTouchStart(e) {
                 this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
+                    style:combineStyles(this.props.style,this.state.states.active)
                 });
 
                 if(this.props.onTouchStart) {
@@ -290,15 +293,15 @@ Object.setPrototypeOf(recess,{
     },
 
     extend(styles) {
-        _.forOwn(styles,function(value,key) {
+        utils.forIn(styles,function(value,key) {
             if(!this[key]) {
                 this[key] = {}
             }
 
-            if(_.isFunction(value)) {
+            if(utils.isFunction(value)) {
                 this[key] = value;
             } else {
-                _.assign(this[key],value);
+                utils.assign(this[key],value);
             }
         }.bind(this));
 
@@ -322,7 +325,7 @@ Object.setPrototypeOf(recess,{
         if(this._app) {
             this._app.forceUpdate();
         } else {
-            _.forOwn(this._components,function(component){
+            utils.forIn(this._components,function(component){
                 component.forceUpdate();
             });
         }
@@ -341,16 +344,16 @@ Object.setPrototypeOf(recess,{
             this._appWarn = false;
         }
 
-        if(_.isUndefined(component)) {
+        if(utils.isUndefined(component)) {
             console.error("Error: No component has been specified.");
             return this;
         }
 
-        if(_.isString(component)) {
+        if(utils.isString(component)) {
             return this._componentStateStyles[component];
         }
 
-        if(_.isObject(component)) {
+        if(utils.isObject(component)) {
             name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
 
             if(!this._component[name]) {
@@ -361,12 +364,12 @@ Object.setPrototypeOf(recess,{
                 this._componentStateStyles[name] = {};
             }
 
-            if(_.isUndefined(states)) {
+            if(utils.isUndefined(states)) {
                 return this._componentStateStyles[name];
             }
 
             this._component[name] = component;
-            _.assign(this._componentStateStyles[name],states);
+            utils.assign(this._componentStateStyles[name],states);
         }
 
         return this;
@@ -383,16 +386,16 @@ Object.setPrototypeOf(recess,{
             this._appWarn = false;
         }
 
-        if(_.isUndefined(component)) {
+        if(utils.isUndefined(component)) {
             console.error("Error: No component has been specified.");
             return this;
         }
 
-        if(_.isString(component)) {
+        if(utils.isString(component)) {
             return this._componentStyles[component];
         }
 
-        if(_.isObject(component)) {
+        if(utils.isObject(component)) {
             name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
 
             if(!this._component[name]) {
@@ -403,19 +406,19 @@ Object.setPrototypeOf(recess,{
                 this._componentStyles[name] = {};
             }
 
-            if(_.isUndefined(styles)) {
+            if(utils.isUndefined(styles)) {
                 return this._componentStyles[name];
             }
 
             this._component[name] = component;
-            _.assign(this._componentStyles[name],styles);
+            utils.assign(this._componentStyles[name],styles);
         }
 
         return this;
     },
 
     stylesheet(id, styles) {
-        if(_.isUndefined(id)) {
+        if(utils.isUndefined(id)) {
             console.error("Error: generated stylesheets need to be given an id.");
             return this;
         }
@@ -429,22 +432,18 @@ Object.setPrototypeOf(recess,{
         style.type = "text/css";
         style.id = id;
 
-        if(_.isString(styles)) {
+        if(utils.isString(styles)) {
             style.textContent = sqwish(styles);
-        } else if(_.isObject(styles)) {
+        } else if(utils.isObject(styles)) {
             let str = "";
 
-            _.forOwn(styles,function(style,key) {
+            utils.forIn(styles,function(style,key) {
                 str += key + "{";
 
                 style = normalize(style);
 
-                _.forOwn(style,function(value,property) {
-                    if(property.charAt(0).toUpperCase() === property.charAt(0)) {
-                        str += "-";
-                    }
-
-                    str += _.kebabCase(property) + ":" + value + ";";
+                utils.forIn(style,function(value,property) {
+                    str += utils.kebabCase(property) + ":" + value + ";";
                 });
 
                 str += "}"

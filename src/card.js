@@ -1,6 +1,6 @@
-import _ from "lodash";
 import normalize from "react-style-normalizer";
 import variables from "./variables";
+import utils from "./utils";
 
 var defaultCard;
 
@@ -18,35 +18,35 @@ function getCardStyle(type,isActive,styles) {
         translate,
         axis;
 
-    if(styles && styles.width && _.isString(styles.width) && /%/.test(styles.width)) {
-        styles.width = (window.innerWidth * (_.parseInt(styles.width) / 100)) - (variables.gutter / 2);
+    if(styles && styles.width && utils.isString(styles.width) && /%/.test(styles.width)) {
+        styles.width = (window.innerWidth * (utils.parseInt(styles.width) / 100)) - (variables.gutter / 2);
     }
 
-    if(styles && styles.height && _.isString(styles.height) && /%/.test(styles.height)) {
-        styles.height = (window.innerHeight * (_.parseInt(styles.height) / 100)) - (variables.gutter / 2);
+    if(styles && styles.height && utils.isString(styles.height) && /%/.test(styles.height)) {
+        styles.height = (window.innerHeight * (utils.parseInt(styles.height) / 100)) - (variables.gutter / 2);
     }
 
     switch(type) {
         case "bottom":
             xy = {
-                bottom:_.ceil(variables.gutter / 2),
+                bottom:utils.ceil(variables.gutter / 2),
                 height:styles.height || 200,
-                left:_.ceil(variables.gutter / 2)
+                left:utils.ceil(variables.gutter / 2)
             };
             axis = "Y";
             break;
         case "left":
             xy = {
-                left:_.ceil(variables.gutter / 2),
-                top:_.ceil(variables.gutter / 2),
+                left:utils.ceil(variables.gutter / 2),
+                top:utils.ceil(variables.gutter / 2),
                 width:styles.width || 200
             };
             axis = "X";
             break;
         case "right":
             xy = {
-                right:_.ceil(variables.gutter / 2),
-                top:_.ceil(variables.gutter / 2),
+                right:utils.ceil(variables.gutter / 2),
+                top:utils.ceil(variables.gutter / 2),
                 width:styles.width || 200
             };
             axis = "X";
@@ -54,18 +54,19 @@ function getCardStyle(type,isActive,styles) {
         case "top":
             xy = {
                 height:styles.height || 200,
-                left:_.ceil(variables.gutter / 2),
-                top:_.ceil(variables.gutter / 2)
+                left:utils.ceil(variables.gutter / 2),
+                top:utils.ceil(variables.gutter / 2)
             };
             axis = "Y";
             break;
     }
 
-    cardStyle = _.extend(_.cloneDeep(defaultCard),xy,styles);
+    cardStyle = utils.merge(utils.clone(defaultCard),xy);
+    cardStyle = utils.merge(cardStyle,styles);
 
-    translate = isActive ? 0 : (xy.width || xy.height) + _.ceil(variables.gutter / 2);
+    translate = isActive ? 0 : (xy.width || xy.height) + utils.ceil(variables.gutter / 2);
 
-    _.extend(cardStyle,{
+    utils.assign(cardStyle,{
         maxHeight:getMaxHeight(),
         maxWidth:getMaxWidth()
     });
@@ -77,7 +78,7 @@ function getCardStyle(type,isActive,styles) {
             break;
     }
 
-    _.extend(cardStyle,normalize({
+    utils.assign(cardStyle,normalize({
         transform:"translate" + axis + "(" + translate + "px)"
     }));
 

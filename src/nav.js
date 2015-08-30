@@ -1,12 +1,12 @@
-import _ from "lodash";
 import normalize from "react-style-normalizer";
 import variables from "./variables";
+import utils from "./utils";
 
 var nav = {
         nav:normalize({
             backgroundColor:variables.white.darker(0.17).toString(), // #f0f0f0
             boxShadow:"2px 2px 2px " + variables.borderColor.toString(),
-            marginBottom:_.ceil(variables.gutter / 2),
+            marginBottom:utils.ceil(variables.gutter / 2),
             minHeight:1
         }),
         navBrand:{
@@ -38,7 +38,7 @@ var nav = {
         }
     };
 
-nav.navFixed = _.extend(_.cloneDeep(nav.nav),{
+nav.navFixed = utils.merge(utils.clone(nav.nav),{
     position:"fixed"
 });
 

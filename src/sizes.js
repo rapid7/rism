@@ -1,487 +1,114 @@
-import React from "react";
-import normalize from "react-style-normalizer";
-import _ from "lodash";
+/*!
+ * Sqwish - a CSS Compressor
+ * Copyright Dustin Diaz 2011
+ * https://github.com/ded/sqwish
+ * License MIT
+ */
 
-import sqwish from "./sqwish";
+import utils from "./utils";
 
-import base from "./base";
-import buttons from "./buttons";
-import card from "./card";
-import forms from "./forms";
-import grid from "./grid";
-import headings from "./headings";
-import helpers from "./helpers";
-import images from "./images";
-import labels from "./labels";
-import listGroup from "./listGroup";
-import nav from "./nav";
-import sizes from "./sizes";
-import responsive from "./responsive";
+function sqwish(css, strict) {
+    // allow /*! bla */ style comments to retain copyrights etc.
+    var comments = css.match(/\/\*![\s\S]+?\*\//g);
 
-import "normalize.css";
+    css = css.trim() // give it a solid trimming to start
 
-// functions to set properties in different ways
-function setPropertyHidden(obj,prop,value) {
-    Object.defineProperty(obj,prop,{
-        configurable: false,
-        enumerable: false,
-        value: value,
-        writable: true
-    });
+        // comments
+        .replace(/\/\*[\s\S]+?\*\//g, "")
+
+        // line breaks and carriage returns
+        .replace(/[\n\r]/g, "")
+
+        // space between selectors, declarations, properties and values
+        .replace(/\s*([:;,{}])\s*/g, "$1")
+
+        // replace multiple spaces with single spaces
+        .replace(/\s+/g, " ")
+
+        // space between last declaration and end of rule
+        // also remove trailing semi-colons on last declaration
+        .replace(/;}/g, "}")
+
+        // this is important
+        .replace(/\s+(!important)/g, "$1")
+
+        // convert longhand hex to shorthand hex
+        .replace(/#([a-fA-F0-9])\1([a-fA-F0-9])\2([a-fA-F0-9])\3(?![a-fA-F0-9])/g, "#$1$2$3")
+        // Restore Microsoft longhand hex
+        .replace(/(Microsoft[^;}]*)#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])(?![a-fA-F0-9])/g, "$1#$2$2$3$3$4$4")
+
+        // replace longhand values with shorthand "5px 5px 5px 5px" => "5px"
+        .replace(/\b(\d+[a-z]{2}) \1 \1 \1/gi, "$1")
+
+        // replace double-specified longhand values with shorthand "5px 2px 5px 2px" => "5px 2px"
+        .replace(/\b(\d+[a-z]{2}) (\d+[a-z]{2}) \1 \2/gi, "$1 $2")
+
+        // replace 0px with 0
+        .replace(/([\s|:])[0]+px/g, "$10");
+
+    if (strict) {
+        css = strict_css(css)
+    }
+
+    // put back in copyrights
+    if (comments) {
+        comments = comments ? comments.join("\n") : "";
+        css = comments + "\n" + css
+    }
+    return css
 }
 
-function setPropertyPermanent(obj,prop,value) {
-    Object.defineProperty(obj,prop,{
-        configurable: false,
-        enumerable: true,
-        value: value,
-        writable: true
-    });
-}
+function strict_css(css) {
+    // now some super fun funky shit where we remove duplicate declarations
+    // into combined rules
 
-function setPropertyReadonly(obj,prop,value) {
-    Object.defineProperty(obj,prop,{
-        configurable: false,
-        enumerable: false,
-        value: value,
-        writable: false
-    });
-}
+    // store global dict of all rules
+    var ruleList = {},
+        rules = css.match(/([^{]+\{[^}]+\})+?/g);
 
-// set responsive values
-function setResponsive(size) {
-    _.forOwn(responsive(size),function(style,key){
-        _.assign(this[key],style);
-    }.bind(this));
-}
+    // lets find the dups
+    utils.forEach(rules,function (rule) {
+        // break rule into selector|declaration parts
+        var parts = rule.match(/([^{]+)\{([^}]+)/),
+            selector = parts[1],
+            declarations = parts[2];
 
-// polyfill for setPrototypeOf
-Object.setPrototypeOf = Object.setPrototypeOf || function(obj,proto) {
-        obj.__proto__ = proto;
-        return obj;
-    };
+        // start new list if it wasn't created already
+        if (!ruleList[selector]) {
+            ruleList[selector] = []
+        }
 
-// set up stuff for creation of normal object
-var styleObjects = [
-        base,
-        buttons,
-        card,
-        forms,
-        grid,
-        headings,
-        helpers,
-        images,
-        labels,
-        listGroup,
-        nav,
-        sizes
-    ],
-    recess = {};
+        declarations = declarations.split(";");
 
-// set up internal properties
-setPropertyHidden(recess,"_app",undefined);
-setPropertyHidden(recess,"_appWarn",true);
-setPropertyReadonly(recess,"_component",{});
-setPropertyReadonly(recess,"_componentStateStyles",{});
-setPropertyReadonly(recess,"_componentStyles",{});
-setPropertyReadonly(recess,"_stylesheets",{});
-setPropertyPermanent(recess,"size",sizes.sizeName());
+        // filter out duplicate properties
+        ruleList[selector] = ruleList[selector].filter(function (decl) {
+            var prop = decl.match(/[^:]+/)[0];
 
-// add external styles to main object
-_.forEach(styleObjects,function(style){
-    _.assign(recess,style);
-});
-
-// set responsive properties
-setResponsive.call(recess,recess.size);
-
-// create the methods for this object
-Object.setPrototypeOf(recess,{
-    application(app){
-        setPropertyReadonly(this,"_app",app);
-        return this;
-    },
-
-    combine() {
-        var obj = {};
-
-        _.forEach(arguments,function(argument,i) {
-            _.merge(obj,argument);
+            // pre-existing properties are not wanted anymore
+            return !declarations.some(function (dec) {
+                // must include "^" as to not confuse "color" with "border-color" etc.
+                return dec.match(new RegExp("^" + prop.replace(/[-\/\^$*+?.()|[]{}]/g, "\$&") + ":"));
+            })
         });
 
-        return obj;
-    },
-
-    element(Element) {
-        var Component = React.createClass({
-            componentWillReceiveProps(newProps) {
-                this.setState({
-                    states:newProps.states || {},
-                    style:newProps.style
-                });
-            },
-
-            getInitialState() {
-                return {
-                    states:this.props.states || {},
-                    style:this.props.style
-                };
-            },
-
-            onBlur(e) {
-                this.setState({
-                    style:this.props.style
-                });
-
-                if(this.props.onBlur) {
-                    this.props.onBlur(e);
-                }
-            },
-
-            onDrag(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.drag)
-                });
-
-                if(this.props.onDrag) {
-                    this.props.onDrag(e);
-                }
-            },
-
-            onDragEnter(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.dragEnter)
-                });
-
-                if(this.props.onDragEnter) {
-                    this.props.onDragEnter(e);
-                }
-            },
-
-            onDragLeave(e) {
-                this.setState({
-                    style:this.props.style
-                });
-
-                if(this.props.onDragLeave) {
-                    this.props.onDragLeave(e);
-                }
-            },
-
-            onFocus(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.focus)
-                });
-
-                if(this.props.onFocus) {
-                    this.props.onFocus(e);
-                }
-            },
-
-            onMouseDown(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
-                });
-
-                if(this.props.onMouseDown) {
-                    this.props.onMouseDown(e);
-                }
-            },
-
-            onMouseEnter(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.hover)
-                });
-
-                if(this.props.onMouseEnter) {
-                    this.props.onMouseEnter(e);
-                }
-            },
-
-            onMouseLeave() {
-                this.setState({
-                    style:this.props.style
-                });
-
-                if(this.props.onMouseLeave) {
-                    this.props.onMouseLeave.call();
-                }
-            },
-
-            onMouseUp(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.hover)
-                });
-
-                if(this.props.onMouseUp) {
-                    this.props.onMouseUp(e);
-                }
-            },
-
-            render() {
-                var {
-                        children,
-                        onDragEnter,
-                        onDragExit,
-                        onDragLeave,
-                        onDragOver,
-                        onLoad,
-                        onMouseDown,
-                        onMouseEnter,
-                        onMouseLeave,
-                        onMouseUp,
-                        onTouchEnd,
-                        onTouchStart,
-                        states,
-                        style,
-                        ...otherProps
-                        } = this.props,
-                    style = this.state.style;
-
-                if(this.props.disabled) {
-                    style = this.props.states.disabled;
-                }
-
-                if(this.props.readonly) {
-                    style = this.props.states.readonly;
-                }
-
-                return (
-                    <Element.type
-                        onBlur={this.onBlur}
-                        onDrag={this.onDrag}
-                        onDragEnter={this.onDragEnter}
-                        onDragLeave={this.onDragLeave}
-                        onFocus={this.onFocus}
-                        onLoad={this.onLoad}
-                        onMouseDown={this.onMouseDown}
-                        onMouseEnter={this.onMouseEnter}
-                        onMouseLeave={this.onMouseLeave}
-                        onMouseUp={this.onMouseUp}
-                        onTouchEnd={this.onTouchEnd}
-                        onTouchStart={this.onTouchStart}
-                        style={style}
-                        {...otherProps}>
-                        {children}
-                    </Element.type>
-                );
-            },
-
-            onTouchEnd(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
-                });
-
-                if(this.props.onTouchEnd) {
-                    this.props.onTouchEnd(e);
-                }
-            },
-
-            onTouchStart(e) {
-                this.setState({
-                    style:_.assign({},this.props.style,this.state.states.active)
-                });
-
-                if(this.props.onTouchStart) {
-                    this.props.onTouchStart(e);
-                }
-            }
-        });
-
-        return Component;
-    },
-
-    extend(styles) {
-        _.forOwn(styles,function(value,key) {
-            if(!this[key]) {
-                this[key] = {}
-            }
-
-            if(_.isFunction(value)) {
-                this[key] = value;
-            } else {
-                _.assign(this[key],value);
-            }
-        }.bind(this));
-
-        return this;
-    },
-
-    onResize() {
-        var size = sizes.sizeName();
-
-        if(size === "xs" || size !== this.size) {
-            this.size = sizes.sizeName();
-            this.render();
-        }
-    },
-
-    prefix:normalize,
-
-    render() {
-        setResponsive.call(this,this.size);
-
-        if(this._app) {
-            this._app.forceUpdate();
-        } else {
-            _.forOwn(this._components,function(component){
-                component.forceUpdate();
-            });
-        }
-
-        return this;
-    },
-
-    states(component,states) {
-        var name;
-
-        if(!this._app && this._appWarn) {
-            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
-                "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
-                "will increase performance of Recess and is highly advised.");
-
-            this._appWarn = false;
-        }
-
-        if(_.isUndefined(component)) {
-            console.error("Error: No component has been specified.");
-            return this;
-        }
-
-        if(_.isString(component)) {
-            return this._componentStateStyles[component];
-        }
-
-        if(_.isObject(component)) {
-            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-            if(!this._component[name]) {
-                this._component[name] = {};
-            }
-
-            if(!this._componentStateStyles[name]) {
-                this._componentStateStyles[name] = {};
-            }
-
-            if(_.isUndefined(states)) {
-                return this._componentStateStyles[name];
-            }
-
-            this._component[name] = component;
-            _.assign(this._componentStateStyles[name],states);
-        }
-
-        return this;
-    },
-
-    styles(component,styles) {
-        var name;
-
-        if(!this._app && this._appWarn) {
-            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
-                "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
-                "will increase performance of Recess and is highly advised.");
-
-            this._appWarn = false;
-        }
-
-        if(_.isUndefined(component)) {
-            console.error("Error: No component has been specified.");
-            return this;
-        }
-
-        if(_.isString(component)) {
-            return this._componentStyles[component];
-        }
-
-        if(_.isObject(component)) {
-            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-            if(!this._component[name]) {
-                this._component[name] = {};
-            }
-
-            if(!this._componentStyles[name]) {
-                this._componentStyles[name] = {};
-            }
-
-            if(_.isUndefined(styles)) {
-                return this._componentStyles[name];
-            }
-
-            this._component[name] = component;
-            _.assign(this._componentStyles[name],styles);
-        }
-
-        return this;
-    },
-
-    stylesheet(id, styles) {
-        if(_.isUndefined(id)) {
-            console.error("Error: generated stylesheets need to be given an id.");
-            return this;
-        }
-
-        if(document.getElementById(id) !== null) {
-            return this;
-        }
-
-        let style = document.createElement("style");
-
-        style.type = "text/css";
-        style.id = id;
-
-        if(_.isString(styles)) {
-            style.textContent = sqwish(styles);
-        } else if(_.isObject(styles)) {
-            let str = "";
-
-            _.forOwn(styles,function(style,key) {
-                str += key + "{";
-
-                style = normalize(style);
-
-                _.forOwn(style,function(value,property) {
-                    if(property.charAt(0).toUpperCase() === property.charAt(0)) {
-                        str += "-";
-                    }
-
-                    str += _.kebabCase(property) + ":" + value + ";";
-                });
-
-                str += "}"
-            });
-
-            style.textContent = sqwish(str);
-        } else {
-            console.error("Error: You either need to provide an object or a string when creating a new stylesheet");
-            return this;
-        }
-
-        this._stylesheets[id] = style;
-
-        document.head.appendChild(style);
-
-        return this;
-    }
-});
-
-// add the basic stylesheet
-recess.stylesheet("Recess",normalize({
-    "*,*:before,*:after":{
-        boxSizing:"border-box"
-    },
-    ".clearFix:before,.clearFix:after":{
-        content:"\"\"",
-        display:"table"
-    },
-    ".clearFix:after":{
-        clear:"both"
-    }
-}));
-
-// add the listener for responsive items
-window.addEventListener("resize",recess.onResize.bind(recess),false);
-
-// let's go!
-export default recess;
+        // latter takes presedence :)
+        ruleList[selector] = ruleList[selector].concat(declarations);
+
+        // still dups? just in case
+        ruleList[selector] = utils.uniq(ruleList[selector]);
+    });
+
+    // reset css because we"re gonna recreate the whole shabang.
+    css = "";
+
+    utils.forIn(ruleList,function(value,selector) {
+        var joinedRuleList = value.join(";");
+        css += selector + "{" + (joinedRuleList).replace(/;$/, "") + "}";
+    });
+
+    return css;
+}
+
+export default function(css,strict) {
+    return sqwish(css,strict);
+}

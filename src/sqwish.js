@@ -5,7 +5,7 @@
  * License MIT
  */
 
-import _ from "lodash";
+import utils from "./utils";
 
 function sqwish(css, strict) {
     // allow /*! bla */ style comments to retain copyrights etc.
@@ -67,7 +67,7 @@ function strict_css(css) {
         rules = css.match(/([^{]+\{[^}]+\})+?/g);
 
     // lets find the dups
-    _.forEach(rules,function (rule) {
+    utils.forEach(rules,function (rule) {
         // break rule into selector|declaration parts
         var parts = rule.match(/([^{]+)\{([^}]+)/),
             selector = parts[1],
@@ -81,11 +81,11 @@ function strict_css(css) {
         declarations = declarations.split(";");
 
         // filter out duplicate properties
-        ruleList[selector] = _.filter(ruleList[selector],function (decl) {
+        ruleList[selector] = ruleList[selector].filter(function (decl) {
             var prop = decl.match(/[^:]+/)[0];
 
             // pre-existing properties are not wanted anymore
-            return !_.some(declarations,function (dec) {
+            return !declarations.some(function (dec) {
                 // must include "^" as to not confuse "color" with "border-color" etc.
                 return dec.match(new RegExp("^" + prop.replace(/[-\/\^$*+?.()|[]{}]/g, "\$&") + ":"));
             })
@@ -95,13 +95,13 @@ function strict_css(css) {
         ruleList[selector] = ruleList[selector].concat(declarations);
 
         // still dups? just in case
-        ruleList[selector] = _.uniq(ruleList[selector]);
+        ruleList[selector] = utils.uniq(ruleList[selector]);
     });
 
     // reset css because we"re gonna recreate the whole shabang.
     css = "";
 
-    _.forOwn(ruleList,function(value,selector) {
+    utils.forIn(ruleList,function(value,selector) {
         var joinedRuleList = value.join(";");
         css += selector + "{" + (joinedRuleList).replace(/;$/, "") + "}";
     });
