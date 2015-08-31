@@ -457,7 +457,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    styles: function styles(component, _styles) {
-	        7;
 	        if (!this._app && this._appWarn) {
 	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
 

@@ -356,7 +356,7 @@ var styleObjects = [
             return this;
         },
 
-        styles(component,styles) {7
+        styles(component,styles) {
             if(!this._app && this._appWarn) {
                 console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
                     "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
