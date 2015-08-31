@@ -462,10 +462,10 @@ setResponsive.call(recess,recess.size);
 
 // add the basic stylesheet
 recess.stylesheet("Recess",normalize({
-    "*,*:before,*:after":{
+    "*, *:before, *:after":{
         boxSizing:"border-box"
     },
-    ".clearFix:before,.clearFix:after":{
+    ".clearFix:before, .clearFix:after":{
         content:"\"\"",
         display:"table"
     },

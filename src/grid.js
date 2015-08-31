@@ -9,49 +9,49 @@ import variables from "./variables";
 import utils from "./utils";
 
 var grid = {
-    column:function(width) {
-        var numDenom;
+        column:function(width) {
+            var numDenom;
 
-        if(/((\d*)\/(\d*))/.test(width)) {
-            numDenom = width.split("/");
-            width = 100 * (utils.parseInt(numDenom[0]) / utils.parseInt(numDenom[1])) + "%";
-        }
+            if(/((\d*)\/(\d*))/.test(width)) {
+                numDenom = width.split("/");
+                width = 100 * (utils.parseInt(numDenom[0]) / utils.parseInt(numDenom[1])) + "%";
+            }
 
-        return {
-            display:"inline-block",
-            minHeight:1,
+            return {
+                display:"inline-block",
+                minHeight:1,
+                paddingLeft:utils.ceil(variables.gutter / 2),
+                paddingRight:utils.ceil(variables.gutter / 2),
+                width:width || "100%",
+                verticalAlign:"top"
+            };
+        },
+        columnFlex:normalize({
+            flexGrow:1,
+            flexShrink:1,
             paddingLeft:utils.ceil(variables.gutter / 2),
-            paddingRight:utils.ceil(variables.gutter / 2),
-            width:width || "100%",
-            verticalAlign:"top"
-        };
-    },
-    columnFlex:normalize({
-        flexGrow:1,
-        flexShrink:1,
-        paddingLeft:utils.ceil(variables.gutter / 2),
-        paddingRight:utils.ceil(variables.gutter / 2)
-    }),
-    containerFixed:{
-        marginLeft:"auto",
-        marginRight:"auto",
-        paddingLeft:utils.ceil(variables.gutter / 2),
-        paddingRight:utils.ceil(variables.gutter / 2)
-    },
-    containerFlex:normalize({
-        alignContent:"stretch",
-        alignItems:"stretch",
-        display:"flex",
-        flexDirection:"row"
-    }),
-    row:{
-        marginLeft:-1 * utils.ceil(variables.gutter / 2),
-        marginRight:-1 * utils.ceil(variables.gutter / 2)
-    },
-    rowFlex:normalize({
-        flexWrap:"nowrap"
-    })
-};
+            paddingRight:utils.ceil(variables.gutter / 2)
+        }),
+        containerFixed:{
+            marginLeft:"auto",
+            marginRight:"auto",
+            paddingLeft:utils.ceil(variables.gutter / 2),
+            paddingRight:utils.ceil(variables.gutter / 2)
+        },
+        containerFlex:normalize({
+            alignContent:"stretch",
+            alignItems:"stretch",
+            display:"flex",
+            flexDirection:"row"
+        }),
+        row:{
+            marginLeft:-1 * utils.ceil(variables.gutter / 2),
+            marginRight:-1 * utils.ceil(variables.gutter / 2)
+        },
+        rowFlex:normalize({
+            flexWrap:"nowrap"
+        })
+    };
 
 grid.container = function(width) {
     return utils.merge(utils.clone(grid.containerFixed),{
