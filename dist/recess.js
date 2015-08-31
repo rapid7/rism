@@ -444,12 +444,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return this._componentStateStyles[_name];
 	            }
 
-	            if (!this._component[_name]) {
-	                this._component[_name] = {};
+	            if (_utils2["default"].isUndefined(this._component[_name])) {
+	                this._component[_name] = component;
+	            }
+
+	            if (_utils2["default"].isUndefined(this._componentStateStyles[_name])) {
 	                this._componentStateStyles[_name] = {};
 	            }
 
-	            this._component[_name] = component;
 	            _utils2["default"].assign(this._componentStateStyles[_name], _states);
 	        }
 
@@ -486,11 +488,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            if (_utils2["default"].isUndefined(this._component[_name2])) {
-	                this._component[_name2] = {};
+	                this._component[_name2] = component;
+	            }
+
+	            if (_utils2["default"].isUndefined(this._componentStyles[_name2])) {
 	                this._componentStyles[_name2] = {};
 	            }
 
-	            this._component[_name2] = component;
 	            _utils2["default"].assign(this._componentStyles[_name2], _styles);
 	        }
 

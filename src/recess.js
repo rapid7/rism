@@ -344,12 +344,14 @@ var styleObjects = [
                     return this._componentStateStyles[name];
                 }
 
-                if(!this._component[name]) {
-                    this._component[name] = {};
+                if(utils.isUndefined(this._component[name])) {
+                    this._component[name] = component;
+                }
+
+                if(utils.isUndefined(this._componentStateStyles[name])) {
                     this._componentStateStyles[name] = {};
                 }
 
-                this._component[name] = component;
                 utils.assign(this._componentStateStyles[name],states);
             }
 
@@ -388,11 +390,13 @@ var styleObjects = [
                 }
 
                 if(utils.isUndefined(this._component[name])) {
-                    this._component[name] = {};
+                    this._component[name] = component;
+                }
+
+                if(utils.isUndefined(this._componentStyles[name])) {
                     this._componentStyles[name] = {};
                 }
 
-                this._component[name] = component;
                 utils.assign(this._componentStyles[name],styles);
             }
 
