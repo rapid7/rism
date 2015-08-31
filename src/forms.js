@@ -1,6 +1,12 @@
-import _ from "lodash";
+/*******************************************************************************
+ * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+ * material contains unpublished, copyrighted work including confidential and
+ * proprietary information of Rapid7.
+ ******************************************************************************/
+
 import normalize from "react-style-normalizer";
 import variables from "./variables";
+import utils from "./utils";
 
 var forms = {
         fieldset:{
@@ -43,18 +49,18 @@ var forms = {
         }
     };
 
-forms.inputColor = _.extend(_.cloneDeep(forms.input),{
+forms.inputColor = utils.merge(utils.clone(forms.input),{
     padding:"0.2em 0.5em"
 });
 
-forms.select = _.extend(_.cloneDeep(forms.input),{
+forms.select = utils.merge(utils.clone(forms.input),{
     height:"2.25em"
 });
 
-forms.selectMultiple = _.extend(_.cloneDeep(forms.input),{
+forms.selectMultiple = utils.merge(utils.clone(forms.input),{
     height:"auto"
 });
 
-forms.textarea = _.cloneDeep(forms.input);
+forms.textarea = utils.clone(forms.input);
 
 export default forms;

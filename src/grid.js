@@ -1,6 +1,12 @@
-import _ from "lodash";
+/*******************************************************************************
+ * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+ * material contains unpublished, copyrighted work including confidential and
+ * proprietary information of Rapid7.
+ ******************************************************************************/
+
 import normalize from "react-style-normalizer";
 import variables from "./variables";
+import utils from "./utils";
 
 var grid = {
         column:function(width) {
@@ -8,14 +14,14 @@ var grid = {
 
             if(/((\d*)\/(\d*))/.test(width)) {
                 numDenom = width.split("/");
-                width = 100 * (_.parseInt(numDenom[0]) / _.parseInt(numDenom[1])) + "%";
+                width = 100 * (utils.parseInt(numDenom[0]) / utils.parseInt(numDenom[1])) + "%";
             }
 
             return {
                 display:"inline-block",
                 minHeight:1,
-                paddingLeft:_.ceil(variables.gutter / 2),
-                paddingRight:_.ceil(variables.gutter / 2),
+                paddingLeft:utils.ceil(variables.gutter / 2),
+                paddingRight:utils.ceil(variables.gutter / 2),
                 width:width || "100%",
                 verticalAlign:"top"
             };
@@ -23,14 +29,14 @@ var grid = {
         columnFlex:normalize({
             flexGrow:1,
             flexShrink:1,
-            paddingLeft:_.ceil(variables.gutter / 2),
-            paddingRight:_.ceil(variables.gutter / 2)
+            paddingLeft:utils.ceil(variables.gutter / 2),
+            paddingRight:utils.ceil(variables.gutter / 2)
         }),
         containerFixed:{
             marginLeft:"auto",
             marginRight:"auto",
-            paddingLeft:_.ceil(variables.gutter / 2),
-            paddingRight:_.ceil(variables.gutter / 2)
+            paddingLeft:utils.ceil(variables.gutter / 2),
+            paddingRight:utils.ceil(variables.gutter / 2)
         },
         containerFlex:normalize({
             alignContent:"stretch",
@@ -39,8 +45,8 @@ var grid = {
             flexDirection:"row"
         }),
         row:{
-            marginLeft:-1 * _.ceil(variables.gutter / 2),
-            marginRight:-1 * _.ceil(variables.gutter / 2)
+            marginLeft:-1 * utils.ceil(variables.gutter / 2),
+            marginRight:-1 * utils.ceil(variables.gutter / 2)
         },
         rowFlex:normalize({
             flexWrap:"nowrap"
@@ -48,12 +54,12 @@ var grid = {
     };
 
 grid.container = function(width) {
-    return _.extend(_.cloneDeep(grid.containerFixed),{
+    return utils.merge(utils.clone(grid.containerFixed),{
         width:width || "100%"
     });
 };
 
-grid.containerFull = _.extend(_.cloneDeep(grid.containerFixed),{
+grid.containerFull = utils.merge(utils.clone(grid.containerFixed),{
     width:"100%"
 });
 

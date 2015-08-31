@@ -1,6 +1,12 @@
-import _ from "lodash";
+/*******************************************************************************
+ * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+ * material contains unpublished, copyrighted work including confidential and
+ * proprietary information of Rapid7.
+ ******************************************************************************/
+
 import normalize from "react-style-normalizer";
 import variables from "./variables";
+import utils from "./utils";
 
 var buttons = {
         button:normalize({
@@ -36,20 +42,20 @@ var buttons = {
         "Warning"
     ];
 
-buttons.buttonHover = _.extend(_.cloneDeep(buttons.button),{
+buttons.buttonHover = utils.merge(utils.clone(buttons.button),{
     backgroundColor:variables.backgroundColor.darker(0.5).toString()
 });
 
-_.forEach(projectColors,function(color){
+utils.forEach(projectColors,function(color){
     let fontColor = ((color === "Warning") ? variables.fontColor : variables.white).toString();
 
-    buttons["button" + color] = _.extend(_.cloneDeep(buttons.button),{
+    buttons["button" + color] = utils.merge(utils.clone(buttons.button),{
         borderColor:variables["color" + color].darker(0.5).toString(),
-        backgroundColor:variables["color" + color],
+        backgroundColor:variables["color" + color].toString(),
         color:fontColor
     });
 
-    buttons["button" + color + "Hover"] = _.extend(_.cloneDeep(buttons["button" + color]),{
+    buttons["button" + color + "Hover"] = utils.merge(utils.clone(buttons["button" + color]),{
         backgroundColor:variables["color" + color].darker(0.5).toString(),
         color:fontColor
     });
