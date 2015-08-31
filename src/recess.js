@@ -314,8 +314,6 @@ var styleObjects = [
         },
 
         states(component,states) {
-            var name;
-
             if(!this._app && this._appWarn) {
                 console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
                     "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
@@ -334,18 +332,21 @@ var styleObjects = [
             }
 
             if(utils.isObject(component)) {
-                name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-                if(!this._component[name]) {
-                    this._component[name] = {};
+                if(_.isUndefined(component._reactInternalInstance)) {
+                    console.error("Error: object passed is not a React constructor.");
+                    return this;
                 }
 
-                if(!this._componentStateStyles[name]) {
-                    this._componentStateStyles[name] = {};
-                }
+                let type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
+                    name = type.displayName || type.name;
 
                 if(utils.isUndefined(states)) {
                     return this._componentStateStyles[name];
+                }
+
+                if(!this._component[name]) {
+                    this._component[name] = {};
+                    this._componentStateStyles[name] = {};
                 }
 
                 this._component[name] = component;
@@ -374,6 +375,11 @@ var styleObjects = [
             }
 
             if(utils.isObject(component)) {
+                if(_.isUndefined(component._reactInternalInstance)) {
+                    console.error("Error: object passed is not a React constructor.");
+                    return this;
+                }
+
                 let type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
                     name = type.displayName || type.name;
 
