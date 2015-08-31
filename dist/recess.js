@@ -1198,7 +1198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                ret = [];
 
 	                this.forEach(obj, (function (item) {
-	                    ret[ret.length] = this.isObject(item) && !this.isFunction(item) ? this.clone(item) : item;
+	                    ret[i] = this.isObject(item) && !this.isFunction(item) ? this.clone(item) : item;
 	                }).bind(this));
 	            } else {
 	                ret = {};
@@ -1310,7 +1310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    dest[i] = this.merge(target[i], item);
 	                } else {
 	                    if (target.indexOf(item) === -1) {
-	                        dest[dest.length] = item;
+	                        dest[i] = item;
 	                    }
 	                }
 	            }).bind(this));
@@ -1324,15 +1324,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	            this.forIn(source, (function (value, key) {
-	                if (!this.isObject(value) || this.isUndefined(value)) {
-	                    dest[key] = value;
-	                } else {
-	                    if (!target[key]) {
-	                        dest[key] = value;
-	                    } else {
-	                        dest[key] = this.merge(target[key], value);
-	                    }
-	                }
+	                dest[key] = !this.isObject(value) || this.isUndefined(value) || this.isUndefined(target[key]) ? value : this.merge(target[key], value);
 	            }).bind(this));
 	        }
 
