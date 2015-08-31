@@ -1,6 +1,6 @@
 {
   "name": "recess",
-  "version": "0.3.0",
+  "version": "0.7.1",
   "description": "Tools to streamline inline style management for React elements",
   "main": "lib",
   "repository": {

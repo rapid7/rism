@@ -356,8 +356,6 @@ var styleObjects = [
         },
 
         styles(component,styles) {
-            var name;
-
             if(!this._app && this._appWarn) {
                 console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
                     "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
@@ -376,18 +374,16 @@ var styleObjects = [
             }
 
             if(utils.isObject(component)) {
-                name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-                if(!this._component[name]) {
-                    this._component[name] = {};
-                }
-
-                if(!this._componentStyles[name]) {
-                    this._componentStyles[name] = {};
-                }
+                let type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
+                    name = type.displayName || type.name;
 
                 if(utils.isUndefined(styles)) {
                     return this._componentStyles[name];
+                }
+
+                if(utils.isUndefined(this._component[name])) {
+                    this._component[name] = {};
+                    this._componentStyles[name] = {};
                 }
 
                 this._component[name] = component;
