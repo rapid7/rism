@@ -31,7 +31,7 @@ var labels = {
 utils.forEach(projectColors,function(color){
     let fontColor = ((color === "Warning") ? variables.fontColor : variables.white).toString();
 
-    labels["labels" + color] = utils.merge(utils.clone(labels.label),{
+    labels["label" + color] = utils.merge(utils.clone(labels.label),{
         backgroundColor:variables["color" + color].toString(),
         color:fontColor
     });

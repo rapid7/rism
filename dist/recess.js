@@ -2793,7 +2793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	_utils2["default"].forEach(projectColors, function (color) {
 	    var fontColor = (color === "Warning" ? _variables2["default"].fontColor : _variables2["default"].white).toString();
 
-	    labels["labels" + color] = _utils2["default"].merge(_utils2["default"].clone(labels.label), {
+	    labels["label" + color] = _utils2["default"].merge(_utils2["default"].clone(labels.label), {
 	        backgroundColor: _variables2["default"]["color" + color].toString(),
 	        color: fontColor
 	    });
