@@ -456,8 +456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    styles: function styles(component, _styles) {
-	        var name;
-
+	        7;
 	        if (!this._app && this._appWarn) {
 	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
 
@@ -474,22 +473,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (_utils2["default"].isObject(component)) {
-	            name = component._reactInternalInstance && component._reactInternalInstance._currentElement.type.displayName;
-
-	            if (!this._component[name]) {
-	                this._component[name] = {};
-	            }
-
-	            if (!this._componentStyles[name]) {
-	                this._componentStyles[name] = {};
-	            }
+	            var type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
+	                _name = type.displayName || type.name;
 
 	            if (_utils2["default"].isUndefined(_styles)) {
-	                return this._componentStyles[name];
+	                return this._componentStyles[_name];
 	            }
 
-	            this._component[name] = component;
-	            _utils2["default"].assign(this._componentStyles[name], _styles);
+	            if (_utils2["default"].isUndefined(this._component[_name])) {
+	                this._component[_name] = {};
+	                this._componentStyles[_name] = {};
+	            }
+
+	            this._component[_name] = component;
+	            _utils2["default"].assign(this._componentStyles[_name], _styles);
 	        }
 
 	        return this;
