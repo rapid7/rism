@@ -452,7 +452,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._componentStateStyles[_name] = {};
 	            }
 
-	            _utils2["default"].assign(this._componentStateStyles[_name], (0, _reactPrefixer2["default"])(_states));
+	            this._componentStateStyles[_name] = _utils2["default"].merge(this._componentStateStyles[_name], (0, _reactPrefixer2["default"])(_states));
 	        }
 
 	        return this;
@@ -495,7 +495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._componentStyles[_name2] = {};
 	            }
 
-	            _utils2["default"].assign(this._componentStyles[_name2], (0, _reactPrefixer2["default"])(_styles));
+	            this._componentStyles[_name2] = _utils2["default"].merge(this._componentStyles[_name2], (0, _reactPrefixer2["default"])(_styles));
 	        }
 
 	        return this;

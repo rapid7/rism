@@ -352,7 +352,7 @@ var styleObjects = [
                     this._componentStateStyles[name] = {};
                 }
 
-                utils.assign(this._componentStateStyles[name],prefix(states));
+                this._componentStateStyles[name] = utils.merge(this._componentStateStyles[name],prefix(states));
             }
 
             return this;
@@ -397,7 +397,7 @@ var styleObjects = [
                     this._componentStyles[name] = {};
                 }
 
-                utils.assign(this._componentStyles[name],prefix(styles));
+                this._componentStyles[name] = utils.merge(this._componentStyles[name],prefix(styles));
             }
 
             return this;
