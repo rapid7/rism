@@ -68,7 +68,7 @@ function combineStyles() {
 // set responsive values
 function setResponsive(size) {
     utils.forIn(responsive(size),function(style,key){
-        utils.assign(this[key],style);
+        utils.assign(this[key],prefix(style));
     }.bind(this));
 }
 
@@ -352,7 +352,7 @@ var styleObjects = [
                     this._componentStateStyles[name] = {};
                 }
 
-                utils.assign(this._componentStateStyles[name],states);
+                utils.assign(this._componentStateStyles[name],prefix(states));
             }
 
             return this;
@@ -397,7 +397,7 @@ var styleObjects = [
                     this._componentStyles[name] = {};
                 }
 
-                utils.assign(this._componentStyles[name],styles);
+                utils.assign(this._componentStyles[name],prefix(styles));
             }
 
             return this;
