@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 import c from "d3-color";
-import prefix from "./react-prefixer";
+import prefix from "react-prefixer";
 import utils from "./utils";
 
 var colors = {

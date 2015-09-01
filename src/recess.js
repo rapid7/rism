@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 import React from "react";
-import prefix from "./react-prefixer";
+import prefix from "react-prefixer";
 
 import sqwish from "./sqwish";
 import utils from "./utils";
