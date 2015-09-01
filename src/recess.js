@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 import React from "react";
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 
 import sqwish from "./sqwish";
 import utils from "./utils";
@@ -273,15 +273,15 @@ var styleObjects = [
         },
 
         extend(styles) {
-            utils.forIn(styles,function(value,key) {
+            utils.forIn(styles,function(style,key) {
                 if(!this[key]) {
                     this[key] = {}
                 }
 
-                if(utils.isFunction(value)) {
-                    this[key] = value;
+                if(utils.isFunction(style)) {
+                    this[key] = style;
                 } else {
-                    utils.assign(this[key],value);
+                    utils.assign(this[key],prefix(style));
                 }
             }.bind(this));
 
@@ -297,7 +297,7 @@ var styleObjects = [
             }
         },
 
-        prefix:normalize,
+        prefix:prefix,
 
         render() {
             setResponsive.call(this,this.size);
@@ -337,7 +337,7 @@ var styleObjects = [
                     return this;
                 }
 
-                let type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
+                let type = component._reactInternalInstance._currentElement.type,
                     name = type.displayName || type.name;
 
                 if(utils.isUndefined(states)) {
@@ -382,7 +382,7 @@ var styleObjects = [
                     return this;
                 }
 
-                let type = component._reactInternalInstance && component._reactInternalInstance._currentElement.type,
+                let type = component._reactInternalInstance._currentElement.type,
                     name = type.displayName || type.name;
 
                 if(utils.isUndefined(styles)) {
@@ -426,7 +426,7 @@ var styleObjects = [
                 utils.forIn(styles,function(style,key) {
                     str += key + "{";
 
-                    style = normalize(style);
+                    style = prefix(style);
 
                     utils.forIn(style,function(value,property) {
                         str += utils.kebabCase(property) + ":" + value + ";";
@@ -467,7 +467,7 @@ utils.forEach(styleObjects,function(style){
 setResponsive.call(recess,recess.size);
 
 // add the basic stylesheet
-recess.stylesheet("Recess",normalize({
+recess.stylesheet("Recess",prefix({
     "*, *:before, *:after":{
         boxSizing:"border-box"
     },

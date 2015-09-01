@@ -4,12 +4,12 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
 var buttons = {
-        button:normalize({
+        button:prefix({
             border:"1px solid " + variables.borderColor.toString(),
             backgroundColor:variables.backgroundColor.toString(),
             borderRadius:variables.borderRadius.toString(),
@@ -28,7 +28,7 @@ var buttons = {
             verticalAlign:"middle",
             whiteSpace:"nowrap"
         }),
-        buttonDisabled:normalize({
+        buttonDisabled:prefix({
             border:0,
             cursor:"not-allowed",
             opacity:0.4

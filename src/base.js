@@ -5,7 +5,6 @@
  ******************************************************************************/
 
 import variables from "./variables";
-import normalize from "react-style-normalizer";
 
 export default {
     a:{

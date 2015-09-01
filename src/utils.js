@@ -93,14 +93,9 @@ export default {
             return;
         }
 
-        let keys = Object.keys(obj),
-            i = keys.length;
-
-        for(; i--;) {
-            if(cb(obj[keys[i]],keys[i],obj) === false) {
-                break;
-            }
-        }
+        this.forEach(Object.keys(obj), function(key) {
+            return cb(obj[key], key, obj);
+        });
     },
 
     isArguments(obj) {

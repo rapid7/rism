@@ -4,7 +4,7 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
@@ -84,14 +84,14 @@ function getCardStyle(type,isActive,styles) {
             break;
     }
 
-    utils.assign(cardStyle,normalize({
+    utils.assign(cardStyle,prefix({
         transform:"translate" + axis + "(" + translate + "px)"
     }));
 
     return cardStyle;
 }
 
-defaultCard = normalize({
+defaultCard = prefix({
     backgroundColor:variables.backgroundColor.toString(),
     border:"1px solid " + variables.borderColor.toString(),
     borderRadius:variables.borderRadius,

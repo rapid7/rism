@@ -4,7 +4,7 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
@@ -22,7 +22,7 @@ var forms = {
             display:"block",
             margin:"0.5em 0 0.2em"
         },
-        input:normalize({
+        input:prefix({
             backgroundColor:variables.backgroundColor.toString(),
             border:"1px solid " + variables.borderColor.toString(),
             borderRadius:variables.borderRadius,

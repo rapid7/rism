@@ -24,7 +24,6 @@
     "d3-color": "~0.2.4",
     "normalize.css": "~3.0.3",
     "react": "~0.13.3",
-    "react-style-normalizer": "~1.2.8",
     "webpack": "~1.11.0"
   },
   "author": "tquetano-r7",

@@ -4,7 +4,7 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
@@ -26,7 +26,7 @@ var grid = {
                 verticalAlign:"top"
             };
         },
-        columnFlex:normalize({
+        columnFlex:prefix({
             flexGrow:1,
             flexShrink:1,
             paddingLeft:utils.ceil(variables.gutter / 2),
@@ -38,7 +38,7 @@ var grid = {
             paddingLeft:utils.ceil(variables.gutter / 2),
             paddingRight:utils.ceil(variables.gutter / 2)
         },
-        containerFlex:normalize({
+        containerFlex:prefix({
             alignContent:"stretch",
             alignItems:"stretch",
             display:"flex",
@@ -48,7 +48,7 @@ var grid = {
             marginLeft:-1 * utils.ceil(variables.gutter / 2),
             marginRight:-1 * utils.ceil(variables.gutter / 2)
         },
-        rowFlex:normalize({
+        rowFlex:prefix({
             flexWrap:"nowrap"
         })
     };

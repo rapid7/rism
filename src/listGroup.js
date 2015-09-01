@@ -4,11 +4,11 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 
 export default {
-    listGroup:normalize({
+    listGroup:prefix({
         border:"1px solid " + variables.white.darker(1.14).toString(), // #aaa
         borderRadius:variables.borderRadius,
         boxShadow:"2px 2px 2px " + variables.borderColor.toString(),

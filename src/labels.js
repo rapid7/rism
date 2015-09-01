@@ -4,12 +4,12 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
 var labels = {
-        label:normalize({
+        label:prefix({
             backgroundColor:variables.white.darker(0.4).toString(), // #ddd
             borderRadius:variables.borderRadius * 2,
             display:"inline",

@@ -4,12 +4,12 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 import utils from "./utils";
 
 var nav = {
-        nav:normalize({
+        nav:prefix({
             backgroundColor:variables.white.darker(0.17).toString(), // #f0f0f0
             boxShadow:"2px 2px 2px " + variables.borderColor.toString(),
             marginBottom:utils.ceil(variables.gutter / 2),

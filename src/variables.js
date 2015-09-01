@@ -5,7 +5,8 @@
  ******************************************************************************/
 
 import c from "d3-color";
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
+import utils from "./utils";
 
 var colors = {
         black:c.color("#111"),
@@ -23,23 +24,25 @@ var colors = {
         headingFontWeight:400,
         headingMargin:"1em 0 0.5em",
         gutter:30
+    },
+    ret = {
+        black:colors.black,
+        backgroundColor:colors.white,
+        borderColor:colors.white.darker(0.625), // #ccc
+        colorDanger:colors.danger,
+        colorInfo:colors.info,
+        colorPrimary:colors.primary,
+        colorSuccess:colors.success,
+        colorWarning:colors.warning,
+        fontColor:colors.black.brighter(3.875), // #444
+        fontSize: sizes.fontSize,
+        fontWeight: sizes.fontWeight,
+        gutter: sizes.gutter,
+        headingFontWeight: sizes.headingFontWeight,
+        headingMargin:sizes.headingMargin,
+        white:colors.white
     };
 
-export default normalize({
-    black:colors.black,
-    backgroundColor:colors.white,
-    borderColor:colors.white.darker(0.625), // #ccc
-    borderRadius: sizes.borderRadius,
-    colorDanger:colors.danger,
-    colorInfo:colors.info,
-    colorPrimary:colors.primary,
-    colorSuccess:colors.success,
-    colorWarning:colors.warning,
-    fontColor:colors.black.brighter(3.875), // #444
-    fontSize: sizes.fontSize,
-    fontWeight: sizes.fontWeight,
-    gutter: sizes.gutter,
-    headingFontWeight: sizes.headingFontWeight,
-    headingMargin:sizes.headingMargin,
-    white:colors.white
-});
+export default utils.merge(ret,prefix({
+    borderRadius: sizes.borderRadius
+}));

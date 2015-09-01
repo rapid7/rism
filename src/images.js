@@ -4,11 +4,11 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import normalize from "react-style-normalizer";
+import prefix from "./react-prefixer";
 import variables from "./variables";
 
 export default {
-    imgCircle:normalize({
+    imgCircle:prefix({
         borderRadius:"50%"
     }),
     imgResponsive:{
@@ -16,7 +16,7 @@ export default {
         height:"auto",
         maxWidth:"100%"
     },
-    imgThumbnail:normalize({
+    imgThumbnail:prefix({
         border:"5px solid " + variables.white.toString(),
         borderRadius:variables.borderRadius
     })
