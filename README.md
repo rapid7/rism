@@ -113,7 +113,7 @@ Static styles are cool, but what if you want dynamic styles? Recess has you cove
 * disabled
 * readonly
 
-First, you need to create a recess element:
+First, you need to create a recess element with the *element* method:
 
 ```
 var Button = recess.element(<button/>);
@@ -133,7 +133,9 @@ render:function() {
         className="my-special-button"
         states={buttonStates}
         style={recess.buttonPrimary}
-        type="button"
+        type="button">
+        I haz de hover
+      </Button>
     </div>
   );
 }
