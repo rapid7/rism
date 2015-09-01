@@ -2,6 +2,17 @@
 
 Recess is a convenient way to style React components. It has a pre-built library of styles to choose from (that are easily extended or modified), and also serves as storage for component-specific styles that you create. It is responsive, and includes state-based styling for elements.
 
+### Table of Contents
+* [Browser support](#browser-support)
+* [Basic usage](#basic-usage)
+* [Extending default styles] (#extending-default-styles)
+* [Component-specific styles](#component-specific-styles)
+* [Combine styles](#combine-styles)
+* [Dynamic styles](#dynamic-styles)
+* [Creating stylesheets](#creating-stylesheets)
+* [Prefixes](#prefixes)
+* [Please help!](#please-help)
+
 ### Browser support
 
 We support current version - 2 for all popular browsers, which translates to the following:
@@ -33,7 +44,7 @@ var recess = require("recess");
 </div>
 ```
 
-### Extending the default styles
+### Extending default styles
 
 You can also build upon the existing library object by using the *extend* method in the *componentWillMount* function.
 
