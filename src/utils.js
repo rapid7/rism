@@ -170,7 +170,7 @@ export default {
             }
 
             this.forIn(source,function(value,key) {
-                dest[key] = !this.isObject(value) || this.isUndefined(value) || this.isUndefined(target[key]) ? value : this.merge(target[key],value);
+                dest[key] = this.isUndefined(target[key]) || (!this.isObject(value) && !this.isUndefined(value)) ? value : this.merge(target[key],value || {});
             }.bind(this));
         }
 
