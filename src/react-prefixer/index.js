@@ -3,10 +3,20 @@ import properties from "./properties";
 
 var div = document.createElement("div");
 
-function applyPrefixes(obj) {
-    var keys = Object.keys(obj);
+function isPropertySupported(prop, value, defaultValue) {
+    let temp = div.cloneNode();
 
-    keys.forEach(function(key) {
+    temp.style[prop] = defaultValue;
+
+    try {
+        temp.style[prop] = value;
+    } catch(e) {}
+
+    return temp.style[prop] === value;
+}
+
+function applyPrefixes(obj) {
+    Object.keys(obj).forEach(function(key) {
         if (typeof obj[key] === "object" && !!obj[key]) {
             obj[key] = applyPrefixes(obj[key]);
         } else if (properties.indexOf(key) !== -1 && (typeof div.style[key] !== "string")) {
@@ -19,6 +29,8 @@ function applyPrefixes(obj) {
 
             delete obj[key];
             obj[prefixedKey] = value;
+        } else if(key === "display" && obj[key] === "flex" && !isPropertySupported("display", "flex", "block")) {
+            obj[key] = (prefix === "ms" ? "-ms-flexbox" : prefix.css + "flex");
         }
     });
 

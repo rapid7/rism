@@ -184,7 +184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// set responsive values
 	function setResponsive(size) {
 	    _utils2["default"].forIn((0, _responsive2["default"])(size), (function (style, key) {
-	        _utils2["default"].assign(this[key], style);
+	        _utils2["default"].assign(this[key], (0, _reactPrefixer2["default"])(style));
 	    }).bind(this));
 	}
 
@@ -452,7 +452,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._componentStateStyles[_name] = {};
 	            }
 
-	            _utils2["default"].assign(this._componentStateStyles[_name], _states);
+	            _utils2["default"].assign(this._componentStateStyles[_name], (0, _reactPrefixer2["default"])(_states));
 	        }
 
 	        return this;
@@ -495,7 +495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._componentStyles[_name2] = {};
 	            }
 
-	            _utils2["default"].assign(this._componentStyles[_name2], _styles);
+	            _utils2["default"].assign(this._componentStyles[_name2], (0, _reactPrefixer2["default"])(_styles));
 	        }
 
 	        return this;
@@ -613,10 +613,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var div = document.createElement("div");
 
-	function applyPrefixes(obj) {
-	    var keys = Object.keys(obj);
+	function isPropertySupported(prop, value, defaultValue) {
+	    var temp = div.cloneNode();
 
-	    keys.forEach(function (key) {
+	    temp.style[prop] = defaultValue;
+
+	    try {
+	        temp.style[prop] = value;
+	    } catch (e) {}
+
+	    return temp.style[prop] === value;
+	}
+
+	function applyPrefixes(obj) {
+	    Object.keys(obj).forEach(function (key) {
 	        if (typeof obj[key] === "object" && !!obj[key]) {
 	            obj[key] = applyPrefixes(obj[key]);
 	        } else if (_properties2["default"].indexOf(key) !== -1 && typeof div.style[key] !== "string") {
@@ -629,6 +639,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            delete obj[key];
 	            obj[prefixedKey] = value;
+	        } else if (key === "display" && obj[key] === "flex" && !isPropertySupported("display", "flex", "block")) {
+	            obj[key] = _prefix2["default"] === "ms" ? "-ms-flexbox" : _prefix2["default"].css + "flex";
 	        }
 	    });
 
