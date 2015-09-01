@@ -220,17 +220,19 @@ var styleObjects = [
                             ...otherProps
                         } = this.props,
                         style = this.state.style,
-                        beforeContent,
-                        afterContent;
+                        after = utils.clone(states.after),
+                        before = utils.clone(states.before),
+                        afterContent,
+                        beforeContent;
 
-                    if (states.before) {
-                        beforeContent = states.before.content;
-                        delete states.before.content;
+                    if (before) {
+                        beforeContent = before.content;
+                        delete before.content;
                     }
 
-                    if (states.after) {
-                        afterContent = states.after.content;
-                        delete states.after.content;
+                    if (after) {
+                        afterContent = after.content;
+                        delete after.content;
                     }
 
                     if(this.props.disabled) {
@@ -257,13 +259,13 @@ var styleObjects = [
                             onTouchStart={this.onTouchStart}
                             style={style}
                             {...otherProps}>
-                            {beforeContent && <span style={states.before}>
+                            {beforeContent && <span style={before}>
                                 {beforeContent}
                             </span>}
 
                             {children}
 
-                            {afterContent && <span style={states.after}>
+                            {afterContent && <span style={after}>
                                 {afterContent}
                             </span>}
                         </Element.type>

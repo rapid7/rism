@@ -322,17 +322,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var style = _props.style;
 	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "states", "style"]);
 	                var style = this.state.style;
-	                var beforeContent;
+	                var after = _utils2["default"].clone(states.after);
+	                var before = _utils2["default"].clone(states.before);
 	                var afterContent;
+	                var beforeContent;
 
-	                if (states.before) {
-	                    beforeContent = states.before.content;
-	                    delete states.before.content;
+	                if (before) {
+	                    beforeContent = before.content;
+	                    delete before.content;
 	                }
 
-	                if (states.after) {
-	                    afterContent = states.after.content;
-	                    delete states.after.content;
+	                if (after) {
+	                    afterContent = after.content;
+	                    delete after.content;
 	                }
 
 	                if (this.props.disabled) {
@@ -362,13 +364,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }, otherProps),
 	                    beforeContent && _react2["default"].createElement(
 	                        "span",
-	                        { style: states.before },
+	                        { style: before },
 	                        beforeContent
 	                    ),
 	                    children,
 	                    afterContent && _react2["default"].createElement(
 	                        "span",
-	                        { style: states.after },
+	                        { style: after },
 	                        afterContent
 	                    )
 	                );
