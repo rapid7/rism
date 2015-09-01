@@ -28,7 +28,7 @@
     "d3-color": "~0.2.4",
     "normalize.css": "~3.0.3",
     "react": "~0.13.3",
-    "react-prefixer": "^1.0.1"
+    "react-prefixer": "^1.0.4"
   },
   "author": "tquetano-r7",
   "homepage": "https://github.com/rapid7/recess#readme"
