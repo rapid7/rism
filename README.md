@@ -118,11 +118,13 @@ render:function() {
 ### Dynamic styles
 
 Static styles are cool, but what if you want dynamic styles? Recess has you covered for:
-* hover
-* active
-* focus
-* disabled
-* readonly
+* active (equivalent to :active)
+* after (equivalent to ::after)
+* before (equivalent to ::before)
+* disabled (equivalent to [disabled])
+* focus (equivalent to :focus)
+* hover (equivalent to :hover)
+* readonly equivalent to [readonly])
 
 First, you need to create a recess element with the *element* method:
 
