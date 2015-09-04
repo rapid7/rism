@@ -220,8 +220,8 @@ var styleObjects = [
                             ...otherProps
                         } = this.props,
                         style = this.state.style,
-                        after = utils.clone(states.after),
-                        before = utils.clone(states.before),
+                        after = states && utils.clone(states.after),
+                        before = states && utils.clone(states.before),
                         afterContent,
                         beforeContent;
 

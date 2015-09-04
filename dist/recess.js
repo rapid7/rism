@@ -322,8 +322,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var style = _props.style;
 	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "states", "style"]);
 	                var style = this.state.style;
-	                var after = _utils2["default"].clone(states.after);
-	                var before = _utils2["default"].clone(states.before);
+	                var after = states && _utils2["default"].clone(states.after);
+	                var before = states && _utils2["default"].clone(states.before);
 	                var afterContent;
 	                var beforeContent;
 
