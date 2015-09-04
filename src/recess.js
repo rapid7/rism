@@ -321,11 +321,13 @@ var styleObjects = [
 
         prefix:prefix,
 
-        render() {
+        render(component) {
             setResponsive.call(this,this.size);
 
             if(this._app) {
                 this._app.forceUpdate();
+            } else if(component) {
+                component.forceUpdate();
             } else {
                 utils.forIn(this._components,function(component){
                     component.forceUpdate();

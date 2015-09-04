@@ -425,11 +425,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    prefix: _reactPrefixer2["default"],
 
-	    render: function render() {
+	    render: function render(component) {
 	        setResponsive.call(this, this.size);
 
 	        if (this._app) {
 	            this._app.forceUpdate();
+	        } else if (component) {
+	            component.forceUpdate();
 	        } else {
 	            _utils2["default"].forIn(this._components, function (component) {
 	                component.forceUpdate();
