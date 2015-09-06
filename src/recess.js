@@ -79,8 +79,8 @@ function setResponsive(name) {
         utils.forEach(this._matchMedias._orders, function(query) {
             if (this._matchMedias[query].matches) {
                 utils.forIn(this._responsiveStyles[query],function(style,key){
-                    if(!this[key]) {
-                        this[key] = {};
+                    if(!this._styles[key]) {
+                        this._styles[key] = {};
                     }
 
                     this[key] = utils.merge(this._styles[key],prefix(style));
@@ -119,7 +119,7 @@ var {
         setBreakpoints,
         current,
         ...otherSizeProps
-    } = breakpoints,
+        } = breakpoints,
     styleObjects = [
         base,
         buttons,
@@ -134,6 +134,14 @@ var {
         nav,
         {...otherSizeProps}
     ],
+    defaultBreakpoints = {
+        lg:"(min-width:992px)",
+        md:"(min-width:768px)",
+        sm:"(min-width:568px)",
+        xl:"(min-width:1200px)",
+        xs:"(max-width:567px)"
+    },
+    sizesSet = false,
     recess = Object.create({
         application(app){
             setPropertyReadonly(this,"_app",app);
@@ -344,7 +352,7 @@ var {
         extend(styles) {
             utils.forIn(styles,function(style,key) {
                 if(/@media/.test(key)) {
-                    var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ': ');
+                    var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ":");
 
                     if(!this._responsiveStyles[cleanKey]) {
                         this._responsiveStyles[cleanKey] = {};
@@ -357,8 +365,8 @@ var {
                             this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
 
                             this._matchMedias._orders.sort(function(previous, current) {
-                                var p = previous.split(/\:\s+/)[1].replace("px)",""),
-                                    c = current.split(/\:\s+/)[1].replace("px)","");
+                                var p = previous.split(":")[1].replace("px)",""),
+                                    c = current.split(":")[1].replace("px)","");
 
                                 p = /em/.test(p) ? utils.parseInt(p.replace("em)","")) * 16 : utils.parseInt(p);
                                 c = /em/.test(c) ? utils.parseInt(c.replace("em)","")) * 16 : utils.parseInt(c);
@@ -385,6 +393,8 @@ var {
                 }
             }.bind(this));
 
+            setResponsive.call(this);
+
             return this;
         },
 
@@ -393,7 +403,6 @@ var {
 
             if(size === "xs" || size !== this.size) {
                 this.size = breakpoints.current();
-                console.log(this.size);
             }
 
             this.render();
@@ -413,6 +422,55 @@ var {
                     component.forceUpdate();
                 });
             }
+
+            return this;
+        },
+
+        sizes(bps) {
+            var bpObj = setBreakpoints(bps),
+                orderArr = Object.keys(bps).sort(function(previous, current) {
+                    return bpObj.breakpointWidths[previous] > bpObj.breakpointWidths[current];
+                });
+
+            if (sizesSet) {
+                console.warn("Warning: you are overriding the default sizing for application-wide responsive styles, and therefore will" +
+                    "erase any existing responsive styles that are not component-specific.");
+            } else {
+                sizesSet = true;
+            }
+
+            this._matchMedias = {
+                _orders:[]
+            };
+            this._responsiveStyles = {};
+            this.breakpoints = bps;
+            this.breakpointWidths = bpObj.breakpointWidths;
+
+            utils.forEach(orderArr, function(key) {
+                this._matchMedias[bps[key]] = bpObj.mqls[key];
+                this._matchMedias._orders[this._matchMedias._orders.length] = bps[key];
+            }.bind(this));
+
+            utils.forIn(bpObj.sizeFuncs, function(func, key) {
+                this[key] = func;
+            }.bind(this));
+
+            breakpoints.current = function() {
+                var s = "";
+
+                utils.forEachRight(orderArr, function(size) {
+                    if (bpObj.mqls[size].matches) {
+                        s = size;
+                        return false;
+                    }
+                });
+
+                return s;
+            };
+
+            this.size = breakpoints.current();
+
+            setResponsive.call(this);
 
             return this;
         },
@@ -613,11 +671,15 @@ setPropertyHidden(recess,"_app",undefined);
 setPropertyHidden(recess,"_appWarn",true);
 setPropertyReadonly(recess,"_component",{});
 setPropertyReadonly(recess,"_componentStyles",{});
-setPropertyReadonly(recess,"_matchMedias",{});
+setPropertyHidden(recess,"_matchMedias",{});
 setPropertyHidden(recess._matchMedias,"_orders",[]);
-setPropertyReadonly(recess,"_responsiveStyles",{});
+setPropertyHidden(recess,"_responsiveStyles",{});
+setPropertyHidden(recess,"_styles",{});
 setPropertyReadonly(recess,"_stylesheets",{});
-setPropertyPermanent(recess,"size",breakpoints.current());
+setPropertyPermanent(recess,"size","");
+
+// set default breakpoints
+recess.sizes(defaultBreakpoints);
 
 // assign responsive styles
 recess.extend(responsive);
@@ -627,7 +689,7 @@ utils.forEach(styleObjects,function(style){
     utils.assign(recess,style);
 });
 
-setPropertyReadonly(recess,"_styles",utils.clone(recess));
+recess._styles = utils.clone(recess);
 
 // set responsive properties
 setResponsive.call(recess);

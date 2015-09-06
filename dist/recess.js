@@ -195,8 +195,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _utils2["default"].forEach(this._matchMedias._orders, (function (query) {
 	            if (this._matchMedias[query].matches) {
 	                _utils2["default"].forIn(this._responsiveStyles[query], (function (style, key) {
-	                    if (!this[key]) {
-	                        this[key] = {};
+	                    if (!this._styles[key]) {
+	                        this._styles[key] = {};
 	                    }
 
 	                    this[key] = _utils2["default"].merge(this._styles[key], (0, _reactPrefixer2["default"])(style));
@@ -235,6 +235,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var current = _breakpoints2["default"].current;
 	var otherSizeProps = _objectWithoutProperties(_breakpoints2["default"], ["setBreakpoints", "current"]);
 	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _extends({}, otherSizeProps)];
+	var defaultBreakpoints = {
+	    lg: "(min-width:992px)",
+	    md: "(min-width:768px)",
+	    sm: "(min-width:568px)",
+	    xl: "(min-width:1200px)",
+	    xs: "(max-width:567px)"
+	};
+	var sizesSet = false;
 	var recess = Object.create({
 	    application: function application(app) {
 	        setPropertyReadonly(this, "_app", app);
@@ -446,7 +454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    extend: function extend(styles) {
 	        _utils2["default"].forIn(styles, (function (style, key) {
 	            if (/@media/.test(key)) {
-	                var cleanKey = key.replace("@media ", "").replace(/:(?![ ])/, ': ');
+	                var cleanKey = key.replace("@media ", "").replace(/:(?![ ])/, ":");
 
 	                if (!this._responsiveStyles[cleanKey]) {
 	                    this._responsiveStyles[cleanKey] = {};
@@ -459,8 +467,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
 
 	                        this._matchMedias._orders.sort(function (previous, current) {
-	                            var p = previous.split(/\:\s+/)[1].replace("px)", ""),
-	                                c = current.split(/\:\s+/)[1].replace("px)", "");
+	                            var p = previous.split(":")[1].replace("px)", ""),
+	                                c = current.split(":")[1].replace("px)", "");
 
 	                            p = /em/.test(p) ? _utils2["default"].parseInt(p.replace("em)", "")) * 16 : _utils2["default"].parseInt(p);
 	                            c = /em/.test(c) ? _utils2["default"].parseInt(c.replace("em)", "")) * 16 : _utils2["default"].parseInt(c);
@@ -487,6 +495,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }).bind(this));
 
+	        setResponsive.call(this);
+
 	        return this;
 	    },
 
@@ -495,7 +505,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (size === "xs" || size !== this.size) {
 	            this.size = _breakpoints2["default"].current();
-	            console.log(this.size);
 	        }
 
 	        this.render();
@@ -515,6 +524,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	                component.forceUpdate();
 	            });
 	        }
+
+	        return this;
+	    },
+
+	    sizes: function sizes(bps) {
+	        var bpObj = setBreakpoints(bps),
+	            orderArr = Object.keys(bps).sort(function (previous, current) {
+	            return bpObj.breakpointWidths[previous] > bpObj.breakpointWidths[current];
+	        });
+
+	        if (sizesSet) {
+	            console.warn("Warning: you are overriding the default sizing for application-wide responsive styles, and therefore will" + "erase any existing responsive styles that are not component-specific.");
+	        } else {
+	            sizesSet = true;
+	        }
+
+	        this._matchMedias = {
+	            _orders: []
+	        };
+	        this._responsiveStyles = {};
+	        this.breakpoints = bps;
+	        this.breakpointWidths = bpObj.breakpointWidths;
+
+	        _utils2["default"].forEach(orderArr, (function (key) {
+	            this._matchMedias[bps[key]] = bpObj.mqls[key];
+	            this._matchMedias._orders[this._matchMedias._orders.length] = bps[key];
+	        }).bind(this));
+
+	        _utils2["default"].forIn(bpObj.sizeFuncs, (function (func, key) {
+	            this[key] = func;
+	        }).bind(this));
+
+	        _breakpoints2["default"].current = function () {
+	            var s = "";
+
+	            _utils2["default"].forEachRight(orderArr, function (size) {
+	                if (bpObj.mqls[size].matches) {
+	                    s = size;
+	                    return false;
+	                }
+	            });
+
+	            return s;
+	        };
+
+	        this.size = _breakpoints2["default"].current();
+
+	        setResponsive.call(this);
 
 	        return this;
 	    },
@@ -720,11 +777,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	setPropertyHidden(recess, "_appWarn", true);
 	setPropertyReadonly(recess, "_component", {});
 	setPropertyReadonly(recess, "_componentStyles", {});
-	setPropertyReadonly(recess, "_matchMedias", {});
+	setPropertyHidden(recess, "_matchMedias", {});
 	setPropertyHidden(recess._matchMedias, "_orders", []);
-	setPropertyReadonly(recess, "_responsiveStyles", {});
+	setPropertyHidden(recess, "_responsiveStyles", {});
+	setPropertyHidden(recess, "_styles", {});
 	setPropertyReadonly(recess, "_stylesheets", {});
-	setPropertyPermanent(recess, "size", _breakpoints2["default"].current());
+	setPropertyPermanent(recess, "size", "");
+
+	// set default breakpoints
+	recess.sizes(defaultBreakpoints);
 
 	// assign responsive styles
 	recess.extend(_responsive2["default"]);
@@ -734,7 +795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _utils2["default"].assign(recess, style);
 	});
 
-	setPropertyReadonly(recess, "_styles", _utils2["default"].clone(recess));
+	recess._styles = _utils2["default"].clone(recess);
 
 	// set responsive properties
 	setResponsive.call(recess);
@@ -1115,6 +1176,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            len = arr.length;
 
 	        for (; i < len; i++) {
+	            if (cb(arr[i], i, arr) === false) {
+	                break;
+	            }
+	        }
+	    },
+
+	    forEachRight: function forEachRight(arr, cb) {
+	        if (!this.isArray(arr) && !this.isArguments(arr)) {
+	            console.error("Error: first parameter needs to be an array.");
+	            return;
+	        }
+
+	        var i = arr.length;
+
+	        for (; i--;) {
 	            if (cb(arr[i], i, arr) === false) {
 	                break;
 	            }
@@ -2830,18 +2906,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var breakpoints = {
-	    lg: "(min-width:992px)",
-	    md: "(min-width:768px)",
-	    sm: "(min-width:568px)",
-	    xl: "(min-width:1200px)",
-	    xs: "(max-width:567px)"
-	},
-	    breakpointWidths = {},
-	    sizeFuncs = {},
-	    mqls = {};
+	function setBreakpoints(breakpoints) {
+	    var breakpointWidths = {},
+	        sizeFuncs = {},
+	        mqls = {};
 
-	function setBreakpoints() {
 	    _utils2["default"].forIn(breakpoints, function (query, key) {
 	        var width = query.split(":")[1].replace("px)", "");
 
@@ -2852,30 +2921,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return mqls[key].matches;
 	        };
 	    });
+
+	    return {
+	        breakpoints: breakpoints,
+	        breakpointWidths: breakpointWidths,
+	        current: undefined,
+	        mqls: mqls,
+	        sizeFuncs: sizeFuncs
+	    };
 	}
 
-	setBreakpoints();
-
 	var ret = {
-	    breakpoints: breakpoints,
-	    breakpointWidths: breakpointWidths,
-	    setBreakpoints: setBreakpoints,
-	    current: function current() {
-	        if (mqls.xl.matches) {
-	            return "xl";
-	        } else if (mqls.lg.matches) {
-	            return "lg";
-	        } else if (mqls.md.matches) {
-	            return "md";
-	        } else if (mqls.sm.matches) {
-	            return "sm";
-	        }
-
-	        return "xs";
-	    }
+	    setBreakpoints: setBreakpoints
 	};
-
-	_utils2["default"].assign(ret, sizeFuncs);
 
 	exports["default"] = ret;
 	module.exports = exports["default"];
@@ -2907,7 +2965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _utils2 = _interopRequireDefault(_utils);
 
 	exports["default"] = {
-	    "@media screen and (max-width:567px)": {
+	    "@media (max-width:567px)": {
 	        containerFixed: {
 	            width: "100%"
 	        },
@@ -2930,7 +2988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _variables2["default"].fontSize
 	        }
 	    },
-	    "@media screen and (min-width:568px)": {
+	    "@media (min-width:568px)": {
 	        containerFixed: {
 	            width: 568 - _variables2["default"].gutter
 	        },
@@ -2953,7 +3011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _variables2["default"].fontSize
 	        }
 	    },
-	    "@media screen and (min-width:768px)": {
+	    "@media (min-width:768px)": {
 	        containerFixed: {
 	            width: 768 - _variables2["default"].gutter
 	        },
@@ -2976,7 +3034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _variables2["default"].fontSize * 1.125
 	        }
 	    },
-	    "@media screen and (min-width:992px)": {
+	    "@media (min-width:992px)": {
 	        containerFixed: {
 	            width: 992 - _variables2["default"].gutter
 	        },
@@ -2999,7 +3057,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _variables2["default"].fontSize * 1.25
 	        }
 	    },
-	    "@media screen and (min-width:1200px)": {
+	    "@media (min-width:1200px)": {
 	        containerFixed: {
 	            width: 1200 - _variables2["default"].gutter
 	        },

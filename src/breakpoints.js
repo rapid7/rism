@@ -6,18 +6,11 @@
 
 import utils from "./utils";
 
-var breakpoints = {
-        lg:"(min-width:992px)",
-        md:"(min-width:768px)",
-        sm:"(min-width:568px)",
-        xl:"(min-width:1200px)",
-        xs:"(max-width:567px)"
-    },
-    breakpointWidths = {},
-    sizeFuncs = {},
-    mqls = {};
+function setBreakpoints(breakpoints) {
+    var breakpointWidths = {},
+        sizeFuncs = {},
+        mqls = {};
 
-function setBreakpoints() {
     utils.forIn(breakpoints,function(query,key) {
         var width = query.split(":")[1].replace("px)","");
 
@@ -28,29 +21,18 @@ function setBreakpoints() {
             return mqls[key].matches;
         };
     });
+
+    return {
+        breakpoints:breakpoints,
+        breakpointWidths:breakpointWidths,
+        current:undefined,
+        mqls:mqls,
+        sizeFuncs:sizeFuncs
+    };
 }
 
-setBreakpoints();
-
 let ret = {
-    breakpoints:breakpoints,
-    breakpointWidths:breakpointWidths,
-    setBreakpoints:setBreakpoints,
-    current() {
-        if(mqls.xl.matches) {
-            return "xl";
-        } else if(mqls.lg.matches) {
-            return "lg";
-        } else if(mqls.md.matches) {
-            return "md";
-        } else if(mqls.sm.matches) {
-            return "sm";
-        }
-
-        return "xs";
-    }
+    setBreakpoints:setBreakpoints
 };
-
-utils.assign(ret,sizeFuncs);
 
 export default ret;

@@ -8,7 +8,7 @@ import variables from "./variables";
 import utils from "./utils";
 
 export default {
-    "@media screen and (max-width:567px)":{
+    "@media (max-width:567px)":{
         containerFixed:{
             width:"100%"
         },
@@ -31,7 +31,7 @@ export default {
             fontSize:variables.fontSize
         }
     },
-    "@media screen and (min-width:568px)":{
+    "@media (min-width:568px)":{
         containerFixed:{
             width:568 - variables.gutter
         },
@@ -54,7 +54,7 @@ export default {
             fontSize:variables.fontSize
         }
     },
-    "@media screen and (min-width:768px)":{
+    "@media (min-width:768px)":{
         containerFixed:{
             width:768 - variables.gutter
         },
@@ -77,7 +77,7 @@ export default {
             fontSize:variables.fontSize * 1.125
         }
     },
-    "@media screen and (min-width:992px)":{
+    "@media (min-width:992px)":{
         containerFixed:{
             width:992 - variables.gutter
         },
@@ -100,7 +100,7 @@ export default {
             fontSize:variables.fontSize * 1.25
         }
     },
-    "@media screen and (min-width:1200px)":{
+    "@media (min-width:1200px)":{
         containerFixed:{
             width:1200 - variables.gutter
         },
