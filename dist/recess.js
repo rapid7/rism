@@ -132,9 +132,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _sizes = __webpack_require__(21);
+	var _breakpoints = __webpack_require__(21);
 
-	var _sizes2 = _interopRequireDefault(_sizes);
+	var _breakpoints2 = _interopRequireDefault(_breakpoints);
 
 	var _responsive = __webpack_require__(22);
 
@@ -231,8 +231,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	// set up stuff for creation of normal object
-	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _sizes2["default"]],
-	    recess = Object.create({
+	var setBreakpoints = _breakpoints2["default"].setBreakpoints;
+	var current = _breakpoints2["default"].current;
+	var otherSizeProps = _objectWithoutProperties(_breakpoints2["default"], ["setBreakpoints", "current"]);
+	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _extends({}, otherSizeProps)];
+	var recess = Object.create({
 	    application: function application(app) {
 	        setPropertyReadonly(this, "_app", app);
 	        return this;
@@ -487,19 +490,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this;
 	    },
 
-	    onResize: function onResize() {
-	        var size = _sizes2["default"].sizeName();
+	    onResize: _.debounce(function () {
+	        var size = _breakpoints2["default"].current();
 
 	        if (size === "xs" || size !== this.size) {
-	            this.size = _sizes2["default"].sizeName();
-	            this.render();
+	            this.size = _breakpoints2["default"].current();
+	            console.log(this.size);
 	        }
-	    },
+
+	        this.render();
+	    }, 1),
 
 	    prefix: _reactPrefixer2["default"],
 
 	    render: function render(component) {
-	        setResponsive.call(this, this.size);
+	        setResponsive.call(this);
 
 	        if (this._app) {
 	            this._app.forceUpdate();
@@ -539,19 +544,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var type = component._reactInternalInstance._currentElement.type,
 	                _name = type.displayName || type.name;
 
-	            if (_utils2["default"].isUndefined(_states)) {
-	                return this._componentStateStyles[_name];
-	            }
-
-	            if (_utils2["default"].isUndefined(this._component[_name])) {
+	            if (!this._component[_name]) {
 	                this._component[_name] = component;
 	            }
 
-	            if (_utils2["default"].isUndefined(this._componentStateStyles[_name])) {
-	                this._componentStateStyles[_name] = {};
+	            if (!this._componentStyles[_name]._stateStyles) {
+	                this._componentStyles[_name]._stateStyles = {};
+	                setPropertyHidden(this._componentStyles[_name], "_stateStyles", {});
 	            }
 
-	            this._componentStateStyles[_name] = _utils2["default"].merge(this._componentStateStyles[_name], (0, _reactPrefixer2["default"])(_states));
+	            if (_utils2["default"].isUndefined(_states)) {
+	                return this._componentStyles[_name]._stateStyles;
+	            }
+
+	            this._componentStyles[_name]._stateStyles = _utils2["default"].merge(this._componentStyles[_name]._stateStyles, (0, _reactPrefixer2["default"])(_states));
 	        }
 
 	        return this;
@@ -593,12 +599,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    };
 	                }
 
-	                if (_utils2["default"].isUndefined(_this._component[name])) {
+	                if (!_this._component[name]) {
 	                    _this._component[name] = component;
 	                }
 
-	                if (_utils2["default"].isUndefined(_this._componentStyles[name])) {
+	                if (!_this._componentStyles[name]) {
 	                    _this._componentStyles[name] = {};
+	                    setPropertyHidden(_this._componentStyles[name], "_styles", {});
+	                    setPropertyHidden(_this._componentStyles[name], "_matchMedias", {});
+	                    setPropertyHidden(_this._componentStyles[name]._matchMedias, "_orders", []);
+	                    setPropertyHidden(_this._componentStyles[name], "_responsiveStyles", {});
 	                }
 
 	                // if there is a media query in there, we need to do some extra parsing,
@@ -714,7 +724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	setPropertyHidden(recess._matchMedias, "_orders", []);
 	setPropertyReadonly(recess, "_responsiveStyles", {});
 	setPropertyReadonly(recess, "_stylesheets", {});
-	setPropertyPermanent(recess, "size", _sizes2["default"].sizeName());
+	setPropertyPermanent(recess, "size", _breakpoints2["default"].current());
 
 	// assign responsive styles
 	recess.extend(_responsive2["default"]);
@@ -724,8 +734,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _utils2["default"].assign(recess, style);
 	});
 
+	setPropertyReadonly(recess, "_styles", _utils2["default"].clone(recess));
+
 	// set responsive properties
-	setResponsive.call(recess, recess.size);
+	setResponsive.call(recess);
 
 	// add the basic stylesheet
 	recess.stylesheet("Recess", (0, _reactPrefixer2["default"])({
@@ -2825,15 +2837,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    xl: "(min-width:1200px)",
 	    xs: "(max-width:567px)"
 	},
+	    breakpointWidths = {},
 	    sizeFuncs = {},
-	    sizes = {},
 	    mqls = {};
 
 	function setBreakpoints() {
 	    _utils2["default"].forIn(breakpoints, function (query, key) {
 	        var width = query.split(":")[1].replace("px)", "");
-	        sizes[key] = /em/.test(width) ? _utils2["default"].parseInt(width.replace("em)", "")) * 16 : _utils2["default"].parseInt(width);
+
+	        breakpointWidths[key] = /em/.test(width) ? _utils2["default"].parseInt(width.replace("em)", "")) * 16 : _utils2["default"].parseInt(width);
 	        mqls[key] = window.matchMedia(query);
+
 	        sizeFuncs["is" + key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()] = function () {
 	            return mqls[key].matches;
 	        };
@@ -2844,8 +2858,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ret = {
 	    breakpoints: breakpoints,
+	    breakpointWidths: breakpointWidths,
 	    setBreakpoints: setBreakpoints,
-	    sizeName: function sizeName() {
+	    current: function current() {
 	        if (mqls.xl.matches) {
 	            return "xl";
 	        } else if (mqls.lg.matches) {
@@ -2857,8 +2872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return "xs";
-	    },
-	    sizes: sizes
+	    }
 	};
 
 	_utils2["default"].assign(ret, sizeFuncs);
@@ -2887,10 +2901,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _variables = __webpack_require__(9);
 
 	var _variables2 = _interopRequireDefault(_variables);
-
-	var _sizes = __webpack_require__(21);
-
-	var _sizes2 = _interopRequireDefault(_sizes);
 
 	var _utils = __webpack_require__(7);
 
@@ -2922,7 +2932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    "@media screen and (min-width:568px)": {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes.sm - _variables2["default"].gutter
+	            width: 568 - _variables2["default"].gutter
 	        },
 	        h1: {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5)
@@ -2945,7 +2955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    "@media screen and (min-width:768px)": {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes.md - _variables2["default"].gutter
+	            width: 768 - _variables2["default"].gutter
 	        },
 	        h1: {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.125)
@@ -2968,7 +2978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    "@media screen and (min-width:992px)": {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes.lg - _variables2["default"].gutter
+	            width: 992 - _variables2["default"].gutter
 	        },
 	        h1: {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.25)
@@ -2991,7 +3001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    "@media screen and (min-width:1200px)": {
 	        containerFixed: {
-	            width: _sizes2["default"].sizes.xl - _variables2["default"].gutter
+	            width: 1200 - _variables2["default"].gutter
 	        },
 	        h1: {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.4)

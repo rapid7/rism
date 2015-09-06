@@ -21,7 +21,7 @@ import images from "./images";
 import labels from "./labels";
 import listGroup from "./listGroup";
 import nav from "./nav";
-import sizes from "./sizes";
+import breakpoints from "./breakpoints";
 import responsive from "./responsive";
 
 import "normalize.css";
@@ -115,7 +115,12 @@ function setResponsiveComponents(name) {
 }
 
 // set up stuff for creation of normal object
-var styleObjects = [
+var {
+        setBreakpoints,
+        current,
+        ...otherSizeProps
+    } = breakpoints,
+    styleObjects = [
         base,
         buttons,
         card,
@@ -127,7 +132,7 @@ var styleObjects = [
         labels,
         listGroup,
         nav,
-        sizes
+        {...otherSizeProps}
     ],
     recess = Object.create({
         application(app){
@@ -260,7 +265,7 @@ var styleObjects = [
                             states,
                             style,
                             ...otherProps
-                        } = this.props,
+                            } = this.props,
                         style = this.state.style,
                         after = states && utils.clone(states.after),
                         before = states && utils.clone(states.before),
@@ -383,19 +388,21 @@ var styleObjects = [
             return this;
         },
 
-        onResize() {
-            var size = sizes.sizeName();
+        onResize:_.debounce(function() {
+            var size = breakpoints.current();
 
             if(size === "xs" || size !== this.size) {
-                this.size = sizes.sizeName();
-                this.render();
+                this.size = breakpoints.current();
+                console.log(this.size);
             }
-        },
+
+            this.render();
+        }, 1),
 
         prefix:prefix,
 
         render(component) {
-            setResponsive.call(this,this.size);
+            setResponsive.call(this);
 
             if(this._app) {
                 this._app.forceUpdate();
@@ -437,19 +444,21 @@ var styleObjects = [
                 let type = component._reactInternalInstance._currentElement.type,
                     name = type.displayName || type.name;
 
-                if(utils.isUndefined(states)) {
-                    return this._componentStateStyles[name];
-                }
-
-                if(utils.isUndefined(this._component[name])) {
+                if(!this._component[name]) {
                     this._component[name] = component;
                 }
 
-                if(utils.isUndefined(this._componentStateStyles[name])) {
-                    this._componentStateStyles[name] = {};
+                if(!this._componentStyles[name]._stateStyles) {
+                    this._componentStyles[name]._stateStyles = {};
+                    setPropertyHidden(this._componentStyles[name],"_stateStyles",{});
+
                 }
 
-                this._componentStateStyles[name] = utils.merge(this._componentStateStyles[name],prefix(states));
+                if(utils.isUndefined(states)) {
+                    return this._componentStyles[name]._stateStyles;
+                }
+
+                this._componentStyles[name]._stateStyles = utils.merge(this._componentStyles[name]._stateStyles,prefix(states));
             }
 
             return this;
@@ -486,12 +495,16 @@ var styleObjects = [
                     return this._componentStyles[name];
                 }
 
-                if(utils.isUndefined(this._component[name])) {
+                if(!this._component[name]) {
                     this._component[name] = component;
                 }
 
-                if(utils.isUndefined(this._componentStyles[name])) {
+                if(!this._componentStyles[name]) {
                     this._componentStyles[name] = {};
+                    setPropertyHidden(this._componentStyles[name],"_styles",{});
+                    setPropertyHidden(this._componentStyles[name],"_matchMedias",{});
+                    setPropertyHidden(this._componentStyles[name]._matchMedias,"_orders",[]);
+                    setPropertyHidden(this._componentStyles[name],"_responsiveStyles",{});
                 }
 
                 // if there is a media query in there, we need to do some extra parsing,
@@ -604,7 +617,7 @@ setPropertyReadonly(recess,"_matchMedias",{});
 setPropertyHidden(recess._matchMedias,"_orders",[]);
 setPropertyReadonly(recess,"_responsiveStyles",{});
 setPropertyReadonly(recess,"_stylesheets",{});
-setPropertyPermanent(recess,"size",sizes.sizeName());
+setPropertyPermanent(recess,"size",breakpoints.current());
 
 // assign responsive styles
 recess.extend(responsive);
@@ -614,8 +627,10 @@ utils.forEach(styleObjects,function(style){
     utils.assign(recess,style);
 });
 
+setPropertyReadonly(recess,"_styles",utils.clone(recess));
+
 // set responsive properties
-setResponsive.call(recess,recess.size);
+setResponsive.call(recess);
 
 // add the basic stylesheet
 recess.stylesheet("Recess",prefix({

@@ -5,7 +5,6 @@
  ******************************************************************************/
 
 import variables from "./variables";
-import sizes from "./sizes";
 import utils from "./utils";
 
 export default {
@@ -34,7 +33,7 @@ export default {
     },
     "@media screen and (min-width:568px)":{
         containerFixed:{
-            width:sizes.sizes.sm - variables.gutter
+            width:568 - variables.gutter
         },
         h1:{
             fontSize:utils.ceil(variables.fontSize * 2.5)
@@ -57,7 +56,7 @@ export default {
     },
     "@media screen and (min-width:768px)":{
         containerFixed:{
-            width:sizes.sizes.md - variables.gutter
+            width:768 - variables.gutter
         },
         h1:{
             fontSize:utils.ceil(variables.fontSize * 2.5 * 1.125)
@@ -80,7 +79,7 @@ export default {
     },
     "@media screen and (min-width:992px)":{
         containerFixed:{
-            width:sizes.sizes.lg - variables.gutter
+            width:992 - variables.gutter
         },
         h1:{
             fontSize:utils.ceil(variables.fontSize * 2.5 * 1.25)
@@ -103,7 +102,7 @@ export default {
     },
     "@media screen and (min-width:1200px)":{
         containerFixed:{
-            width:sizes.sizes.xl - variables.gutter
+            width:1200 - variables.gutter
         },
         h1:{
             fontSize:utils.ceil(variables.fontSize * 2.5 * 1.4)

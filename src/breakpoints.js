@@ -13,15 +13,17 @@ var breakpoints = {
         xl:"(min-width:1200px)",
         xs:"(max-width:567px)"
     },
+    breakpointWidths = {},
     sizeFuncs = {},
-    sizes = {},
     mqls = {};
 
 function setBreakpoints() {
     utils.forIn(breakpoints,function(query,key) {
         var width = query.split(":")[1].replace("px)","");
-        sizes[key] = /em/.test(width) ? utils.parseInt(width.replace("em)","")) * 16 : utils.parseInt(width);
+
+        breakpointWidths[key] = /em/.test(width) ? utils.parseInt(width.replace("em)","")) * 16 : utils.parseInt(width);
         mqls[key] = window.matchMedia(query);
+
         sizeFuncs["is" + key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()] = function() {
             return mqls[key].matches;
         };
@@ -32,8 +34,9 @@ setBreakpoints();
 
 let ret = {
     breakpoints:breakpoints,
+    breakpointWidths:breakpointWidths,
     setBreakpoints:setBreakpoints,
-    sizeName() {
+    current() {
         if(mqls.xl.matches) {
             return "xl";
         } else if(mqls.lg.matches) {
@@ -45,8 +48,7 @@ let ret = {
         }
 
         return "xs";
-    },
-    sizes:sizes
+    }
 };
 
 utils.assign(ret,sizeFuncs);
