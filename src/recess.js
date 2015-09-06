@@ -66,10 +66,52 @@ function combineStyles() {
 }
 
 // set responsive values
-function setResponsive(size) {
-    utils.forIn(responsive(size),function(style,key){
-        utils.assign(this[key],prefix(style));
-    }.bind(this));
+function setResponsive(name) {
+    if(name) {
+        setResponsiveComponents.call(this,name);
+    } else {
+        utils.forEach(Object.keys(this._component), function(name) {
+            setResponsiveComponents.call(this,name);
+        }.bind(this));
+    }
+
+    if(utils.isUndefined(name)) {
+        utils.forEach(this._matchMedias._orders, function(query) {
+            if (this._matchMedias[query].matches) {
+                utils.forIn(this._responsiveStyles[query],function(style,key){
+                    if(!this[key]) {
+                        this[key] = {};
+                    }
+
+                    this[key] = utils.merge(this._styles[key],prefix(style));
+                }.bind(this));
+            }
+        }.bind(this));
+    }
+}
+
+function setResponsiveComponents(name) {
+    if(this._componentStyles[name]._matchMedias) {
+        utils.forIn(this._componentStyles[name], function(style, key) {
+            this._componentStyles[name][key] = utils.clone(this._componentStyles[name]._styles[key]);
+        }.bind(this));
+
+        utils.forEach(this._componentStyles[name]._matchMedias._orders, function(query) {
+            if (this._componentStyles[name]._matchMedias[query].matches) {
+                utils.forIn(this._componentStyles[name]._responsiveStyles[query],function(style,key){
+                    if(!this._componentStyles[name][key]) {
+                        this._componentStyles[name][key] = {};
+                    }
+
+                    if(!this._componentStyles[name]._styles[key]) {
+                        this._componentStyles[name]._styles[key] = {};
+                    }
+
+                    this._componentStyles[name][key] = utils.merge(this._componentStyles[name]._styles[key],prefix(style));
+                }.bind(this));
+            }
+        }.bind(this));
+    }
 }
 
 // set up stuff for creation of normal object
@@ -296,14 +338,45 @@ var styleObjects = [
 
         extend(styles) {
             utils.forIn(styles,function(style,key) {
-                if(!this[key]) {
-                    this[key] = {}
-                }
+                if(/@media/.test(key)) {
+                    var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ': ');
 
-                if(utils.isFunction(style)) {
-                    this[key] = style;
+                    if(!this._responsiveStyles[cleanKey]) {
+                        this._responsiveStyles[cleanKey] = {};
+                    }
+
+                    if(!this._matchMedias[cleanKey]) {
+                        this._matchMedias[cleanKey] = window.matchMedia(cleanKey);
+
+                        if(this._matchMedias._orders.indexOf(cleanKey) === -1) {
+                            this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
+
+                            this._matchMedias._orders.sort(function(previous, current) {
+                                var p = previous.split(/\:\s+/)[1].replace("px)",""),
+                                    c = current.split(/\:\s+/)[1].replace("px)","");
+
+                                p = /em/.test(p) ? utils.parseInt(p.replace("em)","")) * 16 : utils.parseInt(p);
+                                c = /em/.test(c) ? utils.parseInt(c.replace("em)","")) * 16 : utils.parseInt(c);
+
+                                return p > c;
+                            });
+                        }
+                    }
+
+                    utils.forIn(style,function(responsiveStyle,responsiveKey) {
+                        if(!this._responsiveStyles[cleanKey][responsiveKey]) {
+                            this._responsiveStyles[cleanKey][responsiveKey] = {};
+                        }
+
+                        utils.assign(this._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
+                    }.bind(this));
                 } else {
-                    utils.assign(this[key],prefix(style));
+                    if(!this[key]) {
+                        this[key] = {}
+                    }
+
+                    this[key] = utils.isFunction(style) ? style : utils.merge(this[key],prefix(style));
+                    this._styles[key] = utils.clone(this[key]);
                 }
             }.bind(this));
 
@@ -421,7 +494,56 @@ var styleObjects = [
                     this._componentStyles[name] = {};
                 }
 
-                this._componentStyles[name] = utils.merge(this._componentStyles[name],prefix(styles));
+                // if there is a media query in there, we need to do some extra parsing,
+                // otherwise we can just do a straight merge
+                if(/@media/.test(JSON.stringify(styles))) {
+                    utils.forIn(styles, function(style,key) {
+                        if(/@media/.test(key)) {
+                            var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ': ');
+
+                            if(!this._componentStyles[name]._responsiveStyles[cleanKey]) {
+                                this._componentStyles[name]._responsiveStyles[cleanKey] = {};
+                            }
+
+                            if(!this._componentStyles[name]._matchMedias[cleanKey]) {
+                                this._componentStyles[name]._matchMedias[cleanKey] = window.matchMedia(cleanKey);
+
+                                if(this._componentStyles[name]._matchMedias._orders.indexOf(cleanKey) === -1) {
+                                    this._componentStyles[name]._matchMedias._orders[this._componentStyles[name]._matchMedias._orders.length] = cleanKey;
+
+                                    this._componentStyles[name]._matchMedias._orders.sort(function(previous, current) {
+                                        var p = previous.split(/\:\s+/)[1].replace("px)",""),
+                                            c = current.split(/\:\s+/)[1].replace("px)","");
+
+                                        p = /em/.test(p) ? utils.parseInt(p.replace("em)","")) * 16 : utils.parseInt(p);
+                                        c = /em/.test(c) ? utils.parseInt(c.replace("em)","")) * 16 : utils.parseInt(c);
+
+                                        return p > c;
+                                    });
+                                }
+                            }
+
+                            utils.forIn(style,function(responsiveStyle,responsiveKey) {
+                                if(!this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey]) {
+                                    this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
+                                }
+
+                                utils.assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
+                            }.bind(this));
+                        } else {
+                            if (!this._componentStyles[name][key]) {
+                                this._componentStyles[name][key] = {}
+                            }
+
+                            this._componentStyles[name][key] = utils.merge(this._componentStyles[name][key], style);
+                            this._componentStyles[name]._styles[key] = utils.clone(this._componentStyles[name][key]);
+                        }
+                    }.bind(this));
+
+                    setResponsive.call(this,name);
+                } else {
+                    this._componentStyles[name] = utils.merge(this._componentStyles[name], styles);
+                }
             }
 
             return this;
@@ -477,10 +599,15 @@ var styleObjects = [
 setPropertyHidden(recess,"_app",undefined);
 setPropertyHidden(recess,"_appWarn",true);
 setPropertyReadonly(recess,"_component",{});
-setPropertyReadonly(recess,"_componentStateStyles",{});
 setPropertyReadonly(recess,"_componentStyles",{});
+setPropertyReadonly(recess,"_matchMedias",{});
+setPropertyHidden(recess._matchMedias,"_orders",[]);
+setPropertyReadonly(recess,"_responsiveStyles",{});
 setPropertyReadonly(recess,"_stylesheets",{});
 setPropertyPermanent(recess,"size",sizes.sizeName());
+
+// assign responsive styles
+recess.extend(responsive);
 
 // add external styles to main object
 utils.forEach(styleObjects,function(style){
