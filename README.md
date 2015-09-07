@@ -285,7 +285,7 @@ componentWillMount:function() {
 }
 ```
 
-Either way, your stylesheet will be generated and injected into the document's *head*. The one thing is that object declarations require the "px" declaration, which is normally coalesced for you by React (meaning *{width:600}* turns into *width: 600px*). I'm working on a fix, but for now you need to explicitly declare *px*.
+Either way, your stylesheet will be generated and injected into the document's *head*. Additionally, you can use unitless declarations like you with React (for example, *{width:600}*) and the stylesheet creator will automatically apply the *px* to it when applicable.
 
 ### Prefixes
 
@@ -316,6 +316,5 @@ By default, all styles that you store by any method are autoprefixed, with the e
 
 ### TODOS
 
-* Allow number-to-value declarations in stylesheets, such as *{width:600}* instead of requiring "px"
 * Sharpen up the responsive styling so that you can combine the default responsive size with custom styles in your component-specific styles
 * Bolster default styles with more stuff (any requests, please ask!)

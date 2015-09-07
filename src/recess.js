@@ -23,6 +23,7 @@ import listGroup from "./listGroup";
 import nav from "./nav";
 import breakpoints from "./breakpoints";
 import responsive from "./responsive";
+import unitlessValues from "./unitlessValues";
 
 import "normalize.css";
 
@@ -642,6 +643,12 @@ var {
 
                 utils.forIn(styles,function(style,key) {
                     str += key + "{";
+
+                    utils.forIn(style, function(value, property) {
+                        if (utils.isNumber(value) && unitlessValues.indexOf(property) === -1) {
+                            style[property] = value + "px";
+                        }
+                    });
 
                     style = prefix(style);
 

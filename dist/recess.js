@@ -140,7 +140,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _responsive2 = _interopRequireDefault(_responsive);
 
-	__webpack_require__(23);
+	var _unitlessValues = __webpack_require__(23);
+
+	var _unitlessValues2 = _interopRequireDefault(_unitlessValues);
+
+	__webpack_require__(24);
 
 	// functions to set properties in different ways
 	function setPropertyHidden(obj, prop, value) {
@@ -748,6 +752,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            _utils2["default"].forIn(styles, function (style, key) {
 	                str += key + "{";
+
+	                _utils2["default"].forIn(style, function (value, property) {
+	                    if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(property) === -1) {
+	                        style[property] = value + "px";
+	                    }
+	                });
 
 	                style = (0, _reactPrefixer2["default"])(style);
 
@@ -3085,9 +3095,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 23 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports["default"] = ["columnCount", "columns", "counterIncrement", "counterReset", "flexGrow", "flexShrink", "fontWeight", "lineHeight", "opacity", "order", "pitchRange", "richness", "stress", "volume", "zIndex"];
+	module.exports = exports["default"];
+
+/***/ },
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(24)();
+	exports = module.exports = __webpack_require__(25)();
 	// imports
 
 
@@ -3098,7 +3120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	/*
