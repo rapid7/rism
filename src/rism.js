@@ -500,17 +500,16 @@ var {
                     return this;
                 }
 
-                let type = component._reactInternalInstance._currentElement.type,
-                    name = type.displayName || type.name;
+                let name = component.displayName;
 
                 if(!this._component[name]) {
                     this._component[name] = component;
                 }
 
-                if(!this._componentStyles[name]._stateStyles) {
+                if(!this._componentStyles[name]) {
+                    this._componentStyles[name] = {};
                     this._componentStyles[name]._stateStyles = {};
                     setPropertyHidden(this._componentStyles[name],"_stateStyles",{});
-
                 }
 
                 if(utils.isUndefined(states)) {
@@ -547,8 +546,7 @@ var {
                     return this;
                 }
 
-                let type = component._reactInternalInstance._currentElement.type,
-                    name = type.displayName || type.name;
+                let name = component.displayName;
 
                 if(utils.isUndefined(styles)) {
                     return this._componentStyles[name];

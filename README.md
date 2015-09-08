@@ -66,7 +66,14 @@ With that same interface you can also create new properties that don't already e
 
 ### Component-specific styles
 
-You can also create component-specific styles that will not pollute the default styles. This is a convenient way to separate your styles by concerns.
+You can also create component-specific styles that will not pollute the default styles. This is a convenient way to separate your styles by concerns. First, give your component a *displayName* when you create the class:
+```
+React.createClass({
+    displayName:"Foo",
+    ...
+});
+```
+This is required so that rism can identify the component on minification. Then, in your *componentWillMount* function, you can add as many styles to the component as you would like:
 
 ```
 componentWillMount:function() {

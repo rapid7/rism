@@ -602,14 +602,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return this;
 	            }
 
-	            var type = component._reactInternalInstance._currentElement.type,
-	                _name = type.displayName || type.name;
+	            var _name = component.displayName;
 
 	            if (!this._component[_name]) {
 	                this._component[_name] = component;
 	            }
 
-	            if (!this._componentStyles[_name]._stateStyles) {
+	            if (!this._componentStyles[_name]) {
+	                this._componentStyles[_name] = {};
 	                this._componentStyles[_name]._stateStyles = {};
 	                setPropertyHidden(this._componentStyles[_name], "_stateStyles", {});
 	            }
@@ -651,8 +651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    };
 	                }
 
-	                var type = component._reactInternalInstance._currentElement.type,
-	                    name = type.displayName || type.name;
+	                var name = component.displayName;
 
 	                if (_utils2["default"].isUndefined(_styles)) {
 	                    return {
