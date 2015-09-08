@@ -3,7 +3,7 @@ var webpack = require("webpack"),
 
 module.exports = merge({},require("./webpack.config"),{
     output:{
-        filename:"recess.min.js"
+        filename:"rism.min.js"
     },
 
     plugins:[

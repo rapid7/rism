@@ -4,6 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import recess from "./recess";
+import rism from "./rism";
 
-export default recess;
+export default rism;

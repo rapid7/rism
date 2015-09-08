@@ -143,7 +143,7 @@ var {
         xs:"(max-width:567px)"
     },
     sizesSet = false,
-    recess = Object.create({
+    rism = Object.create({
         application(app){
             setPropertyReadonly(this,"_app",app);
             return this;
@@ -480,7 +480,7 @@ var {
             if(!this._app && this._appWarn) {
                 console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
                     "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
-                    "will increase performance of Recess and is highly advised.");
+                    "will increase performance of rism and is highly advised.");
 
                 this._appWarn = false;
             }
@@ -527,7 +527,7 @@ var {
             if(!this._app && this._appWarn) {
                 console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " +
                     "you are using a different library as your application base, however if you are using React + Flux then providing an application " +
-                    "will increase performance of Recess and is highly advised.");
+                    "will increase performance of rism and is highly advised.");
 
                 this._appWarn = false;
             }
@@ -674,35 +674,35 @@ var {
     });
 
 // set up internal properties
-setPropertyHidden(recess,"_app",undefined);
-setPropertyHidden(recess,"_appWarn",true);
-setPropertyReadonly(recess,"_component",{});
-setPropertyReadonly(recess,"_componentStyles",{});
-setPropertyHidden(recess,"_matchMedias",{});
-setPropertyHidden(recess._matchMedias,"_orders",[]);
-setPropertyHidden(recess,"_responsiveStyles",{});
-setPropertyHidden(recess,"_styles",{});
-setPropertyReadonly(recess,"_stylesheets",{});
-setPropertyPermanent(recess,"size","");
+setPropertyHidden(rism,"_app",undefined);
+setPropertyHidden(rism,"_appWarn",true);
+setPropertyReadonly(rism,"_component",{});
+setPropertyReadonly(rism,"_componentStyles",{});
+setPropertyHidden(rism,"_matchMedias",{});
+setPropertyHidden(rism._matchMedias,"_orders",[]);
+setPropertyHidden(rism,"_responsiveStyles",{});
+setPropertyHidden(rism,"_styles",{});
+setPropertyReadonly(rism,"_stylesheets",{});
+setPropertyPermanent(rism,"size","");
 
 // set default breakpoints
-recess.sizes(defaultBreakpoints);
+rism.sizes(defaultBreakpoints);
 
 // assign responsive styles
-recess.extend(responsive);
+rism.extend(responsive);
 
 // add external styles to main object
 utils.forEach(styleObjects,function(style){
-    utils.assign(recess,style);
+    utils.assign(rism,style);
 });
 
-recess._styles = utils.clone(recess);
+rism._styles = utils.clone(rism);
 
 // set responsive properties
-setResponsive.call(recess);
+setResponsive.call(rism);
 
 // add the basic stylesheet
-recess.stylesheet("Recess",prefix({
+rism.stylesheet("rism",prefix({
     "*, *:before, *:after":{
         boxSizing:"border-box"
     },
@@ -716,7 +716,7 @@ recess.stylesheet("Recess",prefix({
 }));
 
 // add the listener for responsive items
-window.addEventListener("resize",recess.onResize.bind(recess),false);
+window.addEventListener("resize",rism.onResize.bind(rism),false);
 
 // let's go!
-export default recess;
+export default rism;

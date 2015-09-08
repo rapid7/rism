@@ -1,6 +1,6 @@
-# Recess
+# rism
 
-Recess is a convenient way to style React components. It has a pre-built library of styles to choose from (that are easily extended or modified), and also serves as storage for component-specific styles that you create. It is responsive, and includes state-based styling for elements.
+rism is a convenient way to style React components. It has a pre-built library of styles to choose from (that are easily extended or modified), and also serves as storage for component-specific styles that you create. It is responsive, and includes state-based styling for elements.
 
 ### Table of Contents
 * [Browser support](#browser-support)
@@ -27,18 +27,18 @@ The methods and a vast majority of the styles will still work just fine in IE9, 
 
 ### Basic usage
 
-If you just want to use the styles available in recess, just bring it into your project and start using the properties!
+If you just want to use the styles available in rism, just bring it into your project and start using the properties!
 
 ```
-var recess = require("recess");
+var rism = require("rism");
 
 ...
-<div style={recess.containerFixed}>
-    <h3 style={recess.h3}>
+<div style={rism.containerFixed}>
+    <h3 style={rism.h3}>
       Responsive containers
     </h3>
     
-    <p style={recess.p}>
+    <p style={rism.p}>
       I am a container that will be a fixed width, that will responsively
       change based on overall screen size.
     </p>
@@ -51,7 +51,7 @@ You can also build upon the existing library object by using the *extend* method
 
 ```
 componentWillMount:function() {
-  recess.extend({
+  rism.extend({
     container:{
       backgroundColor:"#ccc"
     },
@@ -70,8 +70,8 @@ You can also create component-specific styles that will not pollute the default 
 
 ```
 componentWillMount:function() {
-  recess.styles(this,{
-    image:recess.combine(recess.imgResponsive,{
+  rism.styles(this,{
+    image:rism.combine(rism.imgResponsive,{
       borderRadius:4
     }),
     greenBackground:{
@@ -85,7 +85,7 @@ Notice that you pass *this* as the first parameter, and the styles object as the
 
 ```
 render:function() {
-  var styles = recess.styles(this);
+  var styles = rism.styles(this);
   
   return (
     <div style={styles.greenBackground}>
@@ -101,9 +101,9 @@ Another thing to note from above is that you can combine styles to create a new 
 
 ```
 render:function() {
-  var styles = recess.styles(this),
+  var styles = rism.styles(this),
       renderStyles = {
-        container:recess.combine(recess.container,recess.textBig,recess.textItalic,{
+        container:rism.combine(rism.container,rism.textBig,rism.textItalic,{
           backgroundColor:"red"
         });
       };
@@ -118,7 +118,7 @@ render:function() {
 
 ### Dynamic styles
 
-Static styles are cool, but what if you want dynamic styles? Recess has you covered for:
+Static styles are cool, but what if you want dynamic styles? rism has you covered for:
 * active (equivalent to :active)
 * after (equivalent to ::after)
 * before (equivalent to ::before)
@@ -127,26 +127,26 @@ Static styles are cool, but what if you want dynamic styles? Recess has you cove
 * hover (equivalent to :hover)
 * readonly equivalent to [readonly])
 
-First, you need to create a recess element with the *element* method:
+First, you need to create a rism element with the *element* method:
 
 ```
-var Button = recess.element(<button/>);
+var Button = rism.element(<button/>);
 ```
 
 And then you just pass in the object of states to the element (all other standard properties for that element work just the same):
 
 ```
 var buttonStates = {
-      hover:recess.buttonPrimaryHover
+      hover:rism.buttonPrimaryHover
     };
 
 render:function() {
   return (
-    <div style={recess.containerFlex}>
+    <div style={rism.containerFlex}>
       <Button
         className="my-special-button"
         states={buttonStates}
-        style={recess.buttonPrimary}
+        style={rism.buttonPrimary}
         type="button">
         I haz de hover
       </Button>
@@ -159,31 +159,31 @@ There is also a convenience function if you wanted to store these states just li
 
 ```
 componentWillMount:function() {
-  recess
+  rism
     .styles(this,{
-      button:recess.combine(recess.buttonPrimary,{
+      button:rism.combine(rism.buttonPrimary,{
         fontSize:50
       })
     })
     // chained because the first style needs to be created first
     .styles(this,{
-      buttonHover:recess.combine(recess.styles(this).button,{
+      buttonHover:rism.combine(rism.styles(this).button,{
         transform:"scale(1.2)"
       });
     })
     .states(this,{
       button:{
-        hover:recess.styles(this).buttonHover
+        hover:rism.styles(this).buttonHover
       }
     });
 }
 ...
 render:function() {
-  var styles = recess.styles(this),
-      states = recess.states(this);
+  var styles = rism.styles(this),
+      states = rism.states(this);
   
   return (
-    <div style={recess.containerFlex}>
+    <div style={rism.containerFlex}>
       <Button
         className="my-special-button"
         states={states.button}
@@ -198,7 +198,7 @@ render:function() {
 
 ### Responsive styles
 
-Recess has support for responsive styles, with default breakpoints at:
+rism has support for responsive styles, with default breakpoints at:
 * 568px
 * 768px
 * 992px
@@ -207,7 +207,7 @@ Recess has support for responsive styles, with default breakpoints at:
 You can add to these breakpoints by using the *extend* method in the same way, just adding the media query:
 
 ```
-recess.extend({
+rism.extend({
     "@media (min-width:768px)":{
         p:{
             margin:"2em"
@@ -216,10 +216,10 @@ recess.extend({
 });
 ```
 
-And recess will automatically pick that up, so that whenever the screen is larger than 768 you will have 2em spacing on p elements. You can also do the same thing for your component-specific styles:
+And rism will automatically pick that up, so that whenever the screen is larger than 768 you will have 2em spacing on p elements. You can also do the same thing for your component-specific styles:
 
 ```
-recess.styles(this,{
+rism.styles(this,{
     "@media (min-width:992px)":{
         p:{
             backgroundColor:"red"
@@ -230,7 +230,7 @@ recess.styles(this,{
 You don't just need to use the existing sizes, though, you can use whatever breakpoint you want.
 
 ```
-recess.extend({
+rism.extend({
     "@media (max-width:1000px)":{
         p:{
             textAlign:"center"
@@ -242,19 +242,19 @@ recess.extend({
 If you really want to switch things up and use your own custom breakpoints instead of the defaults provided, you can override them with the *sizes* method.
 
 ```
-recess.sizes({
+rism.sizes({
     s:"@media (max-width:799px)",
     m:"@media (min-width:800px)",
     l:"@media (min-width:1024px)"
 });
 ```
 
-Keep in mind that this function overrides all responsive styling in recess, so you will need to create all responsive styles you want.
+Keep in mind that this function overrides all responsive styling in rism, so you will need to create all responsive styles you want.
 
 One last note ... you don't need to use pixels, you can use em if you want.
 
 ```
-recess.sizes({
+rism.sizes({
     s:"@media (max-width:49.938em)",
     m:"@media (min-width:50em)",
     l:"@media (min-width:64em)"
@@ -269,15 +269,15 @@ Just in case you want to create a stylesheet (like if you wanted to have styling
 var css = "html,body {min-height:100vh}";
 ...
 componentWillMount:function() {
-  recess.stylesheet(css);
+  rism.stylesheet(css);
 }
 ```
 
-Or you can build it with recess style objects:
+Or you can build it with rism style objects:
 
 ```
 componentWillMount:function() {
-  recess.stylesheet({
+  rism.stylesheet({
     "html, body":{
       minHeight:"100vh"
     }
@@ -289,10 +289,10 @@ Either way, your stylesheet will be generated and injected into the document's *
 
 ### Prefixes
 
-Recess comes with a prefixer method that will handle all prefixes for the browsers we support.
+rism comes with a prefixer method that will handle all prefixes for the browsers we support.
 
 ```
-console.log(recess.prefix({
+console.log(rism.prefix({
   userSelect:"none"
 }));
 
@@ -301,7 +301,7 @@ console.log(recess.prefix({
 
 This is useful if you are not storing styles or are doing render-specific styles. It also works with nested objects:
 ```
-console.log(recess.prefix({
+console.log(rism.prefix({
   buttonStates:{
     hover:{
       userSelect:"none"

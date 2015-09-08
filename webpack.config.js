@@ -4,7 +4,7 @@ var path = require("path"),
 module.exports = {
     cache:true,
 
-    entry: path.join(__dirname,"src/recess.js"),
+    entry: path.join(__dirname,"src/rism.js"),
 
     externals:[
         {
@@ -31,8 +31,8 @@ module.exports = {
     },
 
     output: {
-        filename:"recess.js",
-        library:"Recess",
+        filename:"rism.js",
+        library:"rism",
         libraryTarget:"umd",
         path:path.join(__dirname,"/dist")
     }

@@ -1,7 +1,7 @@
 {
   "author": "tquetano-r7",
   "bugs": {
-    "url": "https://github.com/rapid7/recess/issues"
+    "url": "https://github.com/rapid7/rism/issues"
   },
   "description": "Tools to streamline inline style management for React elements",
   "dependencies": {
@@ -18,7 +18,7 @@
     "lodash": "^3.10.1",
     "webpack": "^1.12.0"
   },
-  "homepage": "https://github.com/rapid7/recess#readme",
+  "homepage": "https://github.com/rapid7/rism#readme",
   "keywords": [
     "browser",
     "css",
@@ -28,10 +28,10 @@
   ],
   "license": "MIT",
   "main": "lib",
-  "name": "recess",
+  "name": "rism",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rapid7/recess.git"
+    "url": "git+https://github.com/rapid7/rism.git"
   },
   "scripts": {
     "compile": "babel -d lib/ src/",

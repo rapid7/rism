@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["Recess"] = factory(require("react"));
+		exports["rism"] = factory(require("react"));
 	else
-		root["Recess"] = factory(root["React"]);
+		root["rism"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -247,7 +247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    xs: "(max-width:567px)"
 	};
 	var sizesSet = false;
-	var recess = Object.create({
+	var rism = Object.create({
 	    application: function application(app) {
 	        setPropertyReadonly(this, "_app", app);
 	        return this;
@@ -582,7 +582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    states: function states(component, _states) {
 	        if (!this._app && this._appWarn) {
-	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
+	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of rism and is highly advised.");
 
 	            this._appWarn = false;
 	        }
@@ -628,7 +628,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 
 	        if (!this._app && this._appWarn) {
-	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of Recess and is highly advised.");
+	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of rism and is highly advised.");
 
 	            this._appWarn = false;
 	        }
@@ -783,35 +783,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	// set up internal properties
-	setPropertyHidden(recess, "_app", undefined);
-	setPropertyHidden(recess, "_appWarn", true);
-	setPropertyReadonly(recess, "_component", {});
-	setPropertyReadonly(recess, "_componentStyles", {});
-	setPropertyHidden(recess, "_matchMedias", {});
-	setPropertyHidden(recess._matchMedias, "_orders", []);
-	setPropertyHidden(recess, "_responsiveStyles", {});
-	setPropertyHidden(recess, "_styles", {});
-	setPropertyReadonly(recess, "_stylesheets", {});
-	setPropertyPermanent(recess, "size", "");
+	setPropertyHidden(rism, "_app", undefined);
+	setPropertyHidden(rism, "_appWarn", true);
+	setPropertyReadonly(rism, "_component", {});
+	setPropertyReadonly(rism, "_componentStyles", {});
+	setPropertyHidden(rism, "_matchMedias", {});
+	setPropertyHidden(rism._matchMedias, "_orders", []);
+	setPropertyHidden(rism, "_responsiveStyles", {});
+	setPropertyHidden(rism, "_styles", {});
+	setPropertyReadonly(rism, "_stylesheets", {});
+	setPropertyPermanent(rism, "size", "");
 
 	// set default breakpoints
-	recess.sizes(defaultBreakpoints);
+	rism.sizes(defaultBreakpoints);
 
 	// assign responsive styles
-	recess.extend(_responsive2["default"]);
+	rism.extend(_responsive2["default"]);
 
 	// add external styles to main object
 	_utils2["default"].forEach(styleObjects, function (style) {
-	    _utils2["default"].assign(recess, style);
+	    _utils2["default"].assign(rism, style);
 	});
 
-	recess._styles = _utils2["default"].clone(recess);
+	rism._styles = _utils2["default"].clone(rism);
 
 	// set responsive properties
-	setResponsive.call(recess);
+	setResponsive.call(rism);
 
 	// add the basic stylesheet
-	recess.stylesheet("Recess", (0, _reactPrefixer2["default"])({
+	rism.stylesheet("rism", (0, _reactPrefixer2["default"])({
 	    "*, *:before, *:after": {
 	        boxSizing: "border-box"
 	    },
@@ -825,10 +825,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 	// add the listener for responsive items
-	window.addEventListener("resize", recess.onResize.bind(recess), false);
+	window.addEventListener("resize", rism.onResize.bind(rism), false);
 
 	// let's go!
-	exports["default"] = recess;
+	exports["default"] = rism;
 	module.exports = exports["default"];
 
 /***/ },
