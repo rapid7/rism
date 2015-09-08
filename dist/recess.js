@@ -1234,12 +1234,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return toString.call(obj) === "[object Date]";
 	    },
 
+	    isFinite: function isFinite(obj) {
+	        if (typeof obj !== "number") {
+	            return false;
+	        }
+
+	        if (obj !== obj || obj === Infinity || obj === -Infinity) {
+	            return false;
+	        }
+
+	        return true;
+	    },
+
 	    isFunction: function isFunction(obj) {
 	        return toString.call(obj) === "[object Function]" || typeof obj === "function";
 	    },
 
+	    isNaN: function isNaN(obj) {
+	        return obj !== obj;
+	    },
+
 	    isNull: function isNull(obj) {
 	        return obj === null;
+	    },
+
+	    isNumber: function isNumber(obj) {
+	        obj = obj.toString().replace(/,/g, ".");
+	        return !this.isNaN(parseFloat(obj)) && this.isFinite(obj);
 	    },
 
 	    isObject: function isObject(obj) {

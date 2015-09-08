@@ -125,12 +125,33 @@ export default {
         return toString.call(obj) === "[object Date]";
     },
 
+    isFinite(obj) {
+        if (typeof obj !== "number") {
+            return false;
+        }
+
+        if (obj !== obj || obj === Infinity || obj === -Infinity) {
+            return false;
+        }
+
+        return true;
+    },
+
     isFunction(obj) {
         return toString.call(obj) === "[object Function]" || typeof obj === "function";
     },
 
+    isNaN(obj) {
+        return obj !== obj;
+    },
+
     isNull(obj) {
         return obj === null;
+    },
+
+    isNumber(obj) {
+        obj = obj.toString().replace(/,/g, ".");
+        return !this.isNaN(parseFloat(obj)) && this.isFinite(obj);
     },
 
     isObject(obj) {
