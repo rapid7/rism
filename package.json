@@ -1,20 +1,14 @@
 {
-  "name": "recess",
-  "version": "0.9.1",
-  "description": "Tools to streamline inline style management for React elements",
-  "main": "lib",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rapid7/recess.git"
-  },
+  "author": "tquetano-r7",
   "bugs": {
     "url": "https://github.com/rapid7/recess/issues"
   },
-  "license": "MIT",
-  "scripts": {
-    "compile": "babel -d lib/ src/",
-    "dist": "npm run compile && webpack && webpack --config=webpack.config.minified.js",
-    "prepublish": "npm run compile"
+  "description": "Tools to streamline inline style management for React elements",
+  "dependencies": {
+    "d3-color": "~0.2.4",
+    "normalize.css": "~3.0.3",
+    "react": "~0.13.3",
+    "react-prefixer": "^1.0.5"
   },
   "devDependencies": {
     "babel": "^5.8.23",
@@ -24,12 +18,25 @@
     "lodash": "^3.10.1",
     "webpack": "^1.12.0"
   },
-  "dependencies": {
-    "d3-color": "~0.2.4",
-    "normalize.css": "~3.0.3",
-    "react": "~0.13.3",
-    "react-prefixer": "^1.0.5"
+  "homepage": "https://github.com/rapid7/recess#readme",
+  "keywords": [
+    "browser",
+    "css",
+    "inline style",
+    "react",
+    "style"
+  ],
+  "license": "MIT",
+  "main": "lib",
+  "name": "recess",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rapid7/recess.git"
   },
-  "author": "tquetano-r7",
-  "homepage": "https://github.com/rapid7/recess#readme"
+  "scripts": {
+    "compile": "babel -d lib/ src/",
+    "dist": "npm run compile && webpack && webpack --config=webpack.config.minified.js",
+    "prepublish": "npm run compile"
+  },
+  "version": "0.9.1"
 }
