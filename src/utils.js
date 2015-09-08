@@ -76,8 +76,23 @@ export default {
         let i = 0,
             len = arr.length;
 
-        for(; i < len; i++ ) {
-            if(cb(arr[i],i,arr) === false) {
+        for(; i < len; i++) {
+            if (cb(arr[i], i, arr) === false) {
+                break;
+            }
+        }
+    },
+
+    forEachRight(arr,cb) {
+        if(!this.isArray(arr) && !this.isArguments(arr)) {
+            console.error("Error: first parameter needs to be an array.");
+            return;
+        }
+
+        let i = arr.length;
+
+        for(; i--;) {
+            if (cb(arr[i], i, arr) === false) {
                 break;
             }
         }

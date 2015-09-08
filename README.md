@@ -9,9 +9,10 @@ Recess is a convenient way to style React components. It has a pre-built library
 * [Component-specific styles](#component-specific-styles)
 * [Combine styles](#combine-styles)
 * [Dynamic styles](#dynamic-styles)
+* [Responsive styles](#responsive-styles)
 * [Creating stylesheets](#creating-stylesheets)
 * [Prefixes](#prefixes)
-* [Please help!](#please-help)
+* [TODOS](#todos)
 
 ### Browser support
 
@@ -187,10 +188,77 @@ render:function() {
         className="my-special-button"
         states={states.button}
         style={styles.button}
-        type="button"
+        type="button">
+        Click me!
+      </Button>
     </div>
   );
 }
+```
+
+### Responsive styles
+
+Recess has support for responsive styles, with default breakpoints at:
+* 568px
+* 768px
+* 992px
+* 1200px
+
+You can add to these breakpoints by using the *extend* method in the same way, just adding the media query:
+
+```
+recess.extend({
+    "@media (min-width:768px)":{
+        p:{
+            margin:"2em"
+        }
+    ]
+});
+```
+
+And recess will automatically pick that up, so that whenever the screen is larger than 768 you will have 2em spacing on p elements. You can also do the same thing for your component-specific styles:
+
+```
+recess.styles(this,{
+    "@media (min-width:992px)":{
+        p:{
+            backgroundColor:"red"
+        }
+    }
+});
+```
+You don't just need to use the existing sizes, though, you can use whatever breakpoint you want.
+
+```
+recess.extend({
+    "@media (max-width:1000px)":{
+        p:{
+            textAlign:"center"
+        }
+    }
+});
+```
+
+If you really want to switch things up and use your own custom breakpoints instead of the defaults provided, you can override them with the *sizes* method.
+
+```
+recess.sizes({
+    s:"@media (max-width:799px)",
+    m:"@media (min-width:800px)",
+    l:"@media (min-width:1024px)"
+});
+```
+
+Keep in mind that this function overrides all responsive styling in recess, so you will need to create all responsive styles you want.
+
+One last note ... you don't need to use pixels, you can use em if you want.
+
+```
+recess.sizes({
+    s:"@media (max-width:49.938em)",
+    m:"@media (min-width:50em)",
+    l:"@media (min-width:64em)"
+});
 ```
 
 ### Creating stylesheets
@@ -217,7 +285,7 @@ componentWillMount:function() {
 }
 ```
 
-Either way, your stylesheet will be generated and injected into the document's *head*.
+Either way, your stylesheet will be generated and injected into the document's *head*. Additionally, you can use unitless declarations like you with React (for example, *{width:600}*) and the stylesheet creator will automatically apply the *px* to it when applicable.
 
 ### Prefixes
 
@@ -246,6 +314,7 @@ console.log(recess.prefix({
 
 By default, all styles that you store by any method are autoprefixed, with the exception of stylesheets where you pass a string parameter (objects are prefixed).
 
-### Please help!
+### TODOS
 
-This project is still very young, and we welcome all pull requests or feature enhancements. Tell us what you want to see!
+* Sharpen up the responsive styling so that you can combine the default responsive size with custom styles in your component-specific styles
+* Bolster default styles with more stuff (any requests, please ask!)
