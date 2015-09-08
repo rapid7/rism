@@ -317,4 +317,6 @@ By default, all styles that you store by any method are autoprefixed, with the e
 ### TODOS
 
 * Sharpen up the responsive styling so that you can combine the default responsive size with custom styles in your component-specific styles
+* Create github.io site that has full display of included styles
+* Expand documentation for both styles and full API
 * Bolster default styles with more stuff (any requests, please ask!)
