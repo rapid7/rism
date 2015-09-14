@@ -80,71 +80,71 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _sqwish = __webpack_require__(6);
+	var _sqwish = __webpack_require__(7);
 
 	var _sqwish2 = _interopRequireDefault(_sqwish);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	var _base = __webpack_require__(8);
+	var _base = __webpack_require__(9);
 
 	var _base2 = _interopRequireDefault(_base);
 
-	var _buttons = __webpack_require__(11);
+	var _buttons = __webpack_require__(12);
 
 	var _buttons2 = _interopRequireDefault(_buttons);
 
-	var _card = __webpack_require__(12);
+	var _card = __webpack_require__(13);
 
 	var _card2 = _interopRequireDefault(_card);
 
-	var _forms = __webpack_require__(13);
+	var _forms = __webpack_require__(14);
 
 	var _forms2 = _interopRequireDefault(_forms);
 
-	var _grid = __webpack_require__(14);
+	var _grid = __webpack_require__(15);
 
 	var _grid2 = _interopRequireDefault(_grid);
 
-	var _headings = __webpack_require__(15);
+	var _headings = __webpack_require__(16);
 
 	var _headings2 = _interopRequireDefault(_headings);
 
-	var _helpers = __webpack_require__(16);
+	var _helpers = __webpack_require__(17);
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _images = __webpack_require__(17);
+	var _images = __webpack_require__(18);
 
 	var _images2 = _interopRequireDefault(_images);
 
-	var _labels = __webpack_require__(18);
+	var _labels = __webpack_require__(19);
 
 	var _labels2 = _interopRequireDefault(_labels);
 
-	var _listGroup = __webpack_require__(19);
+	var _listGroup = __webpack_require__(20);
 
 	var _listGroup2 = _interopRequireDefault(_listGroup);
 
-	var _nav = __webpack_require__(20);
+	var _nav = __webpack_require__(21);
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _breakpoints = __webpack_require__(21);
+	var _breakpoints = __webpack_require__(22);
 
 	var _breakpoints2 = _interopRequireDefault(_breakpoints);
 
-	var _responsive = __webpack_require__(22);
+	var _responsive = __webpack_require__(23);
 
 	var _responsive2 = _interopRequireDefault(_responsive);
 
-	var _unitlessValues = __webpack_require__(23);
+	var _unitlessValues = __webpack_require__(24);
 
 	var _unitlessValues2 = _interopRequireDefault(_unitlessValues);
 
-	__webpack_require__(24);
+	__webpack_require__(25);
 
 	// functions to set properties in different ways
 	function setPropertyHidden(obj, prop, value) {
@@ -179,7 +179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var obj = {};
 
 	    _utils2["default"].forEach(arguments, function (argument, i) {
-	        obj = _utils2["default"].merge(obj, argument);
+	        obj = _utils2["default"].merge(obj, (0, _reactPrefixer2["default"])(argument));
 	    });
 
 	    return obj;
@@ -618,6 +618,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return this._componentStyles[_name]._stateStyles;
 	            }
 
+	            _states = (0, _reactPrefixer2["default"])(_states);
+
 	            this._componentStyles[_name]._stateStyles = _utils2["default"].merge(this._componentStyles[_name]._stateStyles, (0, _reactPrefixer2["default"])(_states));
 	        }
 
@@ -705,6 +707,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
 	                                }
 
+	                                responsiveStyle = (0, _reactPrefixer2["default"])(responsiveStyle);
+
 	                                _utils2["default"].assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
 	                            }).bind(this));
 	                        } else {
@@ -712,14 +716,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                this._componentStyles[name][key] = {};
 	                            }
 
-	                            this._componentStyles[name][key] = _utils2["default"].merge(this._componentStyles[name][key], style);
+	                            this._componentStyles[name][key] = combineStyles(this._componentStyles[name][key], style);
 	                            this._componentStyles[name]._styles[key] = _utils2["default"].clone(this._componentStyles[name][key]);
 	                        }
 	                    }).bind(_this));
 
 	                    setResponsive.call(_this, name);
 	                } else {
-	                    _this._componentStyles[name] = _utils2["default"].merge(_this._componentStyles[name], _styles);
+	                    _this._componentStyles[name] = combineStyles(_this._componentStyles[name], _styles);
 	                }
 	            })();
 
@@ -860,24 +864,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _animatableValues2 = _interopRequireDefault(_animatableValues);
 
-	var div = document.createElement("div");
+	var _CssSupportsPolyfill = __webpack_require__(6);
+
+	var _CssSupportsPolyfill2 = _interopRequireDefault(_CssSupportsPolyfill);
 
 	function camelToKebab(str) {
 	    return str.replace(/\W+/g, "-").replace(/([a-z\d])([A-Z])/g, "$1-$2").toLowerCase();
-	}
-
-	function isPropertySupported(prop) {
-	    return typeof div.style[prop] === "string";
-	}
-
-	function isValueSupported(prop, value, defaultValue) {
-	    div.style[prop] = defaultValue;
-
-	    try {
-	        div.style[prop] = value;
-	    } catch (e) {}
-
-	    return div.style[prop] === value;
 	}
 
 	function applyPrefixes(obj) {
@@ -887,7 +879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            if (typeof obj[key] === "object" && !!obj[key]) {
 	                obj[key] = applyPrefixes(obj[key]);
-	            } else if (_properties2["default"].indexOf(key) !== -1 && !isPropertySupported(key)) {
+	            } else if (_properties2["default"].indexOf(key) !== -1 && !(0, _CssSupportsPolyfill2["default"])(camelToKebab(key))) {
 	                var value = obj[key];
 
 	                realKey = _prefix2["default"].js + key.charAt(0).toUpperCase() + key.slice(1);
@@ -896,15 +888,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                obj[realKey] = value;
 	            }
 
-	            if (key === "display" && obj[key] === "flex" && !isValueSupported("display", "flex", "block")) {
-	                obj[key] = _prefix2["default"] === "ms" ? "-ms-flexbox" : _prefix2["default"].css + "flex";
+	            if (realKey === "display" && obj[realKey] === "flex" && !(0, _CssSupportsPolyfill2["default"])("display", "flex")) {
+	                obj[realKey] = _prefix2["default"] === "ms" ? "-ms-flexbox" : _prefix2["default"].css + "flex";
 	            }
 
 	            if (key === "transition") {
 	                _animatableValues2["default"].forEach(function (animatableValue) {
-	                    if (!isPropertySupported(animatableValue)) {
-	                        var kebabValue = camelToKebab(animatableValue),
-	                            re = new RegExp(kebabValue, "g");
+	                    var kebabValue = camelToKebab(animatableValue);
+
+	                    if (!(0, _CssSupportsPolyfill2["default"])(kebabValue)) {
+	                        var re = new RegExp(kebabValue, "g");
 
 	                        obj[realKey] = obj[realKey].replace(re, _prefix2["default"].css + kebabValue);
 	                    }
@@ -968,6 +961,53 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var el = document.createElement("div"),
+	    camelRe = /-([a-z]|[0-9])/ig,
+	    support,
+	    camel;
+
+	exports["default"] = function (prop, value) {
+	    // If no value is supplied, use "inherit"
+	    value = arguments.length === 2 ? value : "inherit";
+
+	    // Try the native standard method first
+	    if ("CSS" in window && "supports" in window.CSS) {
+	        return window.CSS.supports(prop, value);
+	    }
+
+	    // Check Opera's native method
+	    if ("supportsCSS" in window) {
+	        return window.supportsCSS(prop, value);
+	    }
+
+	    // Convert to camel-case for DOM interactions
+	    camel = prop.replace(camelRe, function (all, letter) {
+	        return (letter + "").toUpperCase();
+	    });
+
+	    // Check if the property is supported
+	    support = camel in el.style;
+
+	    // Assign the property and value to invoke
+	    // the CSS interpreter
+	    el.style.cssText = prop + ":" + value;
+
+	    // Ensure both the property and value are
+	    // supported and return
+	    return support && el.style[camel] !== "";
+	};
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -985,7 +1025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -1098,7 +1138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/*******************************************************************************
@@ -1353,7 +1393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1370,7 +1410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
@@ -1403,7 +1443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1420,7 +1460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _d3Color = __webpack_require__(10);
+	var _d3Color = __webpack_require__(11);
 
 	var _d3Color2 = _interopRequireDefault(_d3Color);
 
@@ -1428,7 +1468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -1473,7 +1513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	if (typeof Map === "undefined") {
@@ -2168,7 +2208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2189,11 +2229,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2248,7 +2288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2269,11 +2309,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2378,7 +2418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2399,11 +2439,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2466,7 +2506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2487,11 +2527,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2579,7 +2619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2596,11 +2636,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2622,7 +2662,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/*******************************************************************************
@@ -2689,48 +2729,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*******************************************************************************
-	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
-	 * material contains unpublished, copyrighted work including confidential and
-	 * proprietary information of Rapid7.
-	 ******************************************************************************/
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	var _reactPrefixer = __webpack_require__(2);
-
-	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
-
-	var _variables = __webpack_require__(9);
-
-	var _variables2 = _interopRequireDefault(_variables);
-
-	exports["default"] = {
-	    imgCircle: (0, _reactPrefixer2["default"])({
-	        borderRadius: "50%"
-	    }),
-	    imgResponsive: {
-	        display: "block",
-	        height: "auto",
-	        maxWidth: "100%"
-	    },
-	    imgThumbnail: (0, _reactPrefixer2["default"])({
-	        border: "5px solid " + _variables2["default"].white.toString(),
-	        borderRadius: _variables2["default"].borderRadius
-	    })
-	};
-	module.exports = exports["default"];
-
-/***/ },
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -2752,11 +2750,53 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	exports["default"] = {
+	    imgCircle: (0, _reactPrefixer2["default"])({
+	        borderRadius: "50%"
+	    }),
+	    imgResponsive: {
+	        display: "block",
+	        height: "auto",
+	        maxWidth: "100%"
+	    },
+	    imgThumbnail: (0, _reactPrefixer2["default"])({
+	        border: "5px solid " + _variables2["default"].white.toString(),
+	        borderRadius: _variables2["default"].borderRadius
+	    })
+	};
+	module.exports = exports["default"];
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _reactPrefixer = __webpack_require__(2);
+
+	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
+
+	var _variables = __webpack_require__(10);
+
+	var _variables2 = _interopRequireDefault(_variables);
+
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2787,7 +2827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2808,7 +2848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
@@ -2842,7 +2882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2863,11 +2903,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2915,7 +2955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2932,7 +2972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -2969,7 +3009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -2986,11 +3026,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	var _variables = __webpack_require__(9);
+	var _variables = __webpack_require__(10);
 
 	var _variables2 = _interopRequireDefault(_variables);
 
-	var _utils = __webpack_require__(7);
+	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -3114,7 +3154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -3126,10 +3166,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(25)();
+	exports = module.exports = __webpack_require__(26)();
 	// imports
 
 
@@ -3140,7 +3180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/*

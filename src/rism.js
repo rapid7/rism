@@ -60,7 +60,7 @@ function combineStyles() {
     var obj = {};
 
     utils.forEach(arguments,function(argument,i) {
-        obj = utils.merge(obj,argument);
+        obj = utils.merge(obj, prefix(argument));
     });
 
     return obj;
@@ -249,7 +249,7 @@ var {
 
                 onMouseUp(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.hover)
+                        style:combineStyles(this.props.style, this.state.states.hover)
                     });
 
                     if(this.props.onMouseUp) {
@@ -292,11 +292,11 @@ var {
                     }
 
                     if(this.props.disabled) {
-                        style = combineStyles(this.props.style,this.props.states.disabled);
+                        style = combineStyles(this.props.style, this.props.states.disabled);
                     }
 
                     if(this.props.readonly) {
-                        style = combineStyles(this.props.style,this.props.states.readonly);
+                        style = combineStyles(this.props.style, this.props.states.readonly);
                     }
 
                     return (
@@ -516,6 +516,8 @@ var {
                     return this._componentStyles[name]._stateStyles;
                 }
 
+                states = prefix(states);
+
                 this._componentStyles[name]._stateStyles = utils.merge(this._componentStyles[name]._stateStyles,prefix(states));
             }
 
@@ -598,6 +600,8 @@ var {
                                     this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
                                 }
 
+                                responsiveStyle = prefix(responsiveStyle);
+
                                 utils.assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
                             }.bind(this));
                         } else {
@@ -605,14 +609,14 @@ var {
                                 this._componentStyles[name][key] = {}
                             }
 
-                            this._componentStyles[name][key] = utils.merge(this._componentStyles[name][key], style);
+                            this._componentStyles[name][key] = combineStyles(this._componentStyles[name][key], style);
                             this._componentStyles[name]._styles[key] = utils.clone(this._componentStyles[name][key]);
                         }
                     }.bind(this));
 
                     setResponsive.call(this,name);
                 } else {
-                    this._componentStyles[name] = utils.merge(this._componentStyles[name], styles);
+                    this._componentStyles[name] = combineStyles(this._componentStyles[name], styles);
                 }
             }
 
