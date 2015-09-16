@@ -74,7 +74,7 @@ export default {
             fontSize:utils.ceil(variables.fontSize * 1.125 * 1.125)
         },
         h6:{
-            fontSize:variables.fontSize * 1.125
+            fontSize:utils.ceil(variables.fontSize * 1.125)
         }
     },
     "@media (min-width:992px)":{
@@ -97,7 +97,7 @@ export default {
             fontSize:utils.ceil(variables.fontSize * 1.125 * 1.25)
         },
         h6:{
-            fontSize:variables.fontSize * 1.25
+            fontSize:utils.ceil(variables.fontSize * 1.25)
         }
     },
     "@media (min-width:1200px)":{
@@ -120,7 +120,7 @@ export default {
             fontSize:utils.ceil(variables.fontSize * 1.125 * 1.4)
         },
         h6:{
-            fontSize:variables.fontSize * 1.4
+            fontSize:utils.ceil(variables.fontSize * 1.4)
         }
     }
 };
