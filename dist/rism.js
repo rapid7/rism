@@ -3101,7 +3101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.125)
 	        },
 	        h6: {
-	            fontSize: _variables2["default"].fontSize * 1.125
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
 	        }
 	    },
 	    "@media (min-width:992px)": {
@@ -3124,7 +3124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.25)
 	        },
 	        h6: {
-	            fontSize: _variables2["default"].fontSize * 1.25
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
 	        }
 	    },
 	    "@media (min-width:1200px)": {
@@ -3147,7 +3147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.4)
 	        },
 	        h6: {
-	            fontSize: _variables2["default"].fontSize * 1.4
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.4)
 	        }
 	    }
 	};
