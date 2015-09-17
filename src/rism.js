@@ -21,6 +21,8 @@ import images from "./images";
 import labels from "./labels";
 import listGroup from "./listGroup";
 import nav from "./nav";
+import dropdowns from "./dropdowns";
+
 import breakpoints from "./breakpoints";
 import responsive from "./responsive";
 import unitlessValues from "./unitlessValues";
@@ -133,6 +135,7 @@ var {
         labels,
         listGroup,
         nav,
+        dropdowns,
         {...otherSizeProps}
     ],
     defaultBreakpoints = {

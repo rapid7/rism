@@ -25,24 +25,28 @@ var colors = {
         headingMargin:"1em 0 0.5em",
         gutter:30
     },
-    ret = {
-        black:colors.black,
-        backgroundColor:colors.white,
-        borderColor:colors.white.darker(0.625), // #ccc
-        colorDanger:colors.danger,
-        colorInfo:colors.info,
-        colorPrimary:colors.primary,
-        colorSuccess:colors.success,
-        colorWarning:colors.warning,
-        fontColor:colors.black.brighter(3.875), // #444
-        fontSize: sizes.fontSize,
-        fontWeight: sizes.fontWeight,
-        gutter: sizes.gutter,
-        headingFontWeight: sizes.headingFontWeight,
-        headingMargin:sizes.headingMargin,
-        white:colors.white
+    transitions = {
+        ease:"ease-in-out",
+        timing:"150ms"
     };
 
-export default utils.merge(ret,prefix({
-    borderRadius: sizes.borderRadius
-}));
+export default {
+    black:colors.black,
+    backgroundColor:colors.white,
+    borderRadius:sizes.borderRadius,
+    borderColor:colors.white.darker(0.625), // #ccc
+    colorDanger:colors.danger,
+    colorInfo:colors.info,
+    colorPrimary:colors.primary,
+    colorSuccess:colors.success,
+    colorWarning:colors.warning,
+    fontColor:colors.black.brighter(3.875), // #444
+    fontSize: sizes.fontSize,
+    fontWeight: sizes.fontWeight,
+    gutter: sizes.gutter,
+    headingFontWeight: sizes.headingFontWeight,
+    headingMargin:sizes.headingMargin,
+    transitionEase:transitions.ease,
+    transitionTiming:transitions.timing,
+    white:colors.white
+};

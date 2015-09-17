@@ -17,13 +17,18 @@ var buttons = {
             cursor:"pointer",
             display:"inline-block",
             fontFamily:"inherit",
+            fontSize:12,
             lineHeight:"normal",
             outline:0,
             padding:"0.5em 1em",
             textAlign:"center",
             textDecoration:"none",
             textTransform:"uppercase",
-            transition:"background-color 150ms ease-in-out",
+            transition:"background-color " +
+                variables.transitionTiming + " " +
+                variables.transitionEase + ", color " +
+                variables.transitionTiming + " " +
+                variables.transitionEase,
             userSelect:"none",
             verticalAlign:"middle",
             whiteSpace:"nowrap"
@@ -59,6 +64,17 @@ utils.forEach(projectColors,function(color){
         backgroundColor:variables["color" + color].darker(0.5).toString(),
         color:fontColor
     });
+});
+
+buttons.buttonLink = utils.merge(utils.clone(buttons.button), {
+    backgroundColor:"transparent",
+    border:0,
+    color:variables.colorPrimary.toString()
+});
+
+buttons.buttonLinkHover = utils.merge(utils.clone(buttons.buttonLink), {
+    color:variables.colorPrimary.darker(0.5).toString(),
+    textDecoration:"underline"
 });
 
 export default buttons;
