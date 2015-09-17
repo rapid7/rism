@@ -4,6 +4,8 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
+var toString = Object.prototype.toString;
+
 export default {
     assign(target,source) {
         if(this.isObject(target) && !this.isFunction(target)) {

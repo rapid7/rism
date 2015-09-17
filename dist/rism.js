@@ -1152,6 +1152,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	var toString = Object.prototype.toString;
+
 	exports["default"] = {
 	    assign: function assign(target, source) {
 	        if (this.isObject(target) && !this.isFunction(target)) {
