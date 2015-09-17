@@ -132,19 +132,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _nav2 = _interopRequireDefault(_nav);
 
-	var _breakpoints = __webpack_require__(22);
+	var _dropdowns = __webpack_require__(22);
+
+	var _dropdowns2 = _interopRequireDefault(_dropdowns);
+
+	var _breakpoints = __webpack_require__(23);
 
 	var _breakpoints2 = _interopRequireDefault(_breakpoints);
 
-	var _responsive = __webpack_require__(23);
+	var _responsive = __webpack_require__(24);
 
 	var _responsive2 = _interopRequireDefault(_responsive);
 
-	var _unitlessValues = __webpack_require__(24);
+	var _unitlessValues = __webpack_require__(25);
 
 	var _unitlessValues2 = _interopRequireDefault(_unitlessValues);
 
-	__webpack_require__(25);
+	__webpack_require__(26);
 
 	// functions to set properties in different ways
 	function setPropertyHidden(obj, prop, value) {
@@ -238,7 +242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var setBreakpoints = _breakpoints2["default"].setBreakpoints;
 	var current = _breakpoints2["default"].current;
 	var otherSizeProps = _objectWithoutProperties(_breakpoints2["default"], ["setBreakpoints", "current"]);
-	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _extends({}, otherSizeProps)];
+	var styleObjects = [_base2["default"], _buttons2["default"], _card2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _helpers2["default"], _images2["default"], _labels2["default"], _listGroup2["default"], _nav2["default"], _dropdowns2["default"], _extends({}, otherSizeProps)];
 	var defaultBreakpoints = {
 	    lg: "(min-width:992px)",
 	    md: "(min-width:768px)",
@@ -1491,9 +1495,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    headingMargin: "1em 0 0.5em",
 	    gutter: 30
 	},
-	    ret = {
+	    transitions = {
+	    ease: "ease-in-out",
+	    timing: "150ms"
+	};
+
+	exports["default"] = {
 	    black: colors.black,
 	    backgroundColor: colors.white,
+	    borderRadius: sizes.borderRadius,
 	    borderColor: colors.white.darker(0.625), // #ccc
 	    colorDanger: colors.danger,
 	    colorInfo: colors.info,
@@ -1506,12 +1516,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    gutter: sizes.gutter,
 	    headingFontWeight: sizes.headingFontWeight,
 	    headingMargin: sizes.headingMargin,
+	    transitionEase: transitions.ease,
+	    transitionTiming: transitions.timing,
 	    white: colors.white
 	};
-
-	exports["default"] = _utils2["default"].merge(ret, (0, _reactPrefixer2["default"])({
-	    borderRadius: sizes.borderRadius
-	}));
 	module.exports = exports["default"];
 
 /***/ },
@@ -2248,13 +2256,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        cursor: "pointer",
 	        display: "inline-block",
 	        fontFamily: "inherit",
+	        fontSize: 12,
 	        lineHeight: "normal",
 	        outline: 0,
 	        padding: "0.5em 1em",
 	        textAlign: "center",
 	        textDecoration: "none",
 	        textTransform: "uppercase",
-	        transition: "background-color 150ms ease-in-out",
+	        transition: "background-color " + _variables2["default"].transitionTiming + " " + _variables2["default"].transitionEase + ", color " + _variables2["default"].transitionTiming + " " + _variables2["default"].transitionEase,
 	        userSelect: "none",
 	        verticalAlign: "middle",
 	        whiteSpace: "nowrap"
@@ -2284,6 +2293,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        backgroundColor: _variables2["default"]["color" + color].darker(0.5).toString(),
 	        color: fontColor
 	    });
+	});
+
+	buttons.buttonLink = _utils2["default"].merge(_utils2["default"].clone(buttons.button), {
+	    backgroundColor: "transparent",
+	    border: 0,
+	    color: _variables2["default"].colorPrimary.toString()
+	});
+
+	buttons.buttonLinkHover = _utils2["default"].merge(_utils2["default"].clone(buttons.buttonLink), {
+	    color: _variables2["default"].colorPrimary.darker(0.5).toString(),
+	    textDecoration: "underline"
 	});
 
 	exports["default"] = buttons;
@@ -2974,6 +2994,84 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+	var _reactPrefixer = __webpack_require__(2);
+
+	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
+
+	var _variables = __webpack_require__(10);
+
+	var _variables2 = _interopRequireDefault(_variables);
+
+	var _utils = __webpack_require__(8);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var dropdowns = {
+	    dropdownContainer: {
+	        position: "relative"
+	    },
+	    dropdown: (0, _reactPrefixer2["default"])({
+	        backgroundColor: _variables2["default"].white.toString(),
+	        border: "1px solid #ccc",
+	        borderRadius: _variables2["default"].borderRadius,
+	        boxShadow: "2px 2px 2px #ccc",
+	        color: _variables2["default"].fontColor.toString(),
+	        display: "none",
+	        left: 0,
+	        position: "absolute",
+	        top: "100%"
+	    }),
+	    dropdownList: {
+	        display: "block",
+	        margin: 0,
+	        padding: 0
+	    },
+	    dropdownListItem: {
+	        display: "block",
+	        margin: 0,
+	        padding: "0.5em 1em",
+	        transition: "background-color " + _variables2["default"].transitionTiming + " " + _variables2["default"].transitionEase
+	    }
+	};
+
+	dropdowns.dropdownRight = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdown), {
+	    left: "auto",
+	    right: 0
+	});
+
+	dropdowns.dropdownActive = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdown), {
+	    display: "block"
+	});
+
+	dropdowns.dropdownRightActive = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdownRight), {
+	    display: "block"
+	});
+
+	dropdowns.dropdownListItemHover = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdownListItem), {
+	    backgroundColor: _variables2["default"].white.darker(0.5).toString()
+	});
+
+	exports["default"] = dropdowns;
+	module.exports = exports["default"];
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*******************************************************************************
+	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
+	 * material contains unpublished, copyrighted work including confidential and
+	 * proprietary information of Rapid7.
+	 ******************************************************************************/
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 	var _utils = __webpack_require__(8);
 
 	var _utils2 = _interopRequireDefault(_utils);
@@ -3011,7 +3109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -3156,7 +3254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -3168,10 +3266,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(26)();
+	exports = module.exports = __webpack_require__(27)();
 	// imports
 
 
@@ -3182,7 +3280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/*
