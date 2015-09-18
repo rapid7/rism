@@ -2577,28 +2577,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    columnFlex: (0, _reactPrefixer2["default"])({
 	        flexGrow: 1,
-	        flexShrink: 1,
-	        paddingLeft: _utils2["default"].ceil(_variables2["default"].gutter / 2),
-	        paddingRight: _utils2["default"].ceil(_variables2["default"].gutter / 2)
+	        flexShrink: 1
 	    }),
 	    containerFixed: {
 	        marginLeft: "auto",
-	        marginRight: "auto",
-	        paddingLeft: _utils2["default"].ceil(_variables2["default"].gutter / 2),
-	        paddingRight: _utils2["default"].ceil(_variables2["default"].gutter / 2)
+	        marginRight: "auto"
 	    },
 	    containerFlex: (0, _reactPrefixer2["default"])({
 	        alignContent: "stretch",
 	        alignItems: "stretch",
 	        display: "flex",
 	        flexDirection: "row"
-	    }),
-	    row: {
-	        marginLeft: -1 * _utils2["default"].ceil(_variables2["default"].gutter / 2),
-	        marginRight: -1 * _utils2["default"].ceil(_variables2["default"].gutter / 2)
-	    },
-	    rowFlex: (0, _reactPrefixer2["default"])({
-	        flexWrap: "nowrap"
 	    })
 	};
 
@@ -2611,6 +2600,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	grid.containerFull = _utils2["default"].merge(_utils2["default"].clone(grid.containerFixed), {
 	    width: "100%"
 	});
+
+	grid.rowFlex = _utils2["default"].merge(_utils2["default"].clone(grid.containerFlex), (0, _reactPrefixer2["default"])({
+	    flexWrap: "nowrap"
+	}));
 
 	grid.column_1_12 = grid.column("1/12");
 	grid.column_1_10 = grid.column("1/10");

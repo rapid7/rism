@@ -28,28 +28,17 @@ var grid = {
         },
         columnFlex:prefix({
             flexGrow:1,
-            flexShrink:1,
-            paddingLeft:utils.ceil(variables.gutter / 2),
-            paddingRight:utils.ceil(variables.gutter / 2)
+            flexShrink:1
         }),
         containerFixed:{
             marginLeft:"auto",
-            marginRight:"auto",
-            paddingLeft:utils.ceil(variables.gutter / 2),
-            paddingRight:utils.ceil(variables.gutter / 2)
+            marginRight:"auto"
         },
         containerFlex:prefix({
             alignContent:"stretch",
             alignItems:"stretch",
             display:"flex",
             flexDirection:"row"
-        }),
-        row:{
-            marginLeft:-1 * utils.ceil(variables.gutter / 2),
-            marginRight:-1 * utils.ceil(variables.gutter / 2)
-        },
-        rowFlex:prefix({
-            flexWrap:"nowrap"
         })
     };
 
@@ -62,6 +51,10 @@ grid.container = function(width) {
 grid.containerFull = utils.merge(utils.clone(grid.containerFixed),{
     width:"100%"
 });
+
+grid.rowFlex = utils.merge(utils.clone(grid.containerFlex), prefix({
+    flexWrap:"nowrap"
+}));
 
 grid.column_1_12 = grid.column("1/12");
 grid.column_1_10 = grid.column("1/10");
