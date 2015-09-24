@@ -21,6 +21,8 @@ import images from "./images";
 import labels from "./labels";
 import listGroup from "./listGroup";
 import nav from "./nav";
+import dropdowns from "./dropdowns";
+
 import breakpoints from "./breakpoints";
 import responsive from "./responsive";
 import unitlessValues from "./unitlessValues";
@@ -133,6 +135,7 @@ var {
         labels,
         listGroup,
         nav,
+        dropdowns,
         {...otherSizeProps}
     ],
     defaultBreakpoints = {
@@ -275,11 +278,12 @@ var {
                             style,
                             ...otherProps
                             } = this.props,
-                        style = this.state.style,
                         after = states && utils.clone(states.after),
                         before = states && utils.clone(states.before),
                         afterContent,
                         beforeContent;
+
+                    style = this.state.style;
 
                     if (before) {
                         beforeContent = before.content;
@@ -636,7 +640,7 @@ var {
             let style = document.createElement("style");
 
             style.type = "text/css";
-            style.id = id;
+            style.id = utils.isObject(id) ? id.displayName : id;
 
             if(utils.isString(styles)) {
                 style.textContent = sqwish(styles);
@@ -647,7 +651,7 @@ var {
                     str += key + "{";
 
                     utils.forIn(style, function(value, property) {
-                        if (utils.isNumber(value) && unitlessValues.indexOf(property) === -1) {
+                        if (utils.isNumber(value) && unitlessValues.indexOf(property) === -1  && !/px/.test(value)) {
                             style[property] = value + "px";
                         }
                     });
