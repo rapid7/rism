@@ -640,7 +640,7 @@ var {
             let style = document.createElement("style");
 
             style.type = "text/css";
-            style.id = id;
+            style.id = utils.isObject(id) ? id.displayName : id;
 
             if(utils.isString(styles)) {
                 style.textContent = sqwish(styles);
@@ -651,7 +651,7 @@ var {
                     str += key + "{";
 
                     utils.forIn(style, function(value, property) {
-                        if (utils.isNumber(value) && unitlessValues.indexOf(property) === -1) {
+                        if (utils.isNumber(value) && unitlessValues.indexOf(property) === -1  && !/px/.test(value)) {
                             style[property] = value + "px";
                         }
                     });

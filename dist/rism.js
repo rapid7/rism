@@ -751,7 +751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var style = document.createElement("style");
 
 	        style.type = "text/css";
-	        style.id = id;
+	        style.id = _utils2["default"].isObject(id) ? id.displayName : id;
 
 	        if (_utils2["default"].isString(styles)) {
 	            style.textContent = (0, _sqwish2["default"])(styles);
@@ -762,7 +762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                str += key + "{";
 
 	                _utils2["default"].forIn(style, function (value, property) {
-	                    if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(property) === -1) {
+	                    if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(property) === -1 && !/px/.test(value)) {
 	                        style[property] = value + "px";
 	                    }
 	                });
