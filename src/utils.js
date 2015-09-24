@@ -153,7 +153,14 @@ export default {
 
     isNumber(obj) {
         obj = obj.toString().replace(/,/g, ".");
-        return !this.isNaN(parseFloat(obj)) && this.isFinite(obj);
+
+        if (/[%]/.test(obj)) {
+            return false;
+        }
+
+        let numObj = parseFloat(obj);
+
+        return !this.isNaN(numObj) && this.isFinite(numObj);
     },
 
     isObject(obj) {

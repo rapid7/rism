@@ -278,11 +278,12 @@ var {
                             style,
                             ...otherProps
                             } = this.props,
-                        style = this.state.style,
                         after = states && utils.clone(states.after),
                         before = states && utils.clone(states.before),
                         afterContent,
                         beforeContent;
+
+                    style = this.state.style;
 
                     if (before) {
                         beforeContent = before.content;

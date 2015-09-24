@@ -382,11 +382,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var states = _props.states;
 	                var style = _props.style;
 	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "states", "style"]);
-	                var style = this.state.style;
 	                var after = states && _utils2["default"].clone(states.after);
 	                var before = states && _utils2["default"].clone(states.before);
 	                var afterContent;
 	                var beforeContent;
+
+	                style = this.state.style;
 
 	                if (before) {
 	                    beforeContent = before.content;
@@ -1305,7 +1306,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    isNumber: function isNumber(obj) {
 	        obj = obj.toString().replace(/,/g, ".");
-	        return !this.isNaN(parseFloat(obj)) && this.isFinite(obj);
+
+	        if (/[%]/.test(obj)) {
+	            return false;
+	        }
+
+	        var numObj = parseFloat(obj);
+
+	        return !this.isNaN(numObj) && this.isFinite(numObj);
 	    },
 
 	    isObject: function isObject(obj) {
