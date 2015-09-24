@@ -38,7 +38,8 @@ var grid = {
             alignContent:"stretch",
             alignItems:"stretch",
             display:"flex",
-            flexDirection:"row"
+            flexDirection:"row",
+            width:"100%"
         })
     };
 
