@@ -20,19 +20,18 @@ var dropdowns = {
             color:variables.fontColor.toString(),
             display:"none",
             left:0,
-            position:"absolute",
-            top:"100%"
-        }),
-        dropdownList:{
-            display:"block",
             margin:0,
-            padding:0
-        },
-        dropdownListItem:{
+            padding:0,
+            position:"absolute",
+            top:"100%",
+            zIndex:1000
+        }),
+        dropdownItem:{
             display:"block",
             margin:0,
             padding:"0.5em 1em",
-            transition:"background-color " + variables.transitionTiming + " " + variables.transitionEase
+            transition:"background-color " + variables.transitionTiming + " " + variables.transitionEase,
+            whiteSpace:"nowrap"
         }
     };
 
@@ -49,7 +48,7 @@ dropdowns.dropdownRightActive = utils.merge(utils.clone(dropdowns.dropdownRight)
     display:"block"
 });
 
-dropdowns.dropdownListItemHover = utils.merge(utils.clone(dropdowns.dropdownListItem), {
+dropdowns.dropdownItemHover = utils.merge(utils.clone(dropdowns.dropdownItem), {
     backgroundColor:variables.white.darker(0.5).toString()
 });
 

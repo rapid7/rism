@@ -3012,19 +3012,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        color: _variables2["default"].fontColor.toString(),
 	        display: "none",
 	        left: 0,
-	        position: "absolute",
-	        top: "100%"
-	    }),
-	    dropdownList: {
-	        display: "block",
 	        margin: 0,
-	        padding: 0
-	    },
-	    dropdownListItem: {
+	        padding: 0,
+	        position: "absolute",
+	        top: "100%",
+	        zIndex: 1000
+	    }),
+	    dropdownItem: {
 	        display: "block",
 	        margin: 0,
 	        padding: "0.5em 1em",
-	        transition: "background-color " + _variables2["default"].transitionTiming + " " + _variables2["default"].transitionEase
+	        transition: "background-color " + _variables2["default"].transitionTiming + " " + _variables2["default"].transitionEase,
+	        whiteSpace: "nowrap"
 	    }
 	};
 
@@ -3041,7 +3040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    display: "block"
 	});
 
-	dropdowns.dropdownListItemHover = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdownListItem), {
+	dropdowns.dropdownItemHover = _utils2["default"].merge(_utils2["default"].clone(dropdowns.dropdownItem), {
 	    backgroundColor: _variables2["default"].white.darker(0.5).toString()
 	});
 
