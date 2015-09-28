@@ -182,7 +182,7 @@ var {
 
                 onDrag(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.drag)
+                        style:this.state.states.drag
                     });
 
                     if(this.props.onDrag) {
@@ -192,7 +192,7 @@ var {
 
                 onDragEnter(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.dragEnter)
+                        style:this.state.states.dragEnter
                     });
 
                     if(this.props.onDragEnter) {
@@ -212,7 +212,7 @@ var {
 
                 onFocus(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.focus)
+                        style:combineStyles(this.state.states.active, this.state.states.focus)
                     });
 
                     if(this.props.onFocus) {
@@ -222,7 +222,7 @@ var {
 
                 onMouseDown(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.active)
+                        style:combineStyles(this.state.states.hover, this.state.states.active)
                     });
 
                     if(this.props.onMouseDown) {
@@ -232,7 +232,7 @@ var {
 
                 onMouseEnter(e) {
                     this.setState({
-                        style:combineStyles(this.props.style,this.state.states.hover)
+                        style:this.state.states.hover
                     });
 
                     if(this.props.onMouseEnter) {
@@ -252,7 +252,7 @@ var {
 
                 onMouseUp(e) {
                     this.setState({
-                        style:combineStyles(this.props.style, this.state.states.hover)
+                        style:this.state.states.hover
                     });
 
                     if(this.props.onMouseUp) {
@@ -283,7 +283,7 @@ var {
                         afterContent,
                         beforeContent;
 
-                    style = this.state.style;
+                    style = combineStyles(style, this.state.style);
 
                     if (before) {
                         beforeContent = before.content;
