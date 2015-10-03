@@ -151,7 +151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	__webpack_require__(26);
 
 	// debounce function
-	function debounceResize(func, wait, immediate) {
+	function debounce(func, wait, immediate) {
 	    var timeout;
 
 	    return function () {
