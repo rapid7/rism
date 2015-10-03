@@ -30,7 +30,7 @@ import unitlessValues from "./unitlessValues";
 import "normalize.css";
 
 // debounce function
-function debounce(func, wait, immediate) {
+function debounceResize(func, wait, immediate) {
     var timeout;
 
     return function() {
@@ -427,16 +427,6 @@ var {
             return this;
         },
 
-        onResize:debounce(() => {
-                var size = breakpoints.current();
-
-                if(size === "xs" || size !== this.size) {
-                    this.size = breakpoints.current();
-                }
-
-                this.render();
-        }, 1),
-
         prefix:prefix,
 
         render(component) {
@@ -745,8 +735,18 @@ rism.stylesheet("rism",prefix({
     }
 }));
 
+let onResize = debounce(() => {
+    var size = breakpoints.current();
+
+    if (size === "xs" || size !== this.size) {
+        rism.size = breakpoints.current();
+    }
+
+    rism.render();
+}, 1);
+
 // add the listener for responsive items
-window.addEventListener("resize",rism.onResize.bind(rism),false);
+window.addEventListener("resize", onResize);
 
 // let's go!
 export default rism;
