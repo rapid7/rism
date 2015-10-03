@@ -29,6 +29,30 @@ import unitlessValues from "./unitlessValues";
 
 import "normalize.css";
 
+// debounce function
+function debounce(func, wait, immediate) {
+    var timeout;
+
+    return function() {
+        let context = this,
+            args = arguments,
+            later = function() {
+                timeout = null;
+                if (!immediate) {
+                    func.apply(context, args);
+                }
+            },
+            callNow = immediate && !timeout;
+
+        window.clearTimeout(timeout);
+        timeout = window.setTimeout(later, wait);
+
+        if (callNow) {
+            func.apply(context, args);
+        }
+    };
+}
+
 // functions to set properties in different ways
 function setPropertyHidden(obj,prop,value) {
     Object.defineProperty(obj,prop,{
@@ -403,16 +427,6 @@ var {
             return this;
         },
 
-        onResize:_.debounce(function() {
-            var size = breakpoints.current();
-
-            if(size === "xs" || size !== this.size) {
-                this.size = breakpoints.current();
-            }
-
-            this.render();
-        }, 1),
-
         prefix:prefix,
 
         render(component) {
@@ -499,7 +513,7 @@ var {
             }
 
             if(utils.isObject(component)) {
-                if(_.isUndefined(component._reactInternalInstance)) {
+                if(utils.isUndefined(component._reactInternalInstance)) {
                     console.error("Error: object passed is not a React constructor.");
                     return this;
                 }
@@ -547,7 +561,7 @@ var {
             }
 
             if(utils.isObject(component)) {
-                if(_.isUndefined(component._reactInternalInstance)) {
+                if(utils.isUndefined(component._reactInternalInstance)) {
                     console.error("Error: object passed is not a React constructor.");
                     return this;
                 }
@@ -721,8 +735,18 @@ rism.stylesheet("rism",prefix({
     }
 }));
 
+let onResize = debounce(() => {
+    var size = breakpoints.current();
+
+    if (size === "xs" || size !== this.size) {
+        rism.size = breakpoints.current();
+    }
+
+    rism.render();
+}, 1);
+
 // add the listener for responsive items
-window.addEventListener("resize",rism.onResize.bind(rism),false);
+window.addEventListener("resize", onResize);
 
 // let's go!
 export default rism;
