@@ -30,7 +30,7 @@ import unitlessValues from "./unitlessValues";
 import "normalize.css";
 
 // debounce function
-function debounceResize(func, wait, immediate) {
+function debounce(func, wait, immediate) {
     var timeout;
 
     return function() {
