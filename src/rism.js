@@ -736,13 +736,9 @@ rism.stylesheet("rism",prefix({
 }));
 
 let onResize = debounce(() => {
-    var size = breakpoints.current();
-
-    if (size === "xs" || size !== this.size) {
-        rism.size = breakpoints.current();
+    if (!utils.isUndefined(rism.application)) {
+        rism.render();
     }
-
-    rism.render();
 }, 1);
 
 // add the listener for responsive items

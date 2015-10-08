@@ -38,5 +38,5 @@
     "dist": "npm run compile && webpack && webpack --config=webpack.config.minified.js",
     "prepublish": "npm run compile"
   },
-  "version": "0.9.10"
+  "version": "0.9.11"
 }
