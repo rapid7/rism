@@ -76,7 +76,7 @@ React.createClass({
 This is required so that rism can identify the component on minification. Then, in your *componentWillMount* function, you can add as many styles to the component as you would like:
 
 ```
-componentWillMount:function() {
+componentWillMount() {
   rism.styles(this,{
     image:rism.combine(rism.imgResponsive,{
       borderRadius:4
@@ -91,7 +91,7 @@ componentWillMount:function() {
 Notice that you pass *this* as the first parameter, and the styles object as the second, which associates the styles with this particular component. Then you can retrieve them for use later:
 
 ```
-render:function() {
+render() {
   var styles = rism.styles(this);
   
   return (
@@ -107,7 +107,7 @@ render:function() {
 Another thing to note from above is that you can combine styles to create a new one with the *combine* method. This accepts as many parameters as you'd like. This is especially useful with render-specific styles.
 
 ```
-render:function() {
+render() {
   var styles = rism.styles(this),
       renderStyles = {
         container:rism.combine(rism.container,rism.textBig,rism.textItalic,{
@@ -165,7 +165,7 @@ render:function() {
 There is also a convenience function if you wanted to store these states just like your component styles.
 
 ```
-componentWillMount:function() {
+componentWillMount() {
   rism
     .styles(this,{
       button:rism.combine(rism.buttonPrimary,{
@@ -185,7 +185,7 @@ componentWillMount:function() {
     });
 }
 ...
-render:function() {
+render() {
   var styles = rism.styles(this),
       states = rism.states(this);
   
@@ -275,16 +275,16 @@ Just in case you want to create a stylesheet (like if you wanted to have styling
 ```
 var css = "html,body {min-height:100vh}";
 ...
-componentWillMount:function() {
-  rism.stylesheet(css);
+componentWillMount() {
+  rism.stylesheet(this, css);
 }
 ```
 
 Or you can build it with rism style objects:
 
 ```
-componentWillMount:function() {
-  rism.stylesheet({
+componentWillMount() {
+  rism.stylesheet(this, {
     "html, body":{
       minHeight:"100vh"
     }
@@ -292,7 +292,13 @@ componentWillMount:function() {
 }
 ```
 
-Either way, your stylesheet will be generated and injected into the document's *head*. Additionally, you can use unitless declarations like you with React (for example, *{width:600}*) and the stylesheet creator will automatically apply the *px* to it when applicable.
+Either way, your stylesheet will be generated and injected into the document's *head*. Additionally, you can use unitless declarations like you with React (for example, *{width:600}*) and the stylesheet creator will automatically apply the *px* to it when applicable. Also, notice that *this* is the first argument, which will give an ID to the stylesheet based on that component's *displayName*. If you want a different ID, you can pass in a string value instead:
+
+```
+componentWillMount() {
+    rism.stylesheet("custom-id", css);
+}
+```
 
 ### Prefixes
 
@@ -320,6 +326,30 @@ console.log(rism.prefix({
 ```
 
 By default, all styles that you store by any method are autoprefixed, with the exception of stylesheets where you pass a string parameter (objects are prefixed).
+
+### Optimization techniques
+
+From the beginning, we focused on making rism as performant and minimal memory footprint as possible. That said, there are a couple of ways that you can squeeze that extra little bit out of your rism implementation.
+
+*rism.extend*
+
+This is mainly used for application-wide styles, and even if you are using an application that is entirely built on React, placing it in the *componentWillMount()* function means it will run every time that component mounts. A better idea is to place it in your entry JS file outside of the scope of any lifecycle event, and it will have no impact on runtime because it has no dependencies on any specific component.
+
+*rism.styles* and *rism.states*
+
+These focus more on component-specific styles / states, so the *componentWillMount()* function is the appropriate place for them. That said, you probably don't want to re-assign the same styles on every mounting, so a simple checker to see if the styles exist guard against that:
+
+```
+if (rism.styles(this) === undefined) {
+    // style away
+}
+```
+
+This will make sure those styles are only assigned upon the initial mount. And before you ask, the reason we didn't make this the default behavior is to give the option to override those styles at a later time.
+
+*rism.stylesheet*
+
+The same reasoning goes for *.stylesheet()*, you likely don't want to try to re-establish the stylesheet upon every mounting. In this case, simply place your stylesheet outside the component lifecycle. The important thing to remember that if you were using *this* to inherit the *displayName*, you need to change it to a string value (since *this* is no longer accessible).
 
 ### TODOS
 
