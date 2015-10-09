@@ -758,14 +758,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this;
 	        }
 
-	        if (document.getElementById(id) !== null) {
-	            return this;
+	        id = _utils2["default"].isObject(id) ? id.displayName : id;
+
+	        var existingStyle = document.getElementById(id);
+
+	        if (existingStyle !== null) {
+	            document.head.removeChild(existingStyle);
 	        }
 
 	        var style = document.createElement("style");
 
 	        style.type = "text/css";
-	        style.id = _utils2["default"].isObject(id) ? id.displayName : id;
+	        style.id = id;
 
 	        if (_utils2["default"].isString(styles)) {
 	            style.textContent = (0, _sqwish2["default"])(styles);

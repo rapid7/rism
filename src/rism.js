@@ -647,14 +647,18 @@ var {
                 return this;
             }
 
-            if(document.getElementById(id) !== null) {
-                return this;
+            id = utils.isObject(id) ? id.displayName : id;
+
+            let existingStyle = document.getElementById(id);
+
+            if(existingStyle !== null) {
+                document.head.removeChild(existingStyle);
             }
 
             let style = document.createElement("style");
 
             style.type = "text/css";
-            style.id = utils.isObject(id) ? id.displayName : id;
+            style.id = id;
 
             if(utils.isString(styles)) {
                 style.textContent = sqwish(styles);
