@@ -3106,7 +3106,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	// since I use it in the element
 	"use strict";
 
-	function combineStyles() {
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports["default"] = function () {
 	    var obj = {};
 
 	    utils.forEach(arguments, function (argument, i) {
@@ -3114,7 +3118,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	    return obj;
-	}
+	};
+
+	module.exports = exports["default"];
 
 /***/ },
 /* 25 */

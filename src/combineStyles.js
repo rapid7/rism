@@ -1,5 +1,5 @@
 // since I use it in the element
-function combineStyles() {
+export default function() {
     var obj = {};
 
     utils.forEach(arguments,function(argument,i) {
