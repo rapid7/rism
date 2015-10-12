@@ -124,7 +124,7 @@ function setResponsiveComponents(name) {
                         this._componentStyles[name]._styles[key] = {};
                     }
 
-                    this._componentStyles[name][key] = utils.merge(this._componentStyles[name]._styles[key],prefix(style));
+                    this._componentStyles[name][key] = utils.merge(this._componentStyles[name]._styles[key], prefix(style));
                 }.bind(this));
             }
         }.bind(this));
@@ -171,48 +171,54 @@ var {
         element:element,
 
         extend(styles) {
-            utils.forIn(styles,function(style,key) {
-                if(/@media/.test(key)) {
-                    var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ":");
-
-                    if(!this._responsiveStyles[cleanKey]) {
-                        this._responsiveStyles[cleanKey] = {};
-                    }
-
-                    if(!this._matchMedias[cleanKey]) {
-                        this._matchMedias[cleanKey] = window.matchMedia(cleanKey);
-
-                        if(this._matchMedias._orders.indexOf(cleanKey) === -1) {
-                            this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
-
-                            this._matchMedias._orders.sort(function(previous, current) {
-                                var p = previous.split(":")[1].replace("px)",""),
-                                    c = current.split(":")[1].replace("px)","");
-
-                                p = /em/.test(p) ? utils.parseInt(p.replace("em)","")) * 16 : utils.parseInt(p);
-                                c = /em/.test(c) ? utils.parseInt(c.replace("em)","")) * 16 : utils.parseInt(c);
-
-                                return p > c;
-                            });
-                        }
-                    }
-
-                    utils.forIn(style,function(responsiveStyle,responsiveKey) {
-                        if(!this._responsiveStyles[cleanKey][responsiveKey]) {
-                            this._responsiveStyles[cleanKey][responsiveKey] = {};
-                        }
-
-                        utils.assign(this._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
-                    }.bind(this));
-                } else {
+            utils.forIn(styles, (style, key) => {
+                utils.forIn(style, (item, itemKey) => {
                     if(!this[key]) {
                         this[key] = {}
                     }
 
-                    this[key] = utils.isFunction(style) ? style : utils.merge(this[key],prefix(style));
-                    this._styles[key] = utils.clone(this[key]);
-                }
-            }.bind(this));
+                    if (/@media/.test(itemKey)) {
+                        let cleanKey = itemKey.replace("@media ","").replace(/:(?![ ])/, ":");
+
+                        if (!this._responsiveStyles[cleanKey]) {
+                            this._responsiveStyles[cleanKey] = {};
+                        }
+
+                        if (!this._matchMedias[cleanKey]) {
+                            this._matchMedias[cleanKey] = window.matchMedia(cleanKey);
+
+                            if (this._matchMedias._orders.indexOf(cleanKey) === -1) {
+                                this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
+
+                                this._matchMedias._orders.sort(function(previous, current) {
+                                    var p = previous.split(":")[1].replace("px)",""),
+                                        c = current.split(":")[1].replace("px)","");
+
+                                    p = /em/.test(p) ? utils.parseInt(p.replace("em)","")) * 16 : utils.parseInt(p);
+                                    c = /em/.test(c) ? utils.parseInt(c.replace("em)","")) * 16 : utils.parseInt(c);
+
+                                    return p > c;
+                                });
+                            }
+                        }
+
+                        utils.forIn(item, (responsiveStyle, responsiveKey) => {
+                            if(!this._responsiveStyles[cleanKey][responsiveKey]) {
+                                this._responsiveStyles[cleanKey][responsiveKey] = {};
+                            }
+
+                            utils.assign(this._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
+                        });
+                    } else {
+                        if(utils.isObject(item) && !this[key][itemKey]) {
+                            this[key][itemKey] = {}
+                        }
+
+                        this[key][itemKey] = utils.isFunction(item) ? item : utils.merge(this[key][itemKey], prefix(item));
+                        this._styles[key][itemKey] = utils.clone(this[key][itemKey]);
+                    }
+                });
+            });
 
             setResponsive.call(this);
 
@@ -328,7 +334,7 @@ var {
 
                 states = prefix(states);
 
-                this._componentStyles[name]._stateStyles = utils.merge(this._componentStyles[name]._stateStyles,prefix(states));
+                this._componentStyles[name]._stateStyles = utils.merge(this._componentStyles[name]._stateStyles, prefix(states));
             }
 
             return this;
@@ -376,12 +382,16 @@ var {
                     setPropertyHidden(this._componentStyles[name],"_responsiveStyles",{});
                 }
 
-                // if there is a media query in there, we need to do some extra parsing,
-                // otherwise we can just do a straight merge
-                if(/@media/.test(JSON.stringify(styles))) {
-                    utils.forIn(styles, function(style,key) {
-                        if(/@media/.test(key)) {
-                            var cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ': ');
+                utils.forIn(styles, (style, key) => {
+                    utils.forIn(style, (item, itemKey) => {
+                        if (!this._componentStyles[name][key]) {
+                            this._componentStyles[name][key] = {}
+                        }
+
+                        // if there is a media query in there, we need to do some extra parsing,
+                        // otherwise we can just do a straight merge
+                        if (/@media/.test(itemKey)) {
+                            let cleanKey = key.replace("@media ","").replace(/:(?![ ])/, ': ');
 
                             if(!this._componentStyles[name]._responsiveStyles[cleanKey]) {
                                 this._componentStyles[name]._responsiveStyles[cleanKey] = {};
@@ -405,29 +415,23 @@ var {
                                 }
                             }
 
-                            utils.forIn(style,function(responsiveStyle,responsiveKey) {
+                            utils.forIn(item, (responsiveStyle, responsiveKey) => {
                                 if(!this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey]) {
                                     this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
                                 }
 
-                                responsiveStyle = prefix(responsiveStyle);
-
-                                utils.assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey],responsiveStyle);
-                            }.bind(this));
+                                utils.assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
+                            });
                         } else {
-                            if (!this._componentStyles[name][key]) {
-                                this._componentStyles[name][key] = {}
+                            if(utils.isObject(item) && !this._componentStyles[name][key][itemKey]) {
+                                this._componentStyles[name][key][itemKey] = {}
                             }
 
-                            this._componentStyles[name][key] = combineStyles(this._componentStyles[name][key], style);
-                            this._componentStyles[name]._styles[key] = utils.clone(this._componentStyles[name][key]);
+                            this._componentStyles[name][key][itemKey] = utils.isFunction(item) ? item : utils.merge(this._componentStyles[name][key][itemKey],prefix(item));
+                            this._componentStyles[name]._styles[key][itemKey] = utils.clone(this._componentStyles[name][key][itemKey]);
                         }
-                    }.bind(this));
-
-                    setResponsive.call(this,name);
-                } else {
-                    this._componentStyles[name] = combineStyles(this._componentStyles[name], styles);
-                }
+                    });
+                });
             }
 
             return this;
@@ -513,9 +517,6 @@ utils.forEach(styleObjects,function(style){
 });
 
 rism._styles = utils.clone(rism);
-
-// set responsive properties
-setResponsive.call(rism);
 
 // add the basic stylesheet
 rism.stylesheet("rism",prefix({

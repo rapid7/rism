@@ -8,118 +8,122 @@ import variables from "./variables";
 import utils from "./utils";
 
 export default {
-    "@media (max-width:567px)":{
-        containerFixed:{
+    containerFixed:{
+        "@media (max-width:567px)":{
             width:"100%"
         },
-        h1:{
-            fontSize:utils.ceil(variables.fontSize * 2.5)
-        },
-        h2:{
-            fontSize:utils.ceil(variables.fontSize * 2)
-        },
-        h3:{
-            fontSize:utils.ceil(variables.fontSize * 1.5)
-        },
-        h4:{
-            fontSize:utils.ceil(variables.fontSize * 1.25)
-        },
-        h5:{
-            fontSize:utils.ceil(variables.fontSize * 1.125)
-        },
-        h6:{
-            fontSize:variables.fontSize
-        }
-    },
-    "@media (min-width:568px)":{
-        containerFixed:{
+        "@media (min-width:568px)":{
             width:568 - variables.gutter
         },
-        h1:{
-            fontSize:utils.ceil(variables.fontSize * 2.5)
-        },
-        h2:{
-            fontSize:utils.ceil(variables.fontSize * 2)
-        },
-        h3:{
-            fontSize:utils.ceil(variables.fontSize * 1.5)
-        },
-        h4:{
-            fontSize:utils.ceil(variables.fontSize * 1.25)
-        },
-        h5:{
-            fontSize:utils.ceil(variables.fontSize * 1.125)
-        },
-        h6:{
-            fontSize:variables.fontSize
-        }
-    },
-    "@media (min-width:768px)":{
-        containerFixed:{
+        "@media (min-width:768px)":{
             width:768 - variables.gutter
         },
-        h1:{
-            fontSize:utils.ceil(variables.fontSize * 2.5 * 1.125)
-        },
-        h2:{
-            fontSize:utils.ceil(variables.fontSize * 2 * 1.125)
-        },
-        h3:{
-            fontSize:utils.ceil(variables.fontSize * 1.5 * 1.125)
-        },
-        h4:{
-            fontSize:utils.ceil(variables.fontSize * 1.25 * 1.125)
-        },
-        h5:{
-            fontSize:utils.ceil(variables.fontSize * 1.125 * 1.125)
-        },
-        h6:{
-            fontSize:utils.ceil(variables.fontSize * 1.125)
-        }
-    },
-    "@media (min-width:992px)":{
-        containerFixed:{
+        "@media (min-width:992px)":{
             width:992 - variables.gutter
         },
-        h1:{
-            fontSize:utils.ceil(variables.fontSize * 2.5 * 1.25)
-        },
-        h2:{
-            fontSize:utils.ceil(variables.fontSize * 2 * 1.25)
-        },
-        h3:{
-            fontSize:utils.ceil(variables.fontSize * 1.5 * 1.25)
-        },
-        h4:{
-            fontSize:utils.ceil(variables.fontSize * 1.25 * 1.25)
-        },
-        h5:{
-            fontSize:utils.ceil(variables.fontSize * 1.125 * 1.25)
-        },
-        h6:{
-            fontSize:utils.ceil(variables.fontSize * 1.25)
+        "@media (min-width:1200px)": {
+            width:1200 - variables.gutter
         }
     },
-    "@media (min-width:1200px)":{
-        containerFixed:{
-            width:1200 - variables.gutter
+    h1:{
+        "@media (max-width:567px)":{
+            fontSize:utils.ceil(variables.fontSize * 2.5)
         },
-        h1:{
+        "@media (min-width:568px)":{
+            fontSize:utils.ceil(variables.fontSize * 2.5)
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 2.5 * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 2.5 * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 2.5 * 1.4)
+        }
+    },
+    h2:{
+        "@media (max-width:567px)":{
+            fontSize:utils.ceil(variables.fontSize * 2)
         },
-        h2:{
+        "@media (min-width:568px)":{
+            fontSize:utils.ceil(variables.fontSize * 2)
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 2 * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 2 * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 2 * 1.4)
+        }
+    },
+    h3:{
+        "@media (max-width:567px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.5)
         },
-        h3:{
+        "@media (min-width:568px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.5)
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.5 * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.5 * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 1.5 * 1.4)
+        }
+    },
+    h4:{
+        "@media (max-width:567px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.25)
         },
-        h4:{
+        "@media (min-width:568px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.25)
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.25 * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.25 * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 1.25 * 1.4)
+        }
+    },
+    h5:{
+        "@media (max-width:567px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.125)
         },
-        h5:{
+        "@media (min-width:568px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.125)
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.125 * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.125 * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 1.125 * 1.4)
+        }
+    },
+    h6:{
+        "@media (max-width:567px)":{
+            fontSize:variables.fontSize
         },
-        h6:{
+        "@media (min-width:568px)":{
+            fontSize:variables.fontSize
+        },
+        "@media (min-width:768px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.125)
+        },
+        "@media (min-width:992px)":{
+            fontSize:utils.ceil(variables.fontSize * 1.25)
+        },
+        "@media (min-width:1200px)": {
             fontSize:utils.ceil(variables.fontSize * 1.4)
         }
     }

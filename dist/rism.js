@@ -279,48 +279,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	    element: _element2["default"],
 
 	    extend: function extend(styles) {
-	        _utils2["default"].forIn(styles, (function (style, key) {
-	            if (/@media/.test(key)) {
-	                var cleanKey = key.replace("@media ", "").replace(/:(?![ ])/, ":");
+	        var _this = this;
 
-	                if (!this._responsiveStyles[cleanKey]) {
-	                    this._responsiveStyles[cleanKey] = {};
+	        _utils2["default"].forIn(styles, function (style, key) {
+	            _utils2["default"].forIn(style, function (item, itemKey) {
+	                if (!_this[key]) {
+	                    _this[key] = {};
 	                }
 
-	                if (!this._matchMedias[cleanKey]) {
-	                    this._matchMedias[cleanKey] = window.matchMedia(cleanKey);
+	                if (/@media/.test(itemKey)) {
+	                    (function () {
+	                        var cleanKey = itemKey.replace("@media ", "").replace(/:(?![ ])/, ":");
 
-	                    if (this._matchMedias._orders.indexOf(cleanKey) === -1) {
-	                        this._matchMedias._orders[this._matchMedias._orders.length] = cleanKey;
+	                        if (!_this._responsiveStyles[cleanKey]) {
+	                            _this._responsiveStyles[cleanKey] = {};
+	                        }
 
-	                        this._matchMedias._orders.sort(function (previous, current) {
-	                            var p = previous.split(":")[1].replace("px)", ""),
-	                                c = current.split(":")[1].replace("px)", "");
+	                        if (!_this._matchMedias[cleanKey]) {
+	                            _this._matchMedias[cleanKey] = window.matchMedia(cleanKey);
 
-	                            p = /em/.test(p) ? _utils2["default"].parseInt(p.replace("em)", "")) * 16 : _utils2["default"].parseInt(p);
-	                            c = /em/.test(c) ? _utils2["default"].parseInt(c.replace("em)", "")) * 16 : _utils2["default"].parseInt(c);
+	                            if (_this._matchMedias._orders.indexOf(cleanKey) === -1) {
+	                                _this._matchMedias._orders[_this._matchMedias._orders.length] = cleanKey;
 
-	                            return p > c;
+	                                _this._matchMedias._orders.sort(function (previous, current) {
+	                                    var p = previous.split(":")[1].replace("px)", ""),
+	                                        c = current.split(":")[1].replace("px)", "");
+
+	                                    p = /em/.test(p) ? _utils2["default"].parseInt(p.replace("em)", "")) * 16 : _utils2["default"].parseInt(p);
+	                                    c = /em/.test(c) ? _utils2["default"].parseInt(c.replace("em)", "")) * 16 : _utils2["default"].parseInt(c);
+
+	                                    return p > c;
+	                                });
+	                            }
+	                        }
+
+	                        _utils2["default"].forIn(item, function (responsiveStyle, responsiveKey) {
+	                            if (!_this._responsiveStyles[cleanKey][responsiveKey]) {
+	                                _this._responsiveStyles[cleanKey][responsiveKey] = {};
+	                            }
+
+	                            _utils2["default"].assign(_this._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
 	                        });
-	                    }
-	                }
-
-	                _utils2["default"].forIn(style, (function (responsiveStyle, responsiveKey) {
-	                    if (!this._responsiveStyles[cleanKey][responsiveKey]) {
-	                        this._responsiveStyles[cleanKey][responsiveKey] = {};
+	                    })();
+	                } else {
+	                    if (_utils2["default"].isObject(item) && !_this[key][itemKey]) {
+	                        _this[key][itemKey] = {};
 	                    }
 
-	                    _utils2["default"].assign(this._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
-	                }).bind(this));
-	            } else {
-	                if (!this[key]) {
-	                    this[key] = {};
+	                    _this[key][itemKey] = _utils2["default"].isFunction(item) ? item : _utils2["default"].merge(_this[key][itemKey], (0, _reactPrefixer2["default"])(item));
+	                    _this._styles[key][itemKey] = _utils2["default"].clone(_this[key][itemKey]);
 	                }
-
-	                this[key] = _utils2["default"].isFunction(style) ? style : _utils2["default"].merge(this[key], (0, _reactPrefixer2["default"])(style));
-	                this._styles[key] = _utils2["default"].clone(this[key]);
-	            }
-	        }).bind(this));
+	            });
+	        });
 
 	        setResponsive.call(this);
 
@@ -440,7 +450,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    styles: function styles(component, _styles) {
-	        var _this = this;
+	        var _this2 = this;
 
 	        if (!this._app && this._appWarn) {
 	            console.warn("Warning: You haven't created an application, which means each component will be managed independently. This is unavoidable if " + "you are using a different library as your application base, however if you are using React + Flux then providing an application " + "will increase performance of rism and is highly advised.");
@@ -458,11 +468,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (_utils2["default"].isObject(component)) {
-	            var _ret = (function () {
+	            var _ret2 = (function () {
 	                if (_utils2["default"].isUndefined(component._reactInternalInstance)) {
 	                    console.error("Error: object passed is not a React constructor.");
 	                    return {
-	                        v: _this
+	                        v: _this2
 	                    };
 	                }
 
@@ -470,77 +480,77 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                if (_utils2["default"].isUndefined(_styles)) {
 	                    return {
-	                        v: _this._componentStyles[name]
+	                        v: _this2._componentStyles[name]
 	                    };
 	                }
 
-	                if (!_this._component[name]) {
-	                    _this._component[name] = component;
+	                if (!_this2._component[name]) {
+	                    _this2._component[name] = component;
 	                }
 
-	                if (!_this._componentStyles[name]) {
-	                    _this._componentStyles[name] = {};
-	                    setPropertyHidden(_this._componentStyles[name], "_styles", {});
-	                    setPropertyHidden(_this._componentStyles[name], "_matchMedias", {});
-	                    setPropertyHidden(_this._componentStyles[name]._matchMedias, "_orders", []);
-	                    setPropertyHidden(_this._componentStyles[name], "_responsiveStyles", {});
+	                if (!_this2._componentStyles[name]) {
+	                    _this2._componentStyles[name] = {};
+	                    setPropertyHidden(_this2._componentStyles[name], "_styles", {});
+	                    setPropertyHidden(_this2._componentStyles[name], "_matchMedias", {});
+	                    setPropertyHidden(_this2._componentStyles[name]._matchMedias, "_orders", []);
+	                    setPropertyHidden(_this2._componentStyles[name], "_responsiveStyles", {});
 	                }
 
-	                // if there is a media query in there, we need to do some extra parsing,
-	                // otherwise we can just do a straight merge
-	                if (/@media/.test(JSON.stringify(_styles))) {
-	                    _utils2["default"].forIn(_styles, (function (style, key) {
-	                        if (/@media/.test(key)) {
-	                            var cleanKey = key.replace("@media ", "").replace(/:(?![ ])/, ': ');
-
-	                            if (!this._componentStyles[name]._responsiveStyles[cleanKey]) {
-	                                this._componentStyles[name]._responsiveStyles[cleanKey] = {};
-	                            }
-
-	                            if (!this._componentStyles[name]._matchMedias[cleanKey]) {
-	                                this._componentStyles[name]._matchMedias[cleanKey] = window.matchMedia(cleanKey);
-
-	                                if (this._componentStyles[name]._matchMedias._orders.indexOf(cleanKey) === -1) {
-	                                    this._componentStyles[name]._matchMedias._orders[this._componentStyles[name]._matchMedias._orders.length] = cleanKey;
-
-	                                    this._componentStyles[name]._matchMedias._orders.sort(function (previous, current) {
-	                                        var p = previous.split(/\:\s+/)[1].replace("px)", ""),
-	                                            c = current.split(/\:\s+/)[1].replace("px)", "");
-
-	                                        p = /em/.test(p) ? _utils2["default"].parseInt(p.replace("em)", "")) * 16 : _utils2["default"].parseInt(p);
-	                                        c = /em/.test(c) ? _utils2["default"].parseInt(c.replace("em)", "")) * 16 : _utils2["default"].parseInt(c);
-
-	                                        return p > c;
-	                                    });
-	                                }
-	                            }
-
-	                            _utils2["default"].forIn(style, (function (responsiveStyle, responsiveKey) {
-	                                if (!this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey]) {
-	                                    this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
-	                                }
-
-	                                responsiveStyle = (0, _reactPrefixer2["default"])(responsiveStyle);
-
-	                                _utils2["default"].assign(this._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
-	                            }).bind(this));
-	                        } else {
-	                            if (!this._componentStyles[name][key]) {
-	                                this._componentStyles[name][key] = {};
-	                            }
-
-	                            this._componentStyles[name][key] = (0, _combineStyles2["default"])(this._componentStyles[name][key], style);
-	                            this._componentStyles[name]._styles[key] = _utils2["default"].clone(this._componentStyles[name][key]);
+	                _utils2["default"].forIn(_styles, function (style, key) {
+	                    _utils2["default"].forIn(style, function (item, itemKey) {
+	                        if (!_this2._componentStyles[name][key]) {
+	                            _this2._componentStyles[name][key] = {};
 	                        }
-	                    }).bind(_this));
 
-	                    setResponsive.call(_this, name);
-	                } else {
-	                    _this._componentStyles[name] = (0, _combineStyles2["default"])(_this._componentStyles[name], _styles);
-	                }
+	                        // if there is a media query in there, we need to do some extra parsing,
+	                        // otherwise we can just do a straight merge
+	                        if (/@media/.test(itemKey)) {
+	                            (function () {
+	                                var cleanKey = key.replace("@media ", "").replace(/:(?![ ])/, ': ');
+
+	                                if (!_this2._componentStyles[name]._responsiveStyles[cleanKey]) {
+	                                    _this2._componentStyles[name]._responsiveStyles[cleanKey] = {};
+	                                }
+
+	                                if (!_this2._componentStyles[name]._matchMedias[cleanKey]) {
+	                                    _this2._componentStyles[name]._matchMedias[cleanKey] = window.matchMedia(cleanKey);
+
+	                                    if (_this2._componentStyles[name]._matchMedias._orders.indexOf(cleanKey) === -1) {
+	                                        _this2._componentStyles[name]._matchMedias._orders[_this2._componentStyles[name]._matchMedias._orders.length] = cleanKey;
+
+	                                        _this2._componentStyles[name]._matchMedias._orders.sort(function (previous, current) {
+	                                            var p = previous.split(/\:\s+/)[1].replace("px)", ""),
+	                                                c = current.split(/\:\s+/)[1].replace("px)", "");
+
+	                                            p = /em/.test(p) ? _utils2["default"].parseInt(p.replace("em)", "")) * 16 : _utils2["default"].parseInt(p);
+	                                            c = /em/.test(c) ? _utils2["default"].parseInt(c.replace("em)", "")) * 16 : _utils2["default"].parseInt(c);
+
+	                                            return p > c;
+	                                        });
+	                                    }
+	                                }
+
+	                                _utils2["default"].forIn(item, function (responsiveStyle, responsiveKey) {
+	                                    if (!_this2._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey]) {
+	                                        _this2._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey] = {};
+	                                    }
+
+	                                    _utils2["default"].assign(_this2._componentStyles[name]._responsiveStyles[cleanKey][responsiveKey], responsiveStyle);
+	                                });
+	                            })();
+	                        } else {
+	                            if (_utils2["default"].isObject(item) && !_this2._componentStyles[name][key][itemKey]) {
+	                                _this2._componentStyles[name][key][itemKey] = {};
+	                            }
+
+	                            _this2._componentStyles[name][key][itemKey] = _utils2["default"].isFunction(item) ? item : _utils2["default"].merge(_this2._componentStyles[name][key][itemKey], (0, _reactPrefixer2["default"])(item));
+	                            _this2._componentStyles[name]._styles[key][itemKey] = _utils2["default"].clone(_this2._componentStyles[name][key][itemKey]);
+	                        }
+	                    });
+	                });
 	            })();
 
-	            if (typeof _ret === "object") return _ret.v;
+	            if (typeof _ret2 === "object") return _ret2.v;
 	        }
 
 	        return this;
@@ -626,9 +636,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	rism._styles = _utils2["default"].clone(rism);
-
-	// set responsive properties
-	setResponsive.call(rism);
 
 	// add the basic stylesheet
 	rism.stylesheet("rism", (0, _reactPrefixer2["default"])({
@@ -3216,118 +3223,122 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _utils2 = _interopRequireDefault(_utils);
 
 	exports["default"] = {
-	    "@media (max-width:567px)": {
-	        containerFixed: {
+	    containerFixed: {
+	        "@media (max-width:567px)": {
 	            width: "100%"
 	        },
-	        h1: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5)
-	        },
-	        h2: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2)
-	        },
-	        h3: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5)
-	        },
-	        h4: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
-	        },
-	        h5: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
-	        },
-	        h6: {
-	            fontSize: _variables2["default"].fontSize
-	        }
-	    },
-	    "@media (min-width:568px)": {
-	        containerFixed: {
+	        "@media (min-width:568px)": {
 	            width: 568 - _variables2["default"].gutter
 	        },
-	        h1: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5)
-	        },
-	        h2: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2)
-	        },
-	        h3: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5)
-	        },
-	        h4: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
-	        },
-	        h5: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
-	        },
-	        h6: {
-	            fontSize: _variables2["default"].fontSize
-	        }
-	    },
-	    "@media (min-width:768px)": {
-	        containerFixed: {
+	        "@media (min-width:768px)": {
 	            width: 768 - _variables2["default"].gutter
 	        },
-	        h1: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.125)
-	        },
-	        h2: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2 * 1.125)
-	        },
-	        h3: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5 * 1.125)
-	        },
-	        h4: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25 * 1.125)
-	        },
-	        h5: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.125)
-	        },
-	        h6: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
-	        }
-	    },
-	    "@media (min-width:992px)": {
-	        containerFixed: {
+	        "@media (min-width:992px)": {
 	            width: 992 - _variables2["default"].gutter
 	        },
-	        h1: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.25)
-	        },
-	        h2: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2 * 1.25)
-	        },
-	        h3: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5 * 1.25)
-	        },
-	        h4: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25 * 1.25)
-	        },
-	        h5: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.25)
-	        },
-	        h6: {
-	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
+	        "@media (min-width:1200px)": {
+	            width: 1200 - _variables2["default"].gutter
 	        }
 	    },
-	    "@media (min-width:1200px)": {
-	        containerFixed: {
-	            width: 1200 - _variables2["default"].gutter
+	    h1: {
+	        "@media (max-width:567px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5)
 	        },
-	        h1: {
+	        "@media (min-width:568px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5)
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2.5 * 1.4)
+	        }
+	    },
+	    h2: {
+	        "@media (max-width:567px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2)
 	        },
-	        h2: {
+	        "@media (min-width:568px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2)
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2 * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2 * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 2 * 1.4)
+	        }
+	    },
+	    h3: {
+	        "@media (max-width:567px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5)
 	        },
-	        h3: {
+	        "@media (min-width:568px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5)
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5 * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5 * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.5 * 1.4)
+	        }
+	    },
+	    h4: {
+	        "@media (max-width:567px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
 	        },
-	        h4: {
+	        "@media (min-width:568px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25 * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25 * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25 * 1.4)
+	        }
+	    },
+	    h5: {
+	        "@media (max-width:567px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
 	        },
-	        h5: {
+	        "@media (min-width:568px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125 * 1.4)
+	        }
+	    },
+	    h6: {
+	        "@media (max-width:567px)": {
+	            fontSize: _variables2["default"].fontSize
 	        },
-	        h6: {
+	        "@media (min-width:568px)": {
+	            fontSize: _variables2["default"].fontSize
+	        },
+	        "@media (min-width:768px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.125)
+	        },
+	        "@media (min-width:992px)": {
+	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.25)
+	        },
+	        "@media (min-width:1200px)": {
 	            fontSize: _utils2["default"].ceil(_variables2["default"].fontSize * 1.4)
 	        }
 	    }
