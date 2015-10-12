@@ -2,6 +2,8 @@ import {
     Component
 } from "react";
 
+import combineStyles from "./combineStyles";
+
 function higherOrderComponent(Element) {
     return class RismElement extends Component {
         displayName = "RismElement";

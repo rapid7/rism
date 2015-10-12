@@ -4,9 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import {
-    Component
-} from "react";
 import prefix from "react-prefixer";
 
 import sqwish from "./sqwish";
@@ -24,11 +21,12 @@ import labels from "./labels";
 import listGroup from "./listGroup";
 import nav from "./nav";
 import dropdowns from "./dropdowns";
-import higherOrderComponent from "./higherOrderComponent";
+import element from "./element";
 
 import breakpoints from "./breakpoints";
 import responsive from "./responsive";
 import unitlessValues from "./unitlessValues";
+import combineStyles from "./combineStyles";
 
 import "normalize.css";
 
@@ -82,17 +80,6 @@ function setPropertyReadonly(obj,prop,value) {
         value: value,
         writable: false
     });
-}
-
-// since I use it in the element
-function combineStyles() {
-    var obj = {};
-
-    utils.forEach(arguments,function(argument,i) {
-        obj = utils.merge(obj, prefix(argument));
-    });
-
-    return obj;
 }
 
 // set responsive values
@@ -181,7 +168,7 @@ var {
 
         combine:combineStyles,
 
-        element:higherOrderComponent,
+        element:element,
 
         extend(styles) {
             utils.forIn(styles,function(style,key) {
