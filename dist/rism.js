@@ -3105,20 +3105,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 24 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// since I use it in the element
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	var _utils = __webpack_require__(7);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
 	exports["default"] = function () {
 	    var obj = {};
 
-	    utils.forEach(arguments, function (argument, i) {
-	        obj = utils.merge(obj, prefix(argument));
+	    _utils2["default"].forEach(arguments, function (argument, i) {
+	        obj = _utils2["default"].merge(obj, prefix(argument));
 	    });
 
 	    return obj;

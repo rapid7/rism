@@ -1,4 +1,5 @@
-// since I use it in the element
+import utils from "./utils";
+
 export default function() {
     var obj = {};
 
