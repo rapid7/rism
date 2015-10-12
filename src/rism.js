@@ -301,7 +301,7 @@ var {
             }
 
             if(utils.isString(component)) {
-                return this._componentStateStyles[component];
+                return this._componentStyles[component]._stateStyles;
             }
 
             if(utils.isObject(component)) {

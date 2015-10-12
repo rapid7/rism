@@ -406,7 +406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (_utils2["default"].isString(component)) {
-	            return this._componentStateStyles[component];
+	            return this._componentStyles[component]._stateStyles;
 	        }
 
 	        if (_utils2["default"].isObject(component)) {
