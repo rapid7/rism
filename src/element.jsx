@@ -3,6 +3,7 @@ import {
 } from "react";
 
 import combineStyles from "./combineStyles";
+import utils from "./utils";
 
 function higherOrderComponent(Element) {
     return class RismElement extends Component {

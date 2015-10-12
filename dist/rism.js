@@ -2854,6 +2854,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _combineStyles2 = _interopRequireDefault(_combineStyles);
 
+	var _utils = __webpack_require__(7);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
 	function higherOrderComponent(Element) {
 	    return (function (_Component) {
 	        _inherits(RismElement, _Component);
@@ -3029,8 +3033,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var states = _props.states;
 	                var style = _props.style;
 	                var otherProps = _objectWithoutProperties(_props, ["children", "onDragEnter", "onDragExit", "onDragLeave", "onDragOver", "onLoad", "onMouseDown", "onMouseEnter", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchStart", "states", "style"]);
-	                var after = states && utils.clone(states.after);
-	                var before = states && utils.clone(states.before);
+	                var after = states && _utils2["default"].clone(states.after);
+	                var before = states && _utils2["default"].clone(states.before);
 	                var afterContent;
 	                var beforeContent;
 
