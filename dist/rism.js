@@ -492,7 +492,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 
 	                    return _react2["default"].createElement(
-	                        Element.type,
+	                        Element,
 	                        _extends({
 	                            onBlur: this.onBlur,
 	                            onDrag: this.onDrag,
