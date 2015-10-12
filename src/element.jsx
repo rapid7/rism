@@ -190,7 +190,7 @@ function higherOrderComponent(Element) {
                 style = combineStyles(this.props.style, this.props.states.readonly);
             }
 
-            return <Element
+            return <Element.type
                     onBlur={this.onBlur}
                     onDrag={this.onDrag}
                     onDragEnter={this.onDragEnter}
@@ -214,7 +214,7 @@ function higherOrderComponent(Element) {
                     {afterContent && <span style={after}>
                     {afterContent}
                 </span>}
-            </Element>;
+            </Element.type>;
         }
     }
 }

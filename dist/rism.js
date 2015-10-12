@@ -3059,7 +3059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 
 	                return React.createElement(
-	                    Element,
+	                    Element.type,
 	                    _extends({
 	                        onBlur: this.onBlur,
 	                        onDrag: this.onDrag,
