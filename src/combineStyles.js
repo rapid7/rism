@@ -1,4 +1,5 @@
 import utils from "./utils";
+import prefix from "react-prefixer";
 
 export default function() {
     var obj = {};

@@ -3119,11 +3119,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils2 = _interopRequireDefault(_utils);
 
+	var _reactPrefixer = __webpack_require__(1);
+
+	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
+
 	exports["default"] = function () {
 	    var obj = {};
 
 	    _utils2["default"].forEach(arguments, function (argument, i) {
-	        obj = _utils2["default"].merge(obj, prefix(argument));
+	        obj = _utils2["default"].merge(obj, (0, _reactPrefixer2["default"])(argument));
 	    });
 
 	    return obj;
