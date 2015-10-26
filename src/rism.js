@@ -187,6 +187,8 @@ var {
                     });
                 },
 
+                displayName:Element.type.charAt(0).toUpperCase() + Element.type.slice(1) + "RismElement",
+
                 getInitialState() {
                     return {
                         states:this.props.states || {},
