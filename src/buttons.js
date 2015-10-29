@@ -48,7 +48,7 @@ var buttons = {
     ];
 
 buttons.buttonHover = utils.merge(utils.clone(buttons.button),{
-    backgroundColor:variables.backgroundColor.darker(0.5).toString()
+    backgroundColor:variables.backgroundColor.darker(0.25).toString()
 });
 
 utils.forEach(projectColors,function(color){
