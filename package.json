@@ -7,7 +7,7 @@
   "dependencies": {
     "d3-color": "~0.2.4",
     "normalize.css": "~3.0.3",
-    "react": "~0.13.3",
+    "react": ">=0.13.3",
     "react-prefixer": "^1.1.4"
   },
   "devDependencies": {
@@ -38,5 +38,5 @@
     "dist": "npm run compile && webpack && webpack --config=webpack.config.minified.js",
     "prepublish": "npm run compile"
   },
-  "version": "0.9.14"
+  "version": "0.9.15"
 }
