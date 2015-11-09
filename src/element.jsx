@@ -190,31 +190,65 @@ function higherOrderComponent(Element) {
                 style = combineStyles(this.props.style, this.props.states.readonly);
             }
 
-            return <Element.type
-                onBlur={this.onBlur}
-                onDrag={this.onDrag}
-                onDragEnter={this.onDragEnter}
-                onDragLeave={this.onDragLeave}
-                onFocus={this.onFocus}
-                onLoad={this.onLoad}
-                onMouseDown={this.onMouseDown}
-                onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}
-                onMouseUp={this.onMouseUp}
-                onTouchEnd={this.onTouchEnd}
-                onTouchStart={this.onTouchStart}
-                style={style}
-                {...otherProps}>
-                {beforeContent && <span style={before}>
-                    {beforeContent}
-                </span>}
+            switch (Element.type) {
+                case "area":
+                case "base":
+                case "br":
+                case "col":
+                case "hr":
+                case "img":
+                case "input":
+                case "keygen":
+                case "link":
+                case "menuitem":
+                case "meta":
+                case "param":
+                case "source":
+                case "track":
+                case "wbr":
+                    return <Element.type
+                        onBlur={this.onBlur}
+                        onDrag={this.onDrag}
+                        onDragEnter={this.onDragEnter}
+                        onDragLeave={this.onDragLeave}
+                        onFocus={this.onFocus}
+                        onLoad={this.onLoad}
+                        onMouseDown={this.onMouseDown}
+                        onMouseEnter={this.onMouseEnter}
+                        onMouseLeave={this.onMouseLeave}
+                        onMouseUp={this.onMouseUp}
+                        onTouchEnd={this.onTouchEnd}
+                        onTouchStart={this.onTouchStart}
+                        style={style}
+                        {...otherProps}
+                        />;
+                default:
+                    return <Element.type
+                        onBlur={this.onBlur}
+                        onDrag={this.onDrag}
+                        onDragEnter={this.onDragEnter}
+                        onDragLeave={this.onDragLeave}
+                        onFocus={this.onFocus}
+                        onLoad={this.onLoad}
+                        onMouseDown={this.onMouseDown}
+                        onMouseEnter={this.onMouseEnter}
+                        onMouseLeave={this.onMouseLeave}
+                        onMouseUp={this.onMouseUp}
+                        onTouchEnd={this.onTouchEnd}
+                        onTouchStart={this.onTouchStart}
+                        style={style}
+                        {...otherProps}>
+                        {beforeContent && <span style={before}>
+                            {beforeContent}
+                        </span>}
 
-                {children}
+                        {children}
 
-                {afterContent && <span style={after}>
-                    {afterContent}
-                </span>}
-            </Element.type>;
+                        {afterContent && <span style={after}>
+                            {afterContent}
+                        </span>}
+                    </Element.type>;
+            }
         }
     }
 }
