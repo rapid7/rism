@@ -1,3 +1,7 @@
+# DEPRECATED
+
+rism has gone the way of the dodo. Fear not! It has been tuned up and re-released as [bix](https://github.com/rapid7/bix), with a very similar syntax and more features. That said, bix is made for React 0.14 and higher, so if you are still using 0.13.x then you should stick with rism.
+
 # rism
 
 rism is a convenient way to style React components. It has a pre-built library of styles to choose from (that are easily extended or modified), and also serves as storage for component-specific styles that you create. It is responsive, and includes state-based styling for elements.
